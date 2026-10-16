@@ -2,7 +2,6 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
-import { HeroName } from "@/components/sections/hero-name";
 import { cn } from "@/lib/utils";
 
 export async function Hero() {
@@ -21,18 +20,21 @@ export async function Hero() {
         height={730}
         priority
         sizes="(min-width: 768px) 240px, 160px"
-        className="hero-rise mx-auto h-auto w-40 md:w-60"
+        className="intro-reveal mx-auto h-auto w-40 md:w-60"
       />
 
-      <HeroName firstName={t("firstName")} lastName={t("lastName")} />
+      <h1 id="hero-name" className="hero-name text-display-xl text-text">
+        <span className="block md:inline">{t("firstName")}</span>{" "}
+        <span className="block md:inline">{t("lastName")}</span>
+      </h1>
 
-      <div className="hero-rise flex flex-col gap-gap md:flex-row md:items-end md:justify-between">
-        <div className="flex max-w-measure flex-col gap-gap-sm">
+      <div className="flex flex-col gap-gap md:flex-row md:items-end md:justify-between">
+        <div className="intro-reveal-text flex max-w-measure flex-col gap-gap-sm">
           <p className="text-label text-muted">{t("role")}</p>
           <p className="text-body-lg text-text">{t("proposal")}</p>
         </div>
 
-        <div className="flex flex-wrap gap-gap-sm">
+        <div className="intro-reveal-text flex flex-wrap gap-gap-sm">
           <Link href="/#work" className={buttonVariants()}>
             {t("seeProjects")}
           </Link>
