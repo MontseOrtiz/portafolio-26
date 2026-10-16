@@ -24,6 +24,13 @@ Al trabajar una sección: leer docs/design/sections/<seccion>.md.
 - components/ui/ → componentes base
 - content/ → textos y MDX por idioma (nunca hardcodear copy en componentes)
 
+
+## Archivos de media
+- Imágenes en public/images/<sección>/; proyectos en public/images/projects/<slug>/ (mismo slug que el MDX).
+- Nombres: inglés, minúsculas, kebab-case, sin espacios, acentos, "final", "v2" ni "copy". Patrón: <sección o slug>-<contenido>[-desktop|-mobile].<ext>
+- Formatos: WebP para imágenes (con transparencia si hace falta), MP4 para videos con su póster <nombre>-poster.webp.
+- CVs en public/cv/: montse-ortiz-cv-en.pdf y montse-ortiz-cv-es.pdf.
+
 ## Reglas
 - Solo valores de tokens.md; nada de colores o tamaños sueltos.
 - Mobile first; probar en 375px y 1440px.

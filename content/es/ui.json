@@ -3,33 +3,14 @@
     "title": "Portafolio 26",
     "description": "Portafolio personal de Montse Ortiz, Frontend / Full Stack Developer"
   },
-  "lab": {
-    "title": "Revisión del sistema de diseño",
-    "language": "Idioma",
-    "theme": "Tema",
-    "themeLight": "Claro",
-    "themeDark": "Oscuro",
-    "themeToggle": "Cambiar al tema {theme}",
-    "colors": "Tokens de color",
-    "typography": "Escala tipográfica",
-    "sample": "Hola, construyo interfaces rápidas y claras.",
-    "tokens": {
-      "bg": "Fondo de página",
-      "surface": "Tarjetas y superficies",
-      "text": "Texto principal",
-      "muted": "Texto secundario",
-      "border": "Bordes",
-      "accent": "Acción principal",
-      "on-accent": "Texto sobre acento",
-      "accent-soft": "Badges y tags",
-      "on-accent-soft": "Texto sobre acento suave",
-      "pop": "Pop cobalto",
-      "on-pop": "Texto sobre pop",
-      "powder": "Azul polvo",
-      "on-powder": "Texto sobre polvo",
-      "sand": "Detalle cálido",
-      "cherry": "Micro detalle"
-    }
+  "hero": {
+    "firstName": "Montse",
+    "lastName": "Ortiz",
+    "role": "Frontend / Full Stack Developer",
+    "proposal": "Construyo interfaces rápidas y claras con React y Next.js, y aprendo rápido lo que el proyecto necesite.",
+    "imageAlt": "Ilustración de Montse programando en su laptop, sentada sobre una ventana de navegador con dos perritos",
+    "seeProjects": "Ver proyectos",
+    "contact": "Contacto"
   },
   "nav": {
     "name": "Montse Ortiz",
