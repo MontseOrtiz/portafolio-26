@@ -15,6 +15,13 @@ async function ready(page: Page) {
     await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     await Promise.all(document.getAnimations().map((animation) => animation.finished));
   });
+  // El nombre lo anima Motion (JS): esperar a que llegue a su posición final.
+  await page.waitForFunction(() => {
+    const h1 = document.querySelector("h1");
+    if (!h1) return false;
+    const { opacity, transform } = getComputedStyle(h1);
+    return opacity === "1" && (transform === "none" || transform.startsWith("matrix(1, 0, 0, 1, 0, 0)"));
+  });
 }
 
 for (const locale of LOCALES) {
@@ -82,37 +89,56 @@ test("hero does not overflow horizontally", async ({ page }) => {
 });
 
 test.describe("hero motion", () => {
-  test("name is visible on load and only its opacity animates", async ({ page }) => {
+  test("name rises from 150px with a spring: starts low and transparent, ends in place", async ({ page }) => {
     await page.goto("/en");
     const name = page.getByRole("heading", { level: 1 });
     await expect(name).toBeVisible();
 
-    const animation = await name.evaluate((el) => getComputedStyle(el).animationName);
-    expect(animation).toBe("hero-fade");
+    // Muestrea cada frame durante la intro: tiene que haber un momento con el nombre
+    // desplazado y casi transparente, y al final quedar en su sitio con opacidad 1.
+    const samples = await page.evaluate(
+      () =>
+        new Promise<{ y: number; opacity: number }[]>((resolve) => {
+          const h1 = document.querySelector("h1")!;
+          const out: { y: number; opacity: number }[] = [];
+          const start = performance.now();
+          const tick = () => {
+            const m = new DOMMatrixReadOnly(getComputedStyle(h1).transform === "none" ? undefined : getComputedStyle(h1).transform);
+            out.push({ y: m.m42, opacity: Number(getComputedStyle(h1).opacity) });
+            if (performance.now() - start < 2500) requestAnimationFrame(tick);
+            else resolve(out);
+          };
+          tick();
+        }),
+    );
+    expect(samples.some((f) => f.y > 100 && f.opacity < 0.5)).toBe(true);
+    const last = samples[samples.length - 1];
+    expect(last.y).toBeCloseTo(0, 1);
+    expect(last.opacity).toBe(1);
+  });
 
-    await expect
-      .poll(() => name.evaluate((el) => getComputedStyle(el).opacity))
-      .toBe("1");
+  test("image and text rows reveal after the intro delay, not before", async ({ page }) => {
+    await page.goto("/en");
+    const row = page.locator("#hero .hero-rise").last();
+    const delay = await row.evaluate((el) => getComputedStyle(el).animationDelay);
+    expect(delay).toBe("0.7s");
   });
 
   test.describe("with reduced motion", () => {
     test.use({ reducedMotion: "reduce" });
 
-    test("no animations; everything is in its final state", async ({ page }) => {
+    test("no movement: everything is in its final state", async ({ page }) => {
       await page.goto("/en");
       const name = page.getByRole("heading", { level: 1 });
       await expect(name).toBeVisible();
+      await expect.poll(() => name.evaluate((el) => getComputedStyle(el).opacity)).toBe("1");
+      const transform = await name.evaluate((el) => getComputedStyle(el).transform);
+      expect(transform === "none" || transform.startsWith("matrix(1, 0, 0, 1, 0, 0)")).toBe(true);
 
-      const { animation, opacity } = await name.evaluate((el) => ({
-        animation: getComputedStyle(el).animationName,
-        opacity: getComputedStyle(el).opacity,
-      }));
-      expect(animation).toBe("none");
-      expect(opacity).toBe("1");
-
-      const image = page.locator("#hero img");
-      const imageAnimation = await image.evaluate((el) => getComputedStyle(el).animationName);
-      expect(imageAnimation).toBe("none");
+      for (const selector of ["#hero img", "#hero .hero-rise", "header"]) {
+        const animation = await page.locator(selector).last().evaluate((el) => getComputedStyle(el).animationName);
+        expect(animation, selector).toBe("none");
+      }
     });
   });
 });

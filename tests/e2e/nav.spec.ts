@@ -15,6 +15,13 @@ async function ready(page: Page) {
     await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     await Promise.all(document.getAnimations().map((animation) => animation.finished));
   });
+  // El nombre del hero lo anima Motion (JS): esperar a que llegue a su posición final.
+  await page.waitForFunction(() => {
+    const h1 = document.querySelector("h1");
+    if (!h1) return false;
+    const { opacity, transform } = getComputedStyle(h1);
+    return opacity === "1" && (transform === "none" || transform.startsWith("matrix(1, 0, 0, 1, 0, 0)"));
+  });
 }
 
 // En móvil, los links y toggles viven en el panel: hay que abrirlo antes de usarlos.
