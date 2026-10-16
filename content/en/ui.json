@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "title": "Portafolio 26",
+    "description": "Personal portfolio of Montse Ortiz, Frontend / Full Stack Developer"
+  },
+  "lab": {
+    "title": "Design system check",
+    "language": "Language",
+    "theme": "Theme",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeToggle": "Switch to {theme} theme",
+    "colors": "Color tokens",
+    "typography": "Type scale",
+    "sample": "Hello, I build fast, clear interfaces.",
+    "tokens": {
+      "bg": "Page background",
+      "surface": "Cards and surfaces",
+      "text": "Primary text",
+      "muted": "Secondary text",
+      "border": "Borders",
+      "accent": "Primary action",
+      "on-accent": "Text on accent",
+      "accent-soft": "Badges and tags",
+      "on-accent-soft": "Text on accent soft",
+      "pop": "Pop cobalt",
+      "on-pop": "Text on pop",
+      "powder": "Powder blue",
+      "on-powder": "Text on powder",
+      "sand": "Warm detail",
+      "cherry": "Micro detail"
+    }
+  }
+}

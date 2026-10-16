@@ -17,3 +17,12 @@ playwright-report
 
 # os
 .DS_Store
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# misc
+coverage
+*.pem
+npm-debug.log*

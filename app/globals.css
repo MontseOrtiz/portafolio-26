@@ -1,0 +1,220 @@
+@import "tailwindcss";
+
+/* Tokens de docs/design/tokens.md. Ningún valor fuera de esta lista. */
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Color: light por defecto, dark con la clase .dark (next-themes). */
+:root {
+  color-scheme: light;
+
+  --token-bg: #fffcf2;
+  --token-surface: #faf0ca;
+  --token-text: #173b64;
+  --token-muted: #566780;
+  --token-border: #e8ddb8;
+  --token-accent: #173b64;
+  --token-on-accent: #fffcf2;
+  --token-accent-soft: #fff3b4;
+  --token-on-accent-soft: #173b64;
+  --token-pop: #2b50d6;
+  --token-on-pop: #fffcf2;
+  --token-powder: #b7cde8;
+  --token-on-powder: #173b64;
+  --token-sand: #76623f;
+  --token-cherry: #9b2c33;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --token-bg: #0b1a2e;
+  --token-surface: #122640;
+  --token-text: #fbf4da;
+  --token-muted: #a6b4c7;
+  --token-border: #26405f;
+  --token-accent: #b7cde8;
+  --token-on-accent: #0b1a2e;
+  --token-accent-soft: #fff3b4;
+  --token-on-accent-soft: #173b64;
+  --token-pop: #7d98ff;
+  --token-on-pop: #0b1a2e;
+  --token-powder: #33547f;
+  --token-on-powder: #fbf4da;
+  --token-sand: #d2be92;
+  --token-cherry: #f0959b;
+}
+
+@theme inline {
+  --color-bg: var(--token-bg);
+  --color-surface: var(--token-surface);
+  --color-text: var(--token-text);
+  --color-muted: var(--token-muted);
+  --color-border: var(--token-border);
+  --color-accent: var(--token-accent);
+  --color-on-accent: var(--token-on-accent);
+  --color-accent-soft: var(--token-accent-soft);
+  --color-on-accent-soft: var(--token-on-accent-soft);
+  --color-pop: var(--token-pop);
+  --color-on-pop: var(--token-on-pop);
+  --color-powder: var(--token-powder);
+  --color-on-powder: var(--token-on-powder);
+  --color-sand: var(--token-sand);
+  --color-cherry: var(--token-cherry);
+
+  --font-sans: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI",
+    sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", Menlo,
+    monospace;
+}
+
+/*
+  Escala de tamaños: valor móvil por defecto y valor de escritorio desde 768px.
+  Las variables se sobrescriben en :root para que las utilidades las lean en vivo.
+*/
+@theme {
+  --text-display-xl: clamp(64px, calc(64px + 112 * (100vw - 375px) / 905), 176px);
+  --text-display-xl--line-height: 0.9;
+  --text-display-xl--letter-spacing: -0.04em;
+
+  --text-heading: 28px;
+  --text-heading--line-height: 1.3;
+  --text-heading--letter-spacing: -0.02em;
+
+  --text-title: 19px;
+  --text-title--line-height: 1.3;
+  --text-title--letter-spacing: -0.02em;
+
+  --text-body-lg: 17px;
+  --text-body-lg--line-height: 1.5;
+
+  --text-body: 16px;
+  --text-body--line-height: 1.5;
+
+  --text-small: 14px;
+  --text-small--line-height: 1.5;
+
+  --text-label: 12px;
+  --text-label--line-height: 1.2;
+  --text-label--letter-spacing: 0.08em;
+
+  /* Espaciado: escala de 4px, con valores de layout móvil por defecto. */
+  --spacing-gutter: 20px;
+  --spacing-section: 48px;
+  --spacing-section-lg: 80px;
+  --spacing-gap: 16px;
+  --spacing-gap-sm: 8px;
+
+  --container-page: 1280px;
+  --container-measure: 560px;
+
+  --radius-md: 16px;
+  --radius-full: 9999px;
+
+  --shadow-photo: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  --rotate-tilt-sm: 3deg;
+  --rotate-tilt-md: -6deg;
+  --scale-hover: 1.02;
+
+  --duration-fast: 150ms;
+  --duration: 300ms;
+  --duration-slow: 500ms;
+  --ease-token: cubic-bezier(0.22, 1, 0.36, 1);
+  --delay-stagger: 100ms;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --text-heading: 38px;
+    --text-title: 22px;
+    --text-body-lg: 19px;
+    --spacing-gutter: 32px;
+    --spacing-section: 64px;
+    --spacing-section-lg: 128px;
+    --spacing-gap: 24px;
+  }
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+  }
+
+  body {
+    background-color: var(--token-bg);
+    color: var(--token-text);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--token-pop);
+    outline-offset: 2px;
+  }
+}
+
+/* Tipos con su familia, tamaño, peso e interlineado de tokens.md. */
+@utility text-display-xl {
+  font-family: var(--font-sans);
+  font-size: var(--text-display-xl);
+  line-height: var(--text-display-xl--line-height);
+  letter-spacing: var(--text-display-xl--letter-spacing);
+  font-weight: 500;
+}
+
+@utility text-heading {
+  font-family: var(--font-sans);
+  font-size: var(--text-heading);
+  line-height: var(--text-heading--line-height);
+  letter-spacing: var(--text-heading--letter-spacing);
+  font-weight: 500;
+}
+
+@utility text-title {
+  font-family: var(--font-sans);
+  font-size: var(--text-title);
+  line-height: var(--text-title--line-height);
+  letter-spacing: var(--text-title--letter-spacing);
+  font-weight: 500;
+}
+
+@utility text-body-lg {
+  font-family: var(--font-sans);
+  font-size: var(--text-body-lg);
+  line-height: var(--text-body-lg--line-height);
+  font-weight: 400;
+}
+
+@utility text-body {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: var(--text-body--line-height);
+  font-weight: 400;
+}
+
+@utility text-small {
+  font-family: var(--font-mono);
+  font-size: var(--text-small);
+  line-height: var(--text-small--line-height);
+  font-weight: 400;
+}
+
+@utility text-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  letter-spacing: var(--text-label--letter-spacing);
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0ms !important;
+    transition-duration: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
