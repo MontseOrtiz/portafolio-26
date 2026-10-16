@@ -8,8 +8,13 @@ const copy = {
   es: { seeProjects: "Ver proyectos", contact: "Contacto", imageAlt: "Ilustración de Montse programando en su laptop, sentada sobre una ventana de navegador con dos perritos" },
 } as const;
 
+// Espera fuentes y animaciones de entrada (nav, hero) antes de capturar.
 async function ready(page: Page) {
-  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    await Promise.all(document.getAnimations().map((animation) => animation.finished));
+  });
 }
 
 for (const locale of LOCALES) {

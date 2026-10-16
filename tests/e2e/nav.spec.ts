@@ -8,8 +8,13 @@ const copy = {
   es: { skip: "Saltar al contenido", open: "Abrir menú", close: "Cerrar menú", toEs: "Cambiar a español", toEn: "Cambiar a inglés", toDark: "Cambiar a modo oscuro", toLight: "Cambiar a modo claro" },
 } as const;
 
+// Espera fuentes y animaciones de entrada (nav, hero) antes de capturar.
 async function ready(page: Page) {
-  await page.evaluate(() => document.fonts.ready);
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    await Promise.all(document.getAnimations().map((animation) => animation.finished));
+  });
 }
 
 // En móvil, los links y toggles viven en el panel: hay que abrirlo antes de usarlos.
