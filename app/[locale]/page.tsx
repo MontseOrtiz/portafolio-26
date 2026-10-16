@@ -1,7 +1,4 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
-import { ThemeToggle } from "@/components/theme-toggle";
-import { routing } from "@/i18n/routing";
 
 const tokenSwatches = [
   { key: "bg", swatch: "bg-bg", label: "text-text" },
@@ -35,64 +32,51 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
-export default async function LabPage({ params }: Props) {
+// Temporal: muestra los tokens mientras no hay secciones. Se quita al llegar el hero.
+export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
   const t = await getTranslations("lab");
 
   return (
-    <main className="bg-bg text-text mx-auto flex min-h-screen w-full max-w-page flex-col gap-section px-gutter py-section">
-      <header className="flex flex-wrap items-center justify-between gap-gap">
-        <p className="text-label text-muted">{t("title")}</p>
-        <div className="flex items-center gap-gap-sm">
-          <nav aria-label={t("language")} className="text-small flex items-center gap-gap-sm">
-            {routing.locales.map((l) => (
-              <Link
-                key={l}
-                href="/"
-                locale={l}
-                className="underline underline-offset-4 hover:text-pop"
-                aria-current={l === locale ? "page" : undefined}
+    <>
+      <div className="flex flex-col gap-section">
+        <section aria-labelledby="colors-title" className="flex flex-col gap-gap">
+          <h1 id="colors-title" className="text-heading">
+            {t("colors")}
+          </h1>
+          <ul className="grid grid-cols-2 gap-gap-sm md:grid-cols-3 md:gap-gap">
+            {tokenSwatches.map((s) => (
+              <li
+                key={s.key}
+                className={`${s.swatch} ${s.label} border-border flex min-h-24 flex-col justify-between border p-gap-sm`}
               >
-                {l.toUpperCase()}
-              </Link>
+                <span className="text-label">{s.key}</span>
+                <span className="text-small">{t(`tokens.${s.key}`)}</span>
+              </li>
             ))}
-          </nav>
-          <ThemeToggle />
-        </div>
-      </header>
+          </ul>
+        </section>
 
-      <section aria-labelledby="colors-title" className="flex flex-col gap-gap">
-        <h2 id="colors-title" className="text-heading">
-          {t("colors")}
-        </h2>
-        <ul className="grid grid-cols-2 gap-gap-sm md:grid-cols-3 md:gap-gap">
-          {tokenSwatches.map((s) => (
-            <li
-              key={s.key}
-              className={`${s.swatch} ${s.label} border-border flex min-h-24 flex-col justify-between border p-gap-sm`}
-            >
-              <span className="text-label">{s.key}</span>
-              <span className="text-small">{t(`tokens.${s.key}`)}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
+        <section aria-labelledby="type-title" className="flex flex-col gap-gap">
+          <h2 id="type-title" className="text-heading">
+            {t("typography")}
+          </h2>
+          <ul className="flex flex-col gap-gap">
+            {typeScale.map((s) => (
+              <li key={s.name} className="border-border flex flex-col gap-gap-sm border-t pt-gap-sm">
+                <span className="text-label text-muted">{s.name}</span>
+                <p className={s.className}>{t("sample")}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
 
-      <section aria-labelledby="type-title" className="flex flex-col gap-gap">
-        <h2 id="type-title" className="text-heading">
-          {t("typography")}
-        </h2>
-        <ul className="flex flex-col gap-gap">
-          {typeScale.map((s) => (
-            <li key={s.name} className="flex flex-col gap-gap-sm border-border border-t pt-gap-sm">
-              <span className="text-label text-muted">{s.name}</span>
-              <p className={s.className}>{t("sample")}</p>
-            </li>
-          ))}
-        </ul>
-      </section>
-    </main>
+      <div id="projects" className="scroll-mt-24" />
+      <div id="about" className="scroll-mt-24" />
+      <div id="contact" className="scroll-mt-24" />
+    </>
   );
 }

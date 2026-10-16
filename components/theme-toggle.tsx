@@ -1,5 +1,6 @@
 "use client";
 
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
 import { useSyncExternalStore } from "react";
@@ -8,7 +9,7 @@ import { Button } from "@/components/ui/button";
 const subscribe = () => () => {};
 
 export function ThemeToggle() {
-  const t = useTranslations("lab");
+  const t = useTranslations("nav");
   const { resolvedTheme, setTheme } = useTheme();
   const mounted = useSyncExternalStore(
     subscribe,
@@ -17,16 +18,16 @@ export function ThemeToggle() {
   );
 
   const isDark = mounted && resolvedTheme === "dark";
-  const next = isDark ? "light" : "dark";
-  const nextLabel = t(next === "dark" ? "themeDark" : "themeLight");
+  const label = !mounted ? t("themeToggle") : isDark ? t("toLight") : t("toDark");
 
   return (
     <Button
       variant="outline"
-      onClick={() => setTheme(next)}
-      aria-label={t("themeToggle", { theme: nextLabel })}
+      size="icon"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      aria-label={label}
     >
-      {mounted ? (isDark ? t("themeLight") : t("themeDark")) : t("theme")}
+      {isDark ? <Sun aria-hidden="true" /> : <Moon aria-hidden="true" />}
     </Button>
   );
 }

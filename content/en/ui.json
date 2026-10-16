@@ -30,5 +30,28 @@
       "sand": "Warm detail",
       "cherry": "Micro detail"
     }
+  },
+  "nav": {
+    "name": "Montse Ortiz",
+    "main": "Main navigation",
+    "language": "Language",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact",
+    "cv": "CV",
+    "cta": "Let's talk",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "themeToggle": "Toggle theme",
+    "toLight": "Switch to light mode",
+    "toDark": "Switch to dark mode",
+    "toEn": "Switch to English",
+    "toEs": "Switch to Spanish",
+    "skip": "Skip to content"
+  },
+  "cv": {
+    "title": "CV",
+    "placeholder": "This page is coming soon.",
+    "back": "Back to home"
   }
 }

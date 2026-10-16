@@ -3,8 +3,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
+import { routing, type Locale } from "@/i18n/routing";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Nav } from "@/components/sections/nav";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -37,12 +38,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
-  if (!routing.locales.includes(locale as (typeof routing.locales)[number])) {
+  if (!routing.locales.includes(locale as Locale)) {
     notFound();
   }
   setRequestLocale(locale);
 
   const messages = await getMessages();
+  const t = await getTranslations("nav");
 
   return (
     <html
@@ -50,10 +52,23 @@ export default async function LocaleLayout({ children, params }: Props) {
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="flex min-h-full flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            {children}
+            <a
+              href="#content"
+              className="text-small sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:border focus:border-border focus:bg-surface focus:px-6 focus:py-3 focus:text-text"
+            >
+              {t("skip")}
+            </a>
+            <Nav />
+            <main
+              id="content"
+              tabIndex={-1}
+              className="mx-auto flex w-full max-w-page flex-1 flex-col px-gutter pt-24 pb-section outline-none"
+            >
+              {children}
+            </main>
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

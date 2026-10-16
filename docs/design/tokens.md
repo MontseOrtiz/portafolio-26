@@ -87,6 +87,7 @@ Escala base de 4px: 4, 8, 12, 16, 24, 32, 48, 64, 96, 128.
 | `shadow-photo` | 0 8px 24px rgba(0,0,0,0.12) | Solo imágenes del collage de Sobre mí |
 | `tilt-sm` | 3deg | Rotación ligera (collage) |
 | `tilt-md` | -6deg | Rotación marcada (collage) |
+| `stroke` | 2px | Anillo de foco y subrayado del link activo |
 
 Las medidas propias de un componente (anchos de imagen, de tarjeta, offsets) se definen en su archivo de sección y siempre usan la escala de 4px.
 
@@ -101,6 +102,7 @@ Las medidas propias de un componente (anchos de imagen, de tarjeta, offsets) se 
 | `stagger` | 100ms | Retraso entre elementos que aparecen en secuencia |
 | `hover-scale` | 1.02 | Escala de imágenes en hover |
 | `reveal` | fade + subida de 16px al entrar en pantalla, una sola vez | Bloques al hacer scroll |
+| `lift-sm` | 8px | Subida del panel del menú móvil (fade + subida con `duration` y `easing`) |
 
 Respetar `prefers-reduced-motion`: sin animaciones si el usuario las desactiva (solo cambios de color instantáneos).
 

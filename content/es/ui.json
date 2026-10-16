@@ -30,5 +30,28 @@
       "sand": "Detalle cálido",
       "cherry": "Micro detalle"
     }
+  },
+  "nav": {
+    "name": "Montse Ortiz",
+    "main": "Navegación principal",
+    "language": "Idioma",
+    "projects": "Proyectos",
+    "about": "Sobre mí",
+    "contact": "Contacto",
+    "cv": "CV",
+    "cta": "Hablemos",
+    "menuOpen": "Abrir menú",
+    "menuClose": "Cerrar menú",
+    "themeToggle": "Cambiar tema",
+    "toLight": "Cambiar a modo claro",
+    "toDark": "Cambiar a modo oscuro",
+    "toEn": "Cambiar a inglés",
+    "toEs": "Cambiar a español",
+    "skip": "Saltar al contenido"
+  },
+  "cv": {
+    "title": "CV",
+    "placeholder": "Esta página llega pronto.",
+    "back": "Volver al inicio"
   }
 }
