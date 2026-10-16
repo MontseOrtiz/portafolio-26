@@ -5,8 +5,8 @@ const BASE_URL = `http://localhost:${PORT}`;
 
 export default defineConfig({
   testDir: "./tests/e2e",
-  // Capturas sin nombre de plataforma: la misma referencia para macOS y Linux (CI).
-  snapshotPathTemplate: "{testDir}/__screenshots__/{testFilePath}/{arg}{-projectName}{ext}",
+  // Una referencia por plataforma: *-darwin.png (local) y *-linux.png (CI).
+  snapshotPathTemplate: "{testDir}/__screenshots__/{testFilePath}/{arg}{-projectName}{-snapshotSuffix}{ext}",
   expect: {
     toHaveScreenshot: {
       maxDiffPixelRatio: 0.02,

@@ -1,0 +1,34 @@
+name: Update Playwright snapshots
+
+# Regenera las capturas de referencia en Linux (el entorno de CI).
+# Se ejecuta a mano: Actions > Update Playwright snapshots > Run workflow.
+on:
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - run: npx playwright install --with-deps chromium
+
+      - run: npm run test:e2e:update
+
+      - name: Upload regenerated snapshots
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-snapshots
+          path: tests/e2e/__screenshots__/
+          retention-days: 7
