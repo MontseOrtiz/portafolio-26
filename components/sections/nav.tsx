@@ -11,9 +11,8 @@ import { Link, usePathname } from "@/i18n/navigation";
 const DESKTOP_QUERY = "(min-width: 768px)";
 
 const sectionLinks = [
-  { id: "projects", label: "projects" },
   { id: "about", label: "about" },
-  { id: "contact", label: "contact" },
+  { id: "work", label: "work" },
 ] as const;
 
 const linkClass = (active: boolean) =>
@@ -98,12 +97,18 @@ export function Nav() {
   const isActive = (id: string) => onHome && activeId === id;
 
   return (
-    <header className="fixed inset-x-0 top-4 z-40">
+    <header className="nav-enter fixed inset-x-0 top-4 z-40">
       <div className="mx-auto w-full max-w-page px-gutter">
-        <div className="relative flex items-center justify-between gap-gap rounded-md border border-border bg-surface px-6 py-3">
-          <Link href="/" className="text-title md:flex-1">
-            {t("name")}
-          </Link>
+        <div className="relative flex items-center justify-between gap-gap rounded-md border border-border bg-bg px-6 py-3">
+          <div className="flex min-w-0 items-center gap-gap-sm md:flex-1">
+            <Link href="/" className="text-small font-sans font-medium whitespace-nowrap">
+              {t("name")}
+            </Link>
+            <span aria-hidden="true" className="text-small text-muted hidden md:inline">
+              |
+            </span>
+            <span className="text-small text-muted hidden whitespace-nowrap md:inline">{t("role")}</span>
+          </div>
 
           <Button
             ref={buttonRef}
@@ -121,9 +126,9 @@ export function Nav() {
           <div
             id="site-menu"
             ref={panelRef}
-            className={`${open ? "nav-panel flex" : "hidden"} absolute inset-x-0 top-full mt-2 flex-col gap-gap rounded-md border border-border bg-surface p-gap md:contents`}
+            className={`${open ? "nav-panel flex" : "hidden"} absolute inset-x-0 top-full mt-2 flex-col gap-gap rounded-md border border-border bg-bg p-gap md:contents`}
           >
-            <nav aria-label={t("main")} className="flex flex-col gap-gap md:flex-1 md:flex-row md:justify-center">
+            <nav aria-label={t("main")} className="flex flex-col gap-gap md:flex-row md:justify-center">
               {sectionLinks.map((s) => (
                 <Link
                   key={s.id}

@@ -14,11 +14,11 @@
   },
   "nav": {
     "name": "Montse Ortiz",
+    "role": "Frontend / Full Stack Developer",
     "main": "Main navigation",
     "language": "Language",
-    "projects": "Projects",
     "about": "About",
-    "contact": "Contact",
+    "work": "Work",
     "cv": "CV",
     "cta": "Let's talk",
     "menuOpen": "Open menu",

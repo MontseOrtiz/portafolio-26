@@ -13,7 +13,7 @@ export default async function HomePage({ params }: Props) {
     <>
       <Hero />
 
-      <div id="projects" className="scroll-mt-24" />
+      <div id="work" className="scroll-mt-24" />
       <div id="about" className="scroll-mt-24" />
       <div id="contact" className="scroll-mt-24" />
     </>

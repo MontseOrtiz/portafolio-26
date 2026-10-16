@@ -35,7 +35,7 @@ export async function Hero() {
         </div>
 
         <div className="flex flex-wrap gap-gap-sm">
-          <Link href="/#projects" className={buttonVariants()}>
+          <Link href="/#work" className={buttonVariants()}>
             {t("seeProjects")}
           </Link>
           <Link

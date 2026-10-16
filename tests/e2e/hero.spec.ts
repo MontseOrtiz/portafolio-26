@@ -44,20 +44,20 @@ test.describe("hero content and links", () => {
       await expect(page.locator("#hero img")).toHaveAttribute("alt", copy[locale].imageAlt);
     });
 
-    test(`buttons point to #projects and #contact (${locale})`, async ({ page }) => {
+    test(`buttons point to #work and #contact (${locale})`, async ({ page }) => {
       await page.goto(`/${locale}`);
 
       // Acotado al hero: el nav también tiene un link "Contact".
       const hero = page.locator("#hero");
       const projects = hero.getByRole("link", { name: copy[locale].seeProjects });
-      await expect(projects).toHaveAttribute("href", `/${locale}#projects`);
+      await expect(projects).toHaveAttribute("href", `/${locale}#work`);
 
       const contact = hero.getByRole("link", { name: copy[locale].contact });
       await expect(contact).toHaveAttribute("href", `/${locale}#contact`);
 
       await projects.click();
-      await expect(page).toHaveURL(new RegExp(`/${locale}#projects$`));
-      await expect(page.locator("#projects")).toBeAttached();
+      await expect(page).toHaveURL(new RegExp(`/${locale}#work$`));
+      await expect(page.locator("#work")).toBeAttached();
 
       await page.goto(`/${locale}`);
       await contact.click();

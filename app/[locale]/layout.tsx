@@ -65,7 +65,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             <main
               id="content"
               tabIndex={-1}
-              className="mx-auto flex w-full max-w-page flex-1 flex-col px-gutter pt-24 pb-section outline-none"
+              className="mx-auto flex w-full max-w-page flex-1 flex-col px-gutter pt-[calc(82px+var(--spacing-gap))] pb-section outline-none"
             >
               {children}
             </main>
