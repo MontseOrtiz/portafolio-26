@@ -62,6 +62,22 @@
     "pause": "Pausar presentación",
     "play": "Reanudar presentación"
   },
+  "about": {
+    "name": "Montse Ortiz",
+    "role": "Frontend / Full Stack Developer",
+    "bio": [
+      "Estudié negocios internacionales y terminé escribiendo código. Lo que empezó como curiosidad se volvió una carrera, y no he mirado atrás.",
+      "Desde entonces he trabajado en startups y como consultora en Xeleva, construyendo interfaces con React y Next.js y, cuando el proyecto lo pide, también el backend.",
+      "En Xeleva además mentoro a desarrolladores junior. Explicar en voz alta es la forma más rápida que conozco de descubrir si de verdad entiendo algo.",
+      "Aprendo rápido: hice un sitio WordPress a medida en una semana, y prefiero decir \"esto todavía no lo sé\" que fingir.",
+      "Fuera del trabajo hago CrossFit, y así nació WOD Tracker: me cansé de copiar el pizarrón a mano."
+    ],
+    "contact": "Contacto",
+    "cv": "CV",
+    "avatarAlt": "Ilustración de Montse sentada con las piernas cruzadas y una laptop llena de stickers de tecnología, con un pug mordiendo su agujeta y un cocker spaniel a su lado",
+    "placeholder": "placeholder",
+    "collage": "Collage de imágenes sobre Montse"
+  },
   "nav": {
     "name": "Montse Ortiz",
     "role": "Frontend / Full Stack Developer",
