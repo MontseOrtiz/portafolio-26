@@ -4,7 +4,16 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 
 // Token `reveal`: fade + subida de --reveal-distance al entrar en pantalla, una sola vez.
 // Los estilos viven en globals.css (.reveal); con prefers-reduced-motion no hay animación.
-export function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function Reveal({
+  children,
+  className = "",
+  delay = 0,
+}: {
+  children: ReactNode;
+  className?: string;
+  /** Retraso en ms para entradas escalonadas (múltiplos de `stagger`). */
+  delay?: number;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
 
@@ -24,7 +33,12 @@ export function Reveal({ children, className = "" }: { children: ReactNode; clas
   }, []);
 
   return (
-    <div ref={ref} data-shown={shown} className={`reveal ${className}`}>
+    <div
+      ref={ref}
+      data-shown={shown}
+      className={`reveal ${className}`}
+      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+    >
       {children}
     </div>
   );
