@@ -15,6 +15,11 @@
   "intro": {
     "text": "Soy desarrolladora Frontend / Full Stack y cambié de carrera al código. He construido productos en startups y hecho consultoría en Xeleva, donde también mentoro a juniors. Lo que me distingue es lo rápido que aprendo: hice un sitio WordPress a medida en una semana."
   },
+  "tools": {
+    "title": "Herramientas con las que construyo",
+    "support": "React y Next.js son mi base, pero aprendo lo que el proyecto necesite.",
+    "listLabel": "Herramientas"
+  },
   "projects": {
     "label": "Trabajo seleccionado",
     "title": "Proyectos",
