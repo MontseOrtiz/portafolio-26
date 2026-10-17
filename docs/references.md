@@ -1,27 +1,29 @@
 # references.md — Portafolio 26
 
-Máximo 6 sitios: una base para el look global y el resto para secciones concretas. Las referencias por sección aportan layout e interacción; los colores, fuentes y medidas siempre salen de tokens.md (es decir, del sitio base).
+Máximo 7 sitios: una base para el look global y el resto para secciones concretas. Las referencias por sección aportan layout e interacción; los colores, fuentes y medidas siempre salen de tokens.md (es decir, del sitio base).
 
-Moodboard: docs/design/moodboard.png (collage de las referencias armado por Montse).
+Moodboards en docs/design/: moodboard-palette.png (colores y patrones), moodboard-home.png, moodboard-case-study.png y moodboard-about.png (collages de las referencias armados por Montse).
 
 | Rol | Sitio (URL) | Qué tomamos | Qué NO tomamos |
 | --- | --- | --- | --- |
 | **Base (look global)** | https://palette.supply/ | Estructura de color (fondo, superficies para mockups, texto, un color de acción), combinación de títulos grotescos con texto y etiquetas en monoespaciada, etiquetas pequeñas en mayúsculas, tarjetas con mockup sobre una superficie de color, botones discretos con radio pequeño, espaciados amplios, transiciones cortas | Su paleta (se usa una propia, ver tokens.md), textos, imágenes, logo, fuentes de pago (se sustituyen por Google Fonts parecidas), hero con foto de ambiente a pantalla completa, banner de promoción, elementos de tienda (carrito, precios, licencias) |
 | Nav | https://wearebou.com/ | Barra contenida en una tarjeta con bordes redondeados: logo a la izquierda, links al centro, botón "Contact" con ícono de flecha a la derecha | Sus colores, fuentes y logo |
-| Hero | https://jsandrieu.com/ | Nombre gigante a todo el ancho, una imagen pequeña arriba del nombre, fondo gris claro, mucho espacio en blanco; opcional: bloque de media que se expande al hacer scroll | Sus fotos y fuentes; el hero conserva rol, propuesta y 2 botones además del nombre |
+| Hero | https://jsandrieu.com/ | Nombre + rol a la izquierda del nav, animación de entrada (nav que baja, nombre que sube desde abajo, imagen después), nombre gigante a todo el ancho, una imagen pequeña arriba del nombre, fondo gris claro, mucho espacio en blanco; opcional: bloque de media que se expande al hacer scroll | Sus fotos y fuentes; el hero conserva rol y propuesta además del nombre |
 | Sobre mí | https://www.kodonishimura.com/profile/ | Dos columnas: bio en párrafos cortos a la izquierda con nombre/rol en negritas arriba; a la derecha un collage de imágenes inclinadas y encimadas con pequeños elementos decorativos; abajo dos botones tipo píldora (uno relleno, uno con borde) | Sus fotos, colores, fuentes y contenido |
+| Tools | https://perspectivecards.framer.website/ | Tarjetas inclinadas en perspectiva flotando alrededor de una frase central; en móvil, bento grid desigual | Sus fotos, textos y colores |
 | Proyectos | https://wschupfer.com/los-angeles/ | Tira horizontal de imágenes de distintos tamaños y alturas escalonadas, con scroll o arrastre lateral e indicador para seguir bajando | Sus fotos, el contenido de agencia, el formulario |
-| Caso de estudio (/projects/[slug]) | https://wearebou.com/cases/rovio | Encabezado con nombre del proyecto a la izquierda y logo/ícono a la derecha, separados por una línea; dos columnas: resumen + lista con íconos de check (para el stack) a la izquierda y media grande a la derecha; media a todo el ancho entre bloques; bloques de dos columnas con título a la izquierda y párrafo a la derecha; cuadrícula con bordes finos | Sus colores y fuentes, la sección de logos de medios, el índice de navegación sobre la imagen |
-| CV (/cv) | https://cv.iamrob.in/en | La hoja como folder sobre fondo oscuro, con pestañas laterales tipo separador (en el ejemplo, para cambiar de idioma); layout en columnas: etiqueta de sección a la izquierda, puesto/empresa/fechas en medio, descripción a la derecha; divisores finos entre secciones; listas con flechas; datos de contacto en columnas arriba | Sus colores, la foto con clip (opcional), su contenido |
+| Caso de estudio (/projects/[slug]) | https://jsandrieu.com/04-nextprize + https://wearebou.com/cases/rovio | De jsandrieu: media grande arriba, texto + media en dos columnas, bloques de media a todo el ancho, franja oscura con pantallas móviles, Previous / Next. De Bou: cuadrícula con bordes finos (para el stack) | Sus fotos, colores y fuentes, la sección de logos de medios |
+| CV (en /about) | https://cv.iamrob.in/en | La hoja como folder sobre fondo oscuro, con pestañas laterales tipo separador (en el ejemplo, para cambiar de idioma); layout en columnas: etiqueta de sección a la izquierda, puesto/empresa/fechas en medio, descripción a la derecha; divisores finos entre secciones; listas con flechas; datos de contacto en columnas arriba | Sus colores, la foto con clip (opcional), su contenido |
 
-(Nav y caso de estudio vienen del mismo sitio, así que son 6 sitios en total.)
+(Bou y jsandrieu se usan en dos secciones cada uno, así que son 7 sitios en total.)
 
 ## Notas de las referencias por sección
 
 - Imágenes personales: el hero (imagen pequeña) y el collage de Sobre mí no tienen que ser fotos de Montse. Pueden ser capturas de sus apps, el pizarrón de CrossFit, libros, su espacio de trabajo o una ilustración/avatar.
 - Hero: si se usa la media que se expande al hacer scroll, lleva póster optimizado para no afectar el LCP; con prefers-reduced-motion se muestra fija.
 - Proyectos: con 3 proyectos la tira puede verse vacía; se puede alternar el mockup principal con 1–2 capturas por proyecto. Cada imagen lleva nombre y stack (estilo de etiqueta del sitio base) y abre su caso de estudio. Debe poder recorrerse con teclado y en móvil con swipe.
-- Caso de estudio: la lista con checks se usa para el stack; la cuadrícula con bordes puede servir para resultados o capturas.
+- Caso de estudio: la cuadrícula con bordes finos se usa para el stack.
+- Patrones: toldo de rayas festoneado y gingham, tomados del Palette Preview (ver tokens.md).
 - CV: se toma tal cual el concepto del ejemplo: pestañas de idioma y todo el CV en una sola hoja que se lee con scroll (ver sections/cv.md).
 - Bordes redondeados: el moodboard mezcla esquinas rectas (base) y redondeadas (nav de Bou, botones píldora). El radio final se define en tokens.md.
 
