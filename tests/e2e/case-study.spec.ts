@@ -88,6 +88,57 @@ test.describe("layout", () => {
   });
 });
 
+test.describe("secondary media", () => {
+  const group = (page: import("@playwright/test").Page) => page.getByRole("group", { name: "Project screens" });
+
+  test("is 10% shorter than the old 4:5 and holds at least 6 images", async ({ page }) => {
+    await page.goto("/en/projects/wod-tracker");
+    const box = (await group(page).boundingBox())!;
+    // 4:5 -> altura x 0.9 => ancho / alto = 4 / 4.5
+    expect(box.width / box.height).toBeCloseTo(4 / 4.5, 2);
+    expect(await group(page).locator("[data-slide]").count()).toBeGreaterThanOrEqual(6);
+  });
+
+  test("loops: left, bottom, right, top, left... and wraps to the first image", async ({ page }) => {
+    await page.clock.install();
+    await page.goto("/en/projects/wod-tracker");
+    const media = group(page);
+    await expect(media).toHaveAttribute("data-current", "0");
+    // La primera imagen se muestra completa, sin animación de entrada.
+    await expect(media.locator("[data-slide='0']")).not.toHaveClass(/cycle-in/);
+
+    const expected = ["left", "bottom", "right", "top", "left", "bottom"];
+    for (const [i, direction] of expected.entries()) {
+      await page.clock.fastForward(4100);
+      await expect(media).toHaveAttribute("data-current", String((i + 1) % 6));
+      await expect(media.locator(`[data-slide='${(i + 1) % 6}']`)).toHaveClass(new RegExp(`cycle-in-${direction}`));
+    }
+  });
+
+  test("pause button stops the loop and play resumes it", async ({ page }) => {
+    await page.clock.install();
+    await page.goto("/en/projects/wod-tracker");
+    const media = group(page);
+    await page.getByRole("button", { name: "Pause slideshow" }).click();
+    await page.clock.fastForward(12000);
+    await expect(media).toHaveAttribute("data-current", "0");
+    await page.getByRole("button", { name: "Play slideshow" }).click();
+    await page.clock.fastForward(4100);
+    await expect(media).toHaveAttribute("data-current", "1");
+  });
+
+  test.describe("reduced motion", () => {
+    test.use({ reducedMotion: "reduce" });
+    test("stays on the first image, no controls", async ({ page }) => {
+      await page.clock.install();
+      await page.goto("/en/projects/wod-tracker");
+      await page.clock.fastForward(20000);
+      await expect(group(page)).toHaveAttribute("data-current", "0");
+      await expect(page.getByRole("button", { name: /slideshow/ })).toHaveCount(0);
+    });
+  });
+});
+
 test.describe("motion", () => {
   test("main media has no entrance animation; blocks reveal on scroll", async ({ page }) => {
     await page.goto("/en/projects/wod-tracker");
