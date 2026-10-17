@@ -1,6 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { Hero } from "@/components/sections/hero";
 import { Intro } from "@/components/sections/intro";
+import { Projects } from "@/components/sections/projects";
 import { HeroMediaLoader } from "@/components/sections/hero-media-loader";
 
 type Props = {
@@ -23,7 +24,7 @@ export default async function HomePage({ params }: Props) {
         <Intro />
       </div>
 
-      <div id="work" className="scroll-mt-24" />
+      <Projects />
       <div id="about" className="scroll-mt-24" />
       <div id="contact" className="scroll-mt-24" />
     </>
