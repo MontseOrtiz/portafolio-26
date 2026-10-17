@@ -19,11 +19,10 @@ Al trabajar una sección: leer docs/design/sections/<seccion>.md.
 - next-themes para light/dark (respeta prefers-color-scheme y recuerda la elección)
 
 ## Estructura
-- app/ → rutas (/, /projects/[slug], /cv), en ambos idiomas
+- app/ → rutas (/, /about, /projects/[slug]), en ambos idiomas
 - components/sections/ → una sección por archivo
 - components/ui/ → componentes base
 - content/ → textos y MDX por idioma (nunca hardcodear copy en componentes)
-
 
 ## Archivos de media
 - Imágenes en public/images/<sección>/; proyectos en public/images/projects/<slug>/ (mismo slug que el MDX).
@@ -39,6 +38,9 @@ Al trabajar una sección: leer docs/design/sections/<seccion>.md.
 - Videos: sin audio, en loop, comprimidos, con póster y carga diferida; con prefers-reduced-motion se muestra solo el póster.
 - Una sección por tarea; no tocar otras secciones.
 - Commit al terminar cada sección.
+
+## Git
+- Nunca agregar Co-Authored-By ni ningún trailer de atribución AI a commits o PRs.   
 
 ## Terminado =
 - npm run build, lint y typecheck sin errores
