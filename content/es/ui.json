@@ -15,6 +15,33 @@
   "intro": {
     "text": "Soy desarrolladora Frontend / Full Stack y cambié de carrera al código. He construido productos en startups y hecho consultoría en Xeleva, donde también mentoro a juniors. Lo que me distingue es lo rápido que aprendo: hice un sitio WordPress a medida en una semana."
   },
+  "projects": {
+    "label": "Trabajo seleccionado",
+    "title": "Proyectos",
+    "listLabel": "Proyectos",
+    "previous": "Proyecto anterior",
+    "next": "Proyecto siguiente",
+    "stack": "Stack",
+    "caseStudy": "Caso de estudio",
+    "liveDemo": "Demo en vivo",
+    "newTab": "se abre en una pestaña nueva",
+    "concept": "Proyecto conceptual",
+    "placeholder": "placeholder",
+    "items": {
+      "book-diary": {
+        "name": "Book Diary",
+        "demonstrates": "CRUD completo sobre un modelo de datos en Supabase, integración con la API de Open Library y página de estadísticas."
+      },
+      "wod-tracker": {
+        "name": "WOD Tracker",
+        "demonstrates": "Gemini convierte la foto del pizarrón en datos; mobile first, Lighthouse 100/95/100."
+      },
+      "destino-china": {
+        "name": "Destino China",
+        "demonstrates": "Sitio completo en WordPress/Elementor con SEO on-page y copy orientado a conversión."
+      }
+    }
+  },
   "nav": {
     "name": "Montse Ortiz",
     "role": "Frontend / Full Stack Developer",

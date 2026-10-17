@@ -15,6 +15,33 @@
   "intro": {
     "text": "I'm a Frontend / Full Stack developer who switched careers into code. I've built products at startups and consulted at Xeleva, where I also mentor juniors. What sets me apart is how fast I learn: I built a custom WordPress site in a week."
   },
+  "projects": {
+    "label": "Selected work",
+    "title": "Projects",
+    "listLabel": "Projects",
+    "previous": "Previous project",
+    "next": "Next project",
+    "stack": "Stack",
+    "caseStudy": "Case study",
+    "liveDemo": "Live demo",
+    "newTab": "opens in a new tab",
+    "concept": "Concept project",
+    "placeholder": "placeholder",
+    "items": {
+      "book-diary": {
+        "name": "Book Diary",
+        "demonstrates": "Full CRUD on a Supabase data model, Open Library API integration and a stats page."
+      },
+      "wod-tracker": {
+        "name": "WOD Tracker",
+        "demonstrates": "Gemini turns a photo of the whiteboard into data; mobile first, Lighthouse 100/95/100."
+      },
+      "destino-china": {
+        "name": "Destino China",
+        "demonstrates": "Full WordPress/Elementor site with on-page SEO and conversion-focused copy."
+      }
+    }
+  },
   "nav": {
     "name": "Montse Ortiz",
     "role": "Frontend / Full Stack Developer",
