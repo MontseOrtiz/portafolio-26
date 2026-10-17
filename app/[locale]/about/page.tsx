@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { About } from "@/components/sections/about";
+import { Cv } from "@/components/sections/cv";
+import type { Locale } from "@/i18n/routing";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -18,11 +20,14 @@ export default async function AboutPage({ params }: Props) {
 
   return (
     <>
-      <About />
+      <div className="print:hidden">
+        <About />
+      </div>
 
-      {/* TODO: CV (sección 8, cv.md) y footer de cierre con "Selected work →" (sección 10). */}
-      <div id="cv" className="scroll-mt-24" />
-      <div id="contact" className="scroll-mt-24" />
+      <Cv locale={locale as Locale} />
+
+      {/* TODO: footer de cierre con "Selected work →" (sección 10, footer.md). */}
+      <div id="contact" className="scroll-mt-24 print:hidden" />
     </>
   );
 }

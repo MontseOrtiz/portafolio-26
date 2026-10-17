@@ -57,7 +57,7 @@ export default async function LocaleLayout({ children, params }: Props) {
           <NextIntlClientProvider locale={locale} messages={messages}>
             <a
               href="#content"
-              className="text-small sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:border focus:border-border focus:bg-surface focus:px-6 focus:py-3 focus:text-text"
+              className="text-small sr-only print:hidden focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:border focus:border-border focus:bg-surface focus:px-6 focus:py-3 focus:text-text"
             >
               {t("skip")}
             </a>
@@ -65,7 +65,7 @@ export default async function LocaleLayout({ children, params }: Props) {
             <main
               id="content"
               tabIndex={-1}
-              className="mx-auto flex w-full max-w-page flex-1 flex-col px-gutter pt-[calc(82px+var(--spacing-gap))] pb-section outline-none"
+              className="mx-auto flex w-full max-w-page flex-1 flex-col px-gutter pt-[calc(82px+var(--spacing-gap))] pb-section outline-none print:max-w-none print:px-0 print:pt-0 print:pb-0"
             >
               {children}
             </main>
