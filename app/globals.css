@@ -23,6 +23,7 @@
   --token-on-powder: #173b64;
   --token-sand: #76623f;
   --token-cherry: #9b2c33;
+  --token-on-media: #fffcf2;
 }
 
 .dark {
@@ -43,6 +44,7 @@
   --token-on-powder: #fbf4da;
   --token-sand: #d2be92;
   --token-cherry: #f0959b;
+  --token-on-media: #fffcf2;
 }
 
 @theme inline {
@@ -61,6 +63,10 @@
   --color-on-powder: var(--token-on-powder);
   --color-sand: var(--token-sand);
   --color-cherry: var(--token-cherry);
+  --color-on-media: var(--token-on-media);
+
+  /* scrim: degradado para leer texto sobre media (igual en light y dark). */
+  --background-image-scrim: linear-gradient(to top, rgba(11, 26, 46, 0.8), transparent 50%);
 
   --font-sans: var(--font-geist-sans), system-ui, -apple-system, "Segoe UI",
     sans-serif;
@@ -163,6 +169,7 @@
   }
 
   body {
+    overflow-x: clip;
     background-color: var(--token-bg);
     color: var(--token-text);
     font-size: var(--text-body);
@@ -302,6 +309,20 @@
 .intro-reveal-text {
   animation: intro-reveal var(--intro-reveal-duration) var(--ease-token)
     calc(var(--intro-delay) + var(--delay-stagger) * 2) both;
+}
+
+/*
+  Media debajo del hero. En escritorio mide 16:9 y se expande con clip-path:
+  --reveal (0 → 1, según el scroll desde Motion) reduce la inserción lateral desde el
+  ancho de container hasta el ancho de la ventana. En móvil no se expande (4:5).
+*/
+@media (min-width: 768px) {
+  .hero-media {
+    --hero-media-inset: calc(
+      (1 - var(--reveal, 0)) * (100vw - min(100vw, var(--container-page)) + 2 * var(--spacing-gutter)) / 2
+    );
+    clip-path: inset(0 var(--hero-media-inset));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

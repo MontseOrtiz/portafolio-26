@@ -4,8 +4,8 @@ const LOCALES = ["en", "es"] as const;
 const SCHEMES = ["light", "dark"] as const;
 
 const copy = {
-  en: { seeProjects: "See projects", contact: "Contact", imageAlt: "Illustration of Montse coding on her laptop, sitting on a browser window with two dogs" },
-  es: { seeProjects: "Ver proyectos", contact: "Contacto", imageAlt: "Ilustración de Montse programando en su laptop, sentada sobre una ventana de navegador con dos perritos" },
+  en: { imageAlt: "Illustration of Montse coding on her laptop, sitting on a browser window with two dogs" },
+  es: { imageAlt: "Ilustración de Montse programando en su laptop, sentada sobre una ventana de navegador con dos perritos" },
 } as const;
 
 // Espera fuentes y animaciones de entrada (nav, hero) antes de capturar.
@@ -41,35 +41,103 @@ for (const locale of LOCALES) {
   }
 }
 
-test.describe("hero content and links", () => {
+test.describe("hero content", () => {
   for (const locale of LOCALES) {
     test(`name is the only h1 and image has its alt (${locale})`, async ({ page }) => {
       await page.goto(`/${locale}`);
       await expect(page.getByRole("heading", { level: 1 })).toHaveText("Montse Ortiz");
       await expect(page.locator("#hero img")).toHaveAttribute("alt", copy[locale].imageAlt);
     });
-
-    test(`buttons point to #work and #contact (${locale})`, async ({ page }) => {
-      await page.goto(`/${locale}`);
-
-      // Acotado al hero: el nav también tiene un link "Contact".
-      const hero = page.locator("#hero");
-      const projects = hero.getByRole("link", { name: copy[locale].seeProjects });
-      await expect(projects).toHaveAttribute("href", `/${locale}#work`);
-
-      const contact = hero.getByRole("link", { name: copy[locale].contact });
-      await expect(contact).toHaveAttribute("href", `/${locale}#contact`);
-
-      await projects.click();
-      await expect(page).toHaveURL(new RegExp(`/${locale}#work$`));
-      await expect(page.locator("#work")).toBeAttached();
-
-      await page.goto(`/${locale}`);
-      await contact.click();
-      await expect(page).toHaveURL(new RegExp(`/${locale}#contact$`));
-      await expect(page.locator("#contact")).toBeAttached();
-    });
   }
+
+  test("hero has no CTA buttons", async ({ page }) => {
+    await page.goto("/en");
+    await expect(page.locator("#hero a, #hero button")).toHaveCount(0);
+  });
+
+  test("first screen fills the window height minus the nav and its gap", async ({ page }, testInfo) => {
+    await page.goto("/en");
+    const hero = await page.locator("#hero").boundingBox();
+    const viewport = page.viewportSize()!;
+    const gap = testInfo.project.name === "mobile" ? 16 : 24;
+    // 82px = altura del nav; el contenido puede pasar del mínimo, nunca quedarse corto.
+    expect(hero!.height).toBeGreaterThanOrEqual(viewport.height - 82 - gap - 1);
+  });
+});
+
+test.describe("hero media", () => {
+  test("links to the WOD Tracker case study", async ({ page }) => {
+    await page.goto("/en");
+    const link = page.locator(".hero-media a");
+    await expect(link).toHaveAttribute("href", "/en/projects/wod-tracker");
+    await expect(link).toContainText("WOD Tracker");
+  });
+
+  test("on desktop it grows from the container width to the full window while scrolling", async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "desktop", "expansion is desktop-only");
+    await page.goto("/en");
+    const media = page.locator(".hero-media");
+    // Inserción lateral visible: (ventana - container) / 2 al inicio y 0 al final.
+    const inset = () => media.evaluate((el) => {
+      const match = /inset\(0px(?: ([\d.]+)px)?/.exec(getComputedStyle(el).clipPath);
+      return match ? Number(match[1] ?? 0) : NaN;
+    });
+    const edge = (page.viewportSize()!.width - (await page.locator("main").boundingBox())!.width) / 2 + 1;
+    expect(await inset()).toBeGreaterThan(edge - 2);
+
+    await media.evaluate((el) => el.scrollIntoView({ block: "center" }));
+    await expect.poll(inset).toBeLessThan(1);
+
+    // La expansión no debe crear scroll horizontal.
+    const overflows = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
+    expect(overflows).toBe(false);
+  });
+
+  test("on mobile it is 4:5 and does not expand", async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "mobile", "mobile only");
+    await page.goto("/en");
+    const media = page.locator(".hero-media");
+    await media.evaluate((el) => el.scrollIntoView({ block: "center" }));
+    const box = (await media.boundingBox())!;
+    expect(box.width).toBeLessThan(page.viewportSize()!.width);
+    expect(Math.round((box.height / box.width) * 100)).toBe(125);
+  });
+
+  test.describe("reduced motion", () => {
+    test.use({ reducedMotion: "reduce" });
+
+    test("stays at container width and does not move", async ({ page }, testInfo) => {
+      await page.goto("/en");
+      const media = page.locator(".hero-media");
+      await media.evaluate((el) => el.scrollIntoView({ block: "center" }));
+      const box = (await media.boundingBox())!;
+      if (testInfo.project.name === "desktop") {
+        // Sigue recortada a container: la inserción lateral no baja de (ventana - container) / 2.
+        const inset = await media.evaluate((el) => {
+          const match = /inset\(0px(?: ([\d.]+)px)?/.exec(getComputedStyle(el).clipPath);
+          return match ? Number(match[1] ?? 0) : NaN;
+        });
+        const main = (await page.locator("main").boundingBox())!;
+        expect(inset).toBeGreaterThan((page.viewportSize()!.width - main.width) / 2 - 2);
+        expect(box.width).toBeGreaterThan(0);
+      }
+    });
+
+    for (const locale of ["en", "es"] as const) {
+      test(`screenshot of the media, reduced motion (${locale})`, async ({ page }) => {
+        await page.goto(`/${locale}`);
+        await ready(page);
+        const media = page.locator(".hero-media");
+        await media.evaluate((el) => el.scrollIntoView({ block: "center" }));
+        await ready(page);
+        // El nav fijo taparía la parte superior de la media en el centro de la ventana.
+        await page.addStyleTag({ content: "header { visibility: hidden !important; }" });
+        const box = (await media.boundingBox())!;
+        const image = await page.screenshot({ animations: "disabled", clip: box });
+        expect(image).toMatchSnapshot(`hero-media-reduced-${locale}.png`, { maxDiffPixelRatio: 0.02 });
+      });
+    }
+  });
 });
 
 test("hero does not overflow horizontally", async ({ page }) => {
