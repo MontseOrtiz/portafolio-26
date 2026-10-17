@@ -115,5 +115,20 @@
     "download": "Download PDF",
     "updated": "Last updated",
     "newTab": "opens in a new tab"
+  },
+  "contact": {
+    "label": "Contact",
+    "title": "Let's work together",
+    "invite": "I'm available for remote Frontend / Full Stack work. Write me and tell me what you're building.",
+    "emailLabel": "Email",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "copyAria": "Copy email address",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "links": "Links",
+    "downloadPdf": "Download PDF",
+    "viewCv": "View CV",
+    "newTab": "opens in a new tab"
   }
 }

@@ -115,5 +115,20 @@
     "download": "Descargar PDF",
     "updated": "Última actualización",
     "newTab": "se abre en una pestaña nueva"
+  },
+  "contact": {
+    "label": "Contacto",
+    "title": "Trabajemos juntos",
+    "invite": "Estoy disponible para trabajo remoto como Frontend / Full Stack. Escríbeme y cuéntame qué estás construyendo.",
+    "emailLabel": "Correo",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "copyAria": "Copiar correo",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "links": "Enlaces",
+    "downloadPdf": "Descargar PDF",
+    "viewCv": "Ver CV",
+    "newTab": "se abre en una pestaña nueva"
   }
 }

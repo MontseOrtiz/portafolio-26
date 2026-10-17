@@ -7,12 +7,13 @@ Contenido:
 3. Una línea de invitación (disponibilidad para trabajo remoto)
 4. Correo como CTA grande con botón "Copy"
 5. Links: LinkedIn, GitHub
-6. CV: "Download PDF" (versión según el idioma) y "View CV" (página /cv)
+6. CV: "Download PDF" (versión según el idioma) y "View CV" (lleva a /about#cv)
 Layout desktop: bloque dentro del `container` con fondo `accent`, texto `on-accent` y `radius-md`, padding `section-lg`. Etiqueta, título e invitación arriba a la izquierda; correo en una fila propia; abajo, links a la izquierda y botones de CV a la derecha.
 Layout móvil: todo apilado; el correo puede partir en dos líneas sin desbordar; botones de CV a todo el ancho.
 Tipografía: etiqueta en `label`; título en `heading`; invitación en `body-lg`; correo en `heading` con subrayado; links y botones en `small`.
 Espaciado: `gap` entre filas; `gap-sm` entre links y entre botones.
 Color: fondo `accent`, texto `on-accent`. Botón "Copy" y botones de CV con borde 1px `on-accent`, `radius-full`; el principal ("Download PDF") con fondo `on-accent` y texto `accent`.
+Ubicación: en el home, tras Proyectos; mientras no exista el footer de cierre (footer.md) lleva el ancla `#contact`.
 Interacción:
 - El correo es un link `mailto:`.
 - "Copy" copia el correo y muestra "Copied!" durante 2 s, anunciado con `aria-live="polite"`.
