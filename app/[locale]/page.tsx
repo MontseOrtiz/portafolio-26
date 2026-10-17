@@ -1,6 +1,8 @@
 import { setRequestLocale } from "next-intl/server";
 import { Hero } from "@/components/sections/hero";
 import { Intro } from "@/components/sections/intro";
+import { Contact } from "@/components/sections/contact";
+import type { Locale } from "@/i18n/routing";
 import { Tools } from "@/components/sections/tools";
 import { Projects } from "@/components/sections/projects";
 import { HeroMediaLoader } from "@/components/sections/hero-media-loader";
@@ -31,7 +33,9 @@ export default async function HomePage({ params }: Props) {
 
       <Projects />
       <div id="about" className="scroll-mt-24" />
-      <div id="contact" className="scroll-mt-24" />
+      <div className="mt-gap">
+        <Contact locale={locale as Locale} />
+      </div>
     </>
   );
 }
