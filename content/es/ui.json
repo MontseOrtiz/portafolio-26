@@ -12,6 +12,9 @@
     "mediaTitle": "WOD Tracker",
     "mediaPlaceholder": "placeholder"
   },
+  "intro": {
+    "text": "Soy desarrolladora Frontend / Full Stack y cambié de carrera al código. He construido productos en startups y hecho consultoría en Xeleva, donde también mentoro a juniors. Lo que me distingue es lo rápido que aprendo: hice un sitio WordPress a medida en una semana."
+  },
   "nav": {
     "name": "Montse Ortiz",
     "role": "Frontend / Full Stack Developer",
