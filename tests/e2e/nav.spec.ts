@@ -138,9 +138,9 @@ test.describe("nav content and layout", () => {
     await page.goto("/en");
     await openMenuIfMobile(page, "en", testInfo.project.name);
     const main = page.getByRole("navigation", { name: "Main navigation" });
-    await expect(main.getByRole("link", { name: "About" })).toHaveAttribute("href", "/en#about");
+    await expect(main.getByRole("link", { name: "About" })).toHaveAttribute("href", "/en/about");
     await expect(main.getByRole("link", { name: "Work" })).toHaveAttribute("href", "/en#work");
-    await expect(main.getByRole("link", { name: "CV" })).toHaveAttribute("href", "/en/cv");
+    await expect(main.getByRole("link", { name: "CV" })).toHaveAttribute("href", "/en/about#cv");
     await expect(main.getByRole("link", { name: "Contact" })).toHaveCount(0);
   });
 

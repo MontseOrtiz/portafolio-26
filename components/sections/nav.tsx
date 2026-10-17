@@ -10,10 +10,9 @@ import { Link, usePathname } from "@/i18n/navigation";
 
 const DESKTOP_QUERY = "(min-width: 768px)";
 
-const sectionLinks = [
-  { id: "about", label: "about" },
-  { id: "work", label: "work" },
-] as const;
+// Secciones que el nav marca como activas según cuál esté visible.
+// Home observa #work; /about observa #cv (y marca About cuando #cv no está a la vista).
+const observedIds = { "/": ["work"], "/about": ["cv"] } as const;
 
 const linkClass = (active: boolean) =>
   [
@@ -27,7 +26,7 @@ export function Nav() {
   const t = useTranslations("nav");
   const pathname = usePathname();
   const onHome = pathname === "/";
-  const onCv = pathname === "/cv";
+  const onAbout = pathname === "/about";
 
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -73,11 +72,11 @@ export function Nav() {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [open]);
 
-  // Marca la sección visible en la home.
+  // Marca la sección visible (Work en la home, CV en /about).
   useEffect(() => {
-    if (!onHome) return;
-    const elements = sectionLinks
-      .map((s) => document.getElementById(s.id))
+    const ids = onHome ? observedIds["/"] : onAbout ? observedIds["/about"] : [];
+    const elements = ids
+      .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => el !== null);
     if (elements.length === 0) return;
 
@@ -92,9 +91,11 @@ export function Nav() {
     );
     elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [onHome]);
+  }, [onHome, onAbout]);
 
-  const isActive = (id: string) => onHome && activeId === id;
+  const workActive = onHome && activeId === "work";
+  const cvActive = onAbout && activeId === "cv";
+  const aboutActive = onAbout && !cvActive;
 
   return (
     <header className="nav-enter fixed inset-x-0 top-4 z-40">
@@ -129,21 +130,26 @@ export function Nav() {
             className={`${open ? "nav-panel flex" : "hidden"} absolute inset-x-0 top-full mt-2 flex-col gap-gap rounded-md border border-border bg-bg p-gap md:contents`}
           >
             <nav aria-label={t("main")} className="flex flex-col gap-gap md:flex-row md:justify-center">
-              {sectionLinks.map((s) => (
-                <Link
-                  key={s.id}
-                  href={`/#${s.id}`}
-                  className={linkClass(isActive(s.id))}
-                  aria-current={isActive(s.id) ? "true" : undefined}
-                  onClick={() => setOpen(false)}
-                >
-                  {t(s.label)}
-                </Link>
-              ))}
               <Link
-                href="/cv"
-                className={linkClass(onCv)}
-                aria-current={onCv ? "page" : undefined}
+                href="/about"
+                className={linkClass(aboutActive)}
+                aria-current={aboutActive ? "page" : undefined}
+                onClick={() => setOpen(false)}
+              >
+                {t("about")}
+              </Link>
+              <Link
+                href="/#work"
+                className={linkClass(workActive)}
+                aria-current={workActive ? "true" : undefined}
+                onClick={() => setOpen(false)}
+              >
+                {t("work")}
+              </Link>
+              <Link
+                href="/about#cv"
+                className={linkClass(cvActive)}
+                aria-current={cvActive ? "true" : undefined}
                 onClick={() => setOpen(false)}
               >
                 {t("cv")}
@@ -153,8 +159,9 @@ export function Nav() {
             <div className="flex w-full flex-wrap items-center gap-gap-sm md:w-auto md:flex-1 md:justify-end">
               <LanguageSwitch />
               <ThemeToggle />
+              {/* En el home lleva al footer de cierre; en otras páginas, al footer de esa página. */}
               <Link
-                href="/#contact"
+                href={onHome ? "/#contact" : { pathname, hash: "contact" }}
                 onClick={() => setOpen(false)}
                 className="text-small bg-accent text-on-accent hover:bg-pop hover:text-on-pop transition-colors duration-(--duration-fast) ease-token inline-flex h-10 w-full items-center justify-between gap-gap-sm rounded-full pr-1 pl-gap md:w-auto"
               >
