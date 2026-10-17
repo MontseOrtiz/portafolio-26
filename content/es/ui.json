@@ -57,7 +57,10 @@
     "previous": "Anterior",
     "next": "Siguiente",
     "pagination": "Más proyectos",
-    "placeholder": "placeholder"
+    "placeholder": "placeholder",
+    "secondaryMedia": "Pantallas del proyecto",
+    "pause": "Pausar presentación",
+    "play": "Reanudar presentación"
   },
   "nav": {
     "name": "Montse Ortiz",

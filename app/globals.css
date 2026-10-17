@@ -334,6 +334,34 @@
   background-size: 28px 28px;
 }
 
+/* Media secundaria de los casos de estudio: la imagen nueva entra desde un lado (duration-slow). */
+@keyframes cycle-from-left {
+  from { translate: -100% 0; }
+  to { translate: 0 0; }
+}
+@keyframes cycle-from-right {
+  from { translate: 100% 0; }
+  to { translate: 0 0; }
+}
+@keyframes cycle-from-bottom {
+  from { translate: 0 100%; }
+  to { translate: 0 0; }
+}
+@keyframes cycle-from-top {
+  from { translate: 0 -100%; }
+  to { translate: 0 0; }
+}
+
+.cycle-in {
+  animation-duration: var(--duration-slow);
+  animation-timing-function: var(--ease-token);
+  animation-fill-mode: both;
+}
+.cycle-in-left { animation-name: cycle-from-left; }
+.cycle-in-right { animation-name: cycle-from-right; }
+.cycle-in-bottom { animation-name: cycle-from-bottom; }
+.cycle-in-top { animation-name: cycle-from-top; }
+
 /* Token reveal: bloques que aparecen una vez al entrar en pantalla (ver components/ui/reveal.tsx). */
 .reveal {
   opacity: 0;
@@ -364,6 +392,7 @@
   }
 
   .nav-enter,
+  .cycle-in,
   .hero-name,
   .intro-reveal,
   .intro-reveal-text {

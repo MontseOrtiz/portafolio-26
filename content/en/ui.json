@@ -57,7 +57,10 @@
     "previous": "Previous",
     "next": "Next",
     "pagination": "More projects",
-    "placeholder": "placeholder"
+    "placeholder": "placeholder",
+    "secondaryMedia": "Project screens",
+    "pause": "Pause slideshow",
+    "play": "Play slideshow"
   },
   "nav": {
     "name": "Montse Ortiz",

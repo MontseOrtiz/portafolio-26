@@ -13,6 +13,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { CaseStudyMedia } from "@/components/sections/case-study-media";
 import { Reveal } from "@/components/ui/reveal";
 import { Link } from "@/i18n/navigation";
 import { caseStudies } from "@/content/projects/case-studies";
@@ -33,6 +34,7 @@ const stackIcons: Record<string, LucideIcon> = {
 };
 
 const MOBILE_SCREENS = 4;
+const SECONDARY_IMAGES = 6;
 
 type Props = { slug: string; locale: Locale };
 
@@ -110,7 +112,14 @@ export async function CaseStudy({ slug, locale }: Props) {
             )}
           </div>
         </div>
-        <Placeholder label={t("placeholder")} className="aspect-[4/5] bg-surface md:col-span-7" />
+        {/* Bucle de al menos 6 imágenes; 10% menos alta que el 4:5 anterior (8:9). */}
+        <CaseStudyMedia
+          count={SECONDARY_IMAGES}
+          label={t("secondaryMedia")}
+          placeholder={t("placeholder")}
+          pause={t("pause")}
+          play={t("play")}
+        />
       </header>
 
       <div className="flex flex-col gap-section">
