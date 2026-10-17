@@ -12,7 +12,7 @@ Layout desktop: bloque dentro del `container`, fondo `surface`, `radius-md`. Fra
 Layout móvil: frase en dos líneas; fila de links apilada a la izquierda.
 Tipografía: frase en `display-xl`; links en `label`; copyright en `label` color `muted`.
 Espaciado: padding `section`; `gap` entre la frase y la fila; padding vertical de 16px en la fila.
-Color: fondo `surface`, texto `text`; patrón `pattern-awning` como franja superior del bloque en el home; corazón en `cherry` (único uso de `cherry` en el sitio).
+Color: fondo `surface`, texto `text`; patrón `pattern-awning` como franja superior del bloque en el home; corazón en `cherry` (`cherry` también se usa en la frase central de Tools).
 Interacción:
 - Hover en la frase y en los links: color `pop` (`duration-fast`).
 - LinkedIn y GitHub abren en pestaña nueva con ↗ y texto accesible "(opens in a new tab)".

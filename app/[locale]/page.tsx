@@ -1,6 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { Hero } from "@/components/sections/hero";
 import { Intro } from "@/components/sections/intro";
+import { Tools } from "@/components/sections/tools";
 import { Projects } from "@/components/sections/projects";
 import { HeroMediaLoader } from "@/components/sections/hero-media-loader";
 
@@ -22,6 +23,10 @@ export default async function HomePage({ params }: Props) {
 
       <div className="mt-gap">
         <Intro />
+      </div>
+
+      <div className="mt-gap">
+        <Tools />
       </div>
 
       <Projects />

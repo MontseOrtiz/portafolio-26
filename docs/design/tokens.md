@@ -22,7 +22,7 @@ Paleta propia: amarillo mantequilla y azul Yale, con acentos puntuales. Del siti
 | `powder` | #B7CDE8 | #33547F | Rayas, gingham, badges secundarios |
 | `on-powder` | #173B64 | #FBF4DA | Texto sobre `powder` |
 | `sand` | #76623F | #D2BE92 | Números, detalles cálidos |
-| `cherry` | #9B2C33 | #F0959B | Micro-detalle (corazón del footer); usar muy poco |
+| `cherry` | #9B2C33 | #F0959B | Micro-detalle (corazón del footer, frase central de Tools); usar muy poco |
 | `on-media` | #FFFCF2 | #FFFCF2 | Texto sobre imágenes o video (siempre sobre `scrim`) |
 | `scrim` | linear-gradient(to top, rgba(11,26,46,0.8), transparent 50%) | igual | Degradado para leer texto encima de media |
 
@@ -99,7 +99,7 @@ Patrones decorativos hechos solo con CSS (sin imágenes), del Palette Preview. S
 
 | Token | Valor | Uso |
 | --- | --- | --- |
-| `pattern-awning` | Rayas verticales de 32px alternando `accent-soft` y `bg` (dark: `accent-soft` y `powder`), 44px de alto, con borde inferior festoneado (círculos de 32px con mask) | Franja superior de Tools y del footer de cierre del home |
+| `pattern-awning` | Rayas verticales de 32px alternando `accent-soft` y `bg` (dark: `accent-soft` y `powder`), 44px de alto, con borde inferior festoneado (círculos de 32px con mask) | Franja superior de Tools y del footer de cierre del home. En Tools va arriba y espejada abajo, con las rayas en `pop` sobre `bg` (clases `pattern-awning-pop` y `pattern-awning-flip`) |
 | `pattern-gingham` | Cuadros de 28px: dos gradientes lineales cruzados de `powder` al 70% sobre `bg` | Fondo de mockups en casos de estudio, elementos del collage de Sobre mí |
 
 Las medidas propias de un componente (anchos de imagen, de tarjeta, offsets) se definen en su archivo de sección y siempre usan la escala de 4px.

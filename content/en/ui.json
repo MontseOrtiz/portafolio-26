@@ -15,6 +15,11 @@
   "intro": {
     "text": "I'm a Frontend / Full Stack developer who switched careers into code. I've built products at startups and consulted at Xeleva, where I also mentor juniors. What sets me apart is how fast I learn: I built a custom WordPress site in a week."
   },
+  "tools": {
+    "title": "Tools I build with",
+    "support": "React and Next.js are home base, but I pick up whatever the project needs.",
+    "listLabel": "Tools"
+  },
   "projects": {
     "label": "Selected work",
     "title": "Projects",
