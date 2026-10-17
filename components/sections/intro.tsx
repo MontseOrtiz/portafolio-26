@@ -13,7 +13,6 @@ export async function Intro() {
       <Reveal className="mx-auto max-w-measure text-center">
         <p className="text-body-lg text-text">{t("text")}</p>
       </Reveal>
-      <span aria-hidden="true" className="mx-auto mt-gap block size-2 rounded-full bg-pop" />
     </section>
   );
 }
