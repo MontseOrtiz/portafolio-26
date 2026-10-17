@@ -42,6 +42,26 @@
       }
     }
   },
+  "caseStudy": {
+    "concept": "Concept project",
+    "liveDemo": "Live demo",
+    "repo": "Repo",
+    "newTab": "opens in a new tab",
+    "roleLabel": "Role",
+    "problem": "Problem",
+    "myRole": "My role",
+    "decisions": "Technical decisions",
+    "result": "Result",
+    "stack": "Stack",
+    "mobileScreens": "Mobile screens",
+    "previous": "Previous",
+    "next": "Next",
+    "pagination": "More projects",
+    "placeholder": "placeholder",
+    "secondaryMedia": "Project screens",
+    "pause": "Pause slideshow",
+    "play": "Play slideshow"
+  },
   "nav": {
     "name": "Montse Ortiz",
     "role": "Frontend / Full Stack Developer",
