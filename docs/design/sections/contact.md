@@ -13,7 +13,7 @@ Layout móvil: todo apilado; el correo puede partir en dos líneas sin desbordar
 Tipografía: etiqueta en `label`; título en `heading`; invitación en `body-lg`; correo en `heading` con subrayado; links y botones en `small`.
 Espaciado: `gap` entre filas; `gap-sm` entre links y entre botones.
 Color: fondo `accent`, texto `on-accent`. Botón "Copy" y botones de CV con borde 1px `on-accent`, `radius-full`; el principal ("Download PDF") con fondo `on-accent` y texto `accent`.
-Ubicación: en el home, tras Proyectos; mientras no exista el footer de cierre (footer.md) lleva el ancla `#contact`.
+Ubicación: en el home, tras Proyectos; el ancla `#contact` la lleva el footer de cierre (footer.md); este bloque usa `#get-in-touch`.
 Interacción:
 - El correo es un link `mailto:`.
 - "Copy" copia el correo y muestra "Copied!" durante 2 s, anunciado con `aria-live="polite"`.

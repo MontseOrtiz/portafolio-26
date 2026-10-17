@@ -130,5 +130,17 @@
     "downloadPdf": "Download PDF",
     "viewCv": "View CV",
     "newTab": "opens in a new tab"
+  },
+  "footer": {
+    "homePhrase": "Let's work together",
+    "aboutPhrase": "Selected work",
+    "links": "Contact links",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "email": "Email",
+    "newTab": "opens in a new tab",
+    "rights": "© {year} Montse Ortiz",
+    "credit": "Made with <heart></heart> in Querétaro",
+    "love": "love"
   }
 }

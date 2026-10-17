@@ -25,13 +25,13 @@ function ExternalLink({ href, label, hint }: { href: string; label: string; hint
 }
 
 // TODO: título, invitación y correo finales en la fase 6 (brief.md, "Contenido final").
-// Mientras no exista el footer de cierre (sección 10), este bloque lleva el ancla #contact.
+// El ancla #contact (CTA del nav) la lleva el footer de cierre.
 export async function Contact({ locale }: { locale: Locale }) {
   const t = await getTranslations("contact");
   const hint = t("newTab");
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="scroll-mt-24">
+    <section id="get-in-touch" aria-labelledby="contact-title" className="scroll-mt-24">
       <Reveal className="flex flex-col gap-gap rounded-md bg-accent px-gutter py-section text-on-accent md:py-section-lg">
         <div className="flex max-w-measure flex-col gap-gap-sm">
           <p className="text-label">{t("label")}</p>
