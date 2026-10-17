@@ -4,15 +4,13 @@ const LOCALES = ["en", "es"] as const;
 
 for (const locale of LOCALES) {
   test.describe(`intro ${locale}`, () => {
-    test("centred paragraph, decorative dot, no links or buttons", async ({ page }) => {
+    test("centred paragraph, no decorative dot, links or buttons", async ({ page }) => {
       await page.goto(`/${locale}`);
       const intro = page.locator("#intro");
       await intro.scrollIntoViewIfNeeded();
       await expect(intro.locator("p")).toHaveCSS("text-align", "center");
       await expect(intro.locator("a, button")).toHaveCount(0);
-      const dot = intro.locator('span[aria-hidden="true"]');
-      await expect(dot).toHaveCSS("width", "8px");
-      await expect(dot).toHaveCSS("height", "8px");
+      await expect(intro.locator('[aria-hidden="true"]')).toHaveCount(0);
     });
 
     test("reveals once when entering the viewport", async ({ page }) => {
