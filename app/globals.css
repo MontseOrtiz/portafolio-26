@@ -331,11 +331,12 @@
   44px de alto, con borde inferior festoneado (círculos de 32px hechos con mask).
 */
 .pattern-awning {
+  --awning-a: var(--token-accent-soft);
   --awning-b: var(--token-bg);
   height: 44px;
   background-image: repeating-linear-gradient(
     90deg,
-    var(--token-accent-soft) 0 32px,
+    var(--awning-a) 0 32px,
     var(--awning-b) 32px 64px
   );
   mask-image:
@@ -349,6 +350,18 @@
 
 .dark .pattern-awning {
   --awning-b: var(--token-powder);
+}
+
+/* Variante de Tools: rayas en pop sobre bg (también en dark, donde pop contrasta con bg). */
+.pattern-awning-pop,
+.dark .pattern-awning-pop {
+  --awning-a: var(--token-pop);
+  --awning-b: var(--token-bg);
+}
+
+/* Franja inferior: el mismo patrón espejado, con el festón hacia el contenido. */
+.pattern-awning-flip {
+  transform: scaleY(-1);
 }
 
 /* Tarjetas de Tools: tilt-3d en escritorio (xl), recto con hover-scale al pasar el puntero. */

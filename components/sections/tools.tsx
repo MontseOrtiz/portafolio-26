@@ -67,7 +67,7 @@ export async function Tools() {
       aria-labelledby="tools-title"
       className="overflow-hidden rounded-md border border-border bg-bg"
     >
-      <div aria-hidden="true" className="pattern-awning" />
+      <div aria-hidden="true" className="pattern-awning pattern-awning-pop" />
 
       <div className="px-gutter py-section md:py-section-lg">
         {/* Móvil: bento de 3 columnas. xl: tarjetas flotando alrededor de la frase. */}
@@ -92,7 +92,8 @@ export async function Tools() {
                       }`}
                     >
                       <Icon tool={tool} className={iconSize[size]} />
-                      <span className="text-label break-words">{tool.name}</span>
+                      {/* En móvil (bento) solo se ve el ícono; el nombre sigue disponible para lectores de pantalla. */}
+                      <span className="text-label break-words sr-only xl:not-sr-only">{tool.name}</span>
                     </div>
                   </Reveal>
                 </li>
@@ -102,14 +103,16 @@ export async function Tools() {
 
           <div className="order-2 col-span-2 row-span-3 flex flex-col items-center justify-center gap-gap rounded-sm bg-bg p-gap-sm text-center xl:absolute xl:top-1/2 xl:left-1/2 xl:max-w-measure xl:-translate-x-1/2 xl:-translate-y-1/2 xl:p-0">
             <Reveal className="flex flex-col items-center gap-gap-sm">
-              <h2 id="tools-title" className="text-heading text-text">
+              <h2 id="tools-title" className="text-heading text-cherry">
                 {t("title")}
               </h2>
-              <p className="text-body text-text">{t("support")}</p>
+              <p className="text-body text-cherry">{t("support")}</p>
             </Reveal>
           </div>
         </div>
       </div>
+
+      <div aria-hidden="true" className="pattern-awning pattern-awning-pop pattern-awning-flip" />
     </section>
   );
 }
