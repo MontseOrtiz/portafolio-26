@@ -121,7 +121,7 @@ test.describe("screenshots", () => {
           await page.goto(`/${locale}/about`);
           await page.evaluate(() => document.fonts.ready);
           await expect(page.locator("#about img")).toHaveJSProperty("complete", true);
-          await expect(page).toHaveScreenshot(`about-${locale}-${scheme}.png`, { fullPage: true, animations: "disabled" });
+          await expect(page.locator("#about")).toHaveScreenshot(`about-${locale}-${scheme}.png`, { animations: "disabled", mask: [page.getByRole("banner")] });
         });
       });
     }
