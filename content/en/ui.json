@@ -12,6 +12,9 @@
     "mediaTitle": "WOD Tracker",
     "mediaPlaceholder": "placeholder"
   },
+  "intro": {
+    "text": "I'm a Frontend / Full Stack developer who switched careers into code. I've built products at startups and consulted at Xeleva, where I also mentor juniors. What sets me apart is how fast I learn: I built a custom WordPress site in a week."
+  },
   "nav": {
     "name": "Montse Ortiz",
     "role": "Frontend / Full Stack Developer",

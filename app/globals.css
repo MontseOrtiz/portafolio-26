@@ -325,7 +325,27 @@
   }
 }
 
+/* Token reveal: bloques que aparecen una vez al entrar en pantalla (ver components/ui/reveal.tsx). */
+.reveal {
+  opacity: 0;
+  translate: 0 var(--reveal-distance);
+  transition:
+    opacity var(--duration) var(--ease-token),
+    translate var(--duration) var(--ease-token);
+}
+
+.reveal[data-shown="true"] {
+  opacity: 1;
+  translate: 0 0;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    translate: none;
+    transition: none;
+  }
+
   *,
   *::before,
   *::after {
