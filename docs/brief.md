@@ -12,7 +12,7 @@ Prioridad: lo que el reclutador necesita entender en 30 segundos va primero. Los
 | Stack a destacar | React, Next.js, TypeScript, Node.js, PostgreSQL (Supabase), MongoDB |
 | Diferenciadores | Aprendizaje rápido (sitio WordPress a medida en una semana), mentoría de juniors en Xeleva, SEO, desarrollo con agentes de IA |
 | CTA principal | Enviar correo |
-| CTA secundario | CV: descargar PDF (una versión por idioma) y ver la página /cv |
+| CTA secundario | CV: descargar PDF (una versión por idioma) y verlo en /about#cv |
 | Idiomas del sitio | Inglés (principal) y español. Toda la copy existe en ambos idiomas; el inglés se escribe primero |
 | Tono | Casual y amable, cercano y profesional. Deja ver mi personalidad para que se note cómo sería trabajar conmigo |
 
@@ -21,7 +21,7 @@ Prioridad: lo que el reclutador necesita entender en 30 segundos va primero. Los
 - Sí: primera persona, frases cortas, humor ligero, anécdotas concretas (cambio de carrera, startups, CrossFit).
 - No: jerga de relleno ("passionate", "ninja", "guru"), chistes internos, sarcasmo, exceso de emojis.
 
-## Página de CV (/cv)
+## CV en el sitio (/about#cv)
 
 Versión divertida e interactiva de mi CV que muestra personalidad y habilidad técnica. Convive con el PDF: el PDF es el que pasa filtros ATS y se descarga; la página es para que la disfruten. Mismo contenido que el PDF, en ambos idiomas, accesible y usable en móvil.
 

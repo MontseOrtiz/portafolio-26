@@ -23,6 +23,8 @@ Paleta propia: amarillo mantequilla y azul Yale, con acentos puntuales. Del siti
 | `on-powder` | #173B64 | #FBF4DA | Texto sobre `powder` |
 | `sand` | #76623F | #D2BE92 | Números, detalles cálidos |
 | `cherry` | #9B2C33 | #F0959B | Micro-detalle (corazón del footer); usar muy poco |
+| `on-media` | #FFFCF2 | #FFFCF2 | Texto sobre imágenes o video (siempre sobre `scrim`) |
+| `scrim` | linear-gradient(to top, rgba(11,26,46,0.8), transparent 50%) | igual | Degradado para leer texto encima de media |
 
 Contraste medido (light / dark):
 
@@ -81,13 +83,24 @@ Escala base de 4px: 4, 8, 12, 16, 24, 32, 48, 64, 96, 128.
 | `gap` | 24px / 16px móvil | Separación en grids |
 | `gap-sm` | 8px | Separación entre elementos pequeños (etiquetas, íconos) |
 | `radius-none` | 0 | Tarjetas, imágenes, mockups |
+| `radius-sm` | 12px | Tarjetas pequeñas (Tools) |
 | `radius-md` | 16px | Contenedores: nav, hoja del CV |
 | `radius-full` | 9999px | Botones y etiquetas tipo píldora |
 | `shadow` | ninguna | Tarjetas |
 | `shadow-photo` | 0 8px 24px rgba(0,0,0,0.12) | Solo imágenes del collage de Sobre mí |
 | `tilt-sm` | 3deg | Rotación ligera (collage) |
 | `tilt-md` | -6deg | Rotación marcada (collage) |
-| `stroke` | 2px | Anillo de foco y subrayado del link activo |
+| `perspective` | 1000px | Contenedor de las tarjetas de Tools |
+| `tilt-3d` | rotateX(8deg) rotateY(±16deg) rotateZ(±4deg), combinaciones distintas por tarjeta | Tarjetas de Tools en desktop |
+
+## Patrones
+
+Patrones decorativos hechos solo con CSS (sin imágenes), del Palette Preview. Son detalles de personalidad: como máximo un patrón por sección, nunca como fondo detrás de texto, siempre con `aria-hidden`.
+
+| Token | Valor | Uso |
+| --- | --- | --- |
+| `pattern-awning` | Rayas verticales de 32px alternando `accent-soft` y `bg` (dark: `accent-soft` y `powder`), 44px de alto, con borde inferior festoneado (círculos de 32px con mask) | Franja superior de Tools y del footer de cierre del home |
+| `pattern-gingham` | Cuadros de 28px: dos gradientes lineales cruzados de `powder` al 70% sobre `bg` | Fondo de mockups en casos de estudio, elementos del collage de Sobre mí |
 
 Las medidas propias de un componente (anchos de imagen, de tarjeta, offsets) se definen en su archivo de sección y siempre usan la escala de 4px.
 
@@ -99,10 +112,15 @@ Las medidas propias de un componente (anchos de imagen, de tarjeta, offsets) se 
 | `duration` | 300ms | Transform, aparición de elementos |
 | `duration-slow` | 500ms | Media que se expande, cambios de pestaña |
 | `easing` | cubic-bezier(0.22, 1, 0.36, 1) | Todas las transiciones (ease-out) |
+| `intro-nav` | 1300ms, cubic-bezier(0.44, 0, 0.56, 1), desde -150px con fade | Entrada del nav al cargar la página |
+| `intro-name` | spring de 1400ms con bounce 0.2, desde 150px con opacidad 0.001 → 1 | Entrada del nombre del hero |
+| `intro-reveal` | 1000ms, `easing`, fade + subida de 24px | Aparición gradual de la imagen, el rol y la propuesta del hero |
+| `intro-delay` | 700ms | Retraso de la imagen, el rol y la propuesta del hero (cuando el nombre va a la mitad) |
 | `stagger` | 100ms | Retraso entre elementos que aparecen en secuencia |
 | `hover-scale` | 1.02 | Escala de imágenes en hover |
 | `reveal` | fade + subida de 16px al entrar en pantalla, una sola vez | Bloques al hacer scroll |
-| `lift-sm` | 8px | Subida del panel del menú móvil (fade + subida con `duration` y `easing`) |
+
+Los tokens `intro-*` salen de la animación de entrada de jsandrieu.com (Framer). Nav y nombre arrancan al mismo tiempo: el nombre usa un spring, que avanza rápido al inicio, y el nav una curva ease-in-out desde fuera de la pantalla, que se ve lenta al inicio; por eso el nav se nota cuando el nombre ya casi terminó.
 
 Respetar `prefers-reduced-motion`: sin animaciones si el usuario las desactiva (solo cambios de color instantáneos).
 

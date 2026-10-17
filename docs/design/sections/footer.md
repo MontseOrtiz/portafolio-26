@@ -1,20 +1,21 @@
-# Footer
-Referencia: sin referencia propia; se diseña con el look del sitio base.
-Objetivo: Cerrar el sitio con lo esencial y un detalle de personalidad.
-Contenido:
-1. Links: Projects, About, CV, GitHub, LinkedIn
-2. "© 2026 Montse Ortiz" (el año se calcula solo)
-3. Crédito: "Made with ♥ in Querétaro" (texto final en la fase 6)
-4. Link "Back to top"
-Layout desktop: una fila dentro del `container`, separada del contacto por un divisor 1px `border`: copyright y crédito a la izquierda, links al centro, "Back to top" a la derecha.
-Layout móvil: apilado y alineado a la izquierda: links, luego copyright y crédito, luego "Back to top".
-Tipografía: todo en `small`; copyright en `muted`.
-Espaciado: padding vertical de 32px; `gap` entre links.
-Color: fondo `bg`, texto `text`; el corazón en `cherry` (único uso de `cherry` en el sitio).
+# Footer de cierre
+Referencia: https://jsandrieu.com/ (ver moodboard) — bloque final con una frase gigante y abajo una fila de links.
+Objetivo: Cerrar cada página con una invitación clara y los links de contacto.
+Ancla: `#contact` (el CTA "Let's talk" del nav lleva aquí).
+Contenido (la frase cambia según la página):
+1. Home: "Let's work together" / "Trabajemos juntos", link `mailto:` al correo
+2. /about: "Selected work →" / "Proyectos →", link a /#work
+3. Casos de estudio: sin frase, solo la fila de links (va después de "Previous / Next")
+4. Fila inferior: LinkedIn (izquierda), correo (centro), GitHub (derecha)
+5. Debajo, en pequeño: "© 2026 Montse Ortiz · Made with ♥ in Querétaro" (año automático)
+Layout desktop: bloque dentro del `container`, fondo `surface`, `radius-md`. Frase alineada abajo a la izquierda, a todo el ancho, con mucho aire arriba (padding superior `section-lg`). Fila inferior separada por divisor 1px `border`, con los tres links repartidos (izquierda, centro, derecha).
+Layout móvil: frase en dos líneas; fila de links apilada a la izquierda.
+Tipografía: frase en `display-xl`; links en `label`; copyright en `label` color `muted`.
+Espaciado: padding `section`; `gap` entre la frase y la fila; padding vertical de 16px en la fila.
+Color: fondo `surface`, texto `text`; patrón `pattern-awning` como franja superior del bloque en el home; corazón en `cherry` (único uso de `cherry` en el sitio).
 Interacción:
-- Hover en links: `pop`.
-- Links externos con ↗ y texto accesible "(opens in a new tab)".
-- El corazón lleva `aria-hidden` y el texto accesible dice "Made with love in Querétaro".
-- "Back to top" mueve el foco al inicio de la página.
-Animación: ninguna aparte de los hovers.
-No incluir: newsletter, mapa del sitio extenso, logos de herramientas, segundo CTA de contacto.
+- Hover en la frase y en los links: color `pop` (`duration-fast`).
+- LinkedIn y GitHub abren en pestaña nueva con ↗ y texto accesible "(opens in a new tab)".
+- El corazón lleva `aria-hidden`; el texto accesible dice "Made with love in Querétaro".
+Animación: la frase entra con `reveal` al aparecer en pantalla. Sin animación con `prefers-reduced-motion`.
+No incluir: formulario de contacto, teléfono, newsletter, mapa del sitio, Instagram.

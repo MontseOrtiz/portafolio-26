@@ -1,6 +1,7 @@
 # Proyectos
 Referencia: https://wschupfer.com/los-angeles/ (ver moodboard) — tira horizontal de imágenes de distintos tamaños y alturas escalonadas.
 Objetivo: Probar que sé construir: el reclutador ve los 3 proyectos y entra a sus casos de estudio.
+Ancla de la sección: `#work` (link "Work" del nav).
 Contenido:
 1. Encabezado: etiqueta "Selected work", título "Projects", contador "1 / 3" y flechas anterior/siguiente
 2. Tres tarjetas (Book Diary, WOD Tracker, Destino China), cada una con:

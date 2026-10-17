@@ -18,21 +18,23 @@ Las fases 1 a 3 son solo documentos; el código empieza en la fase 4 con todo de
 - [x] Revisar que ninguna sección use valores fuera de tokens.md
 
 ## Fase 4: Scaffold
-- [ ] Crear el repo con el stack de CLAUDE.md
-- [ ] Copiar docs/ y CLAUDE.md al repo
-- [ ] Configurar idiomas (en principal, es)
-- [ ] Configurar tokens en Tailwind, fuentes, tema light/dark, layout y nav
-- [ ] Configurar Playwright y deploy de preview en Vercel
+- [x] Crear el repo con el stack de CLAUDE.md
+- [x] Copiar docs/ y CLAUDE.md al repo
+- [x] Configurar idiomas (en principal, es)
+- [x] Configurar tokens en Tailwind, fuentes y tema light/dark
+- [x] Layout base y nav
+- [x] Configurar Playwright y deploy de preview en Vercel (https://montse-ortiz.vercel.app)
 
 ## Fase 5: Secciones (una por tarea)
-- [ ] Hero
+- [x] Hero
+- [ ] Descripción corta
+- [ ] Tools
 - [ ] Proyectos
-- [ ] Sobre mí
-- [ ] Contacto y footer
+- [ ] Footer de cierre (las tres versiones)
+- [ ] Página /about: Sobre mí + CV
 - [ ] Plantilla de caso de estudio + 3 casos en MDX
-- [ ] Página de CV
 
-Cada sección: el agente construye, saca capturas, compara con la spec, corrige; se aprueba y se hace commit. Donde falte contenido final se usan los textos actuales o placeholders marcados.
+Cada sección: el agente construye (incluida la animación del campo "Animación" de su spec, con Motion y los tokens de motion), saca capturas, compara con la spec, corrige; se aprueba y se hace commit. Donde falte contenido final se usan los textos actuales o placeholders marcados.
 
 ## Fase 6: Contenido final
 - [ ] Completar los pendientes de "Contenido final" de brief.md (repos, qué demuestra, resultado de Destino China, mockups y capturas, correo)
