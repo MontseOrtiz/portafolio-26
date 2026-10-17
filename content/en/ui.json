@@ -103,7 +103,17 @@
   },
   "cv": {
     "title": "CV",
-    "placeholder": "This page is coming soon.",
-    "back": "Back to home"
+    "tabs": "CV language",
+    "english": "English",
+    "spanish": "Español",
+    "location": "Location",
+    "contact": "Contact",
+    "digital": "Digital",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "portfolio": "Portfolio",
+    "download": "Download PDF",
+    "updated": "Last updated",
+    "newTab": "opens in a new tab"
   }
 }

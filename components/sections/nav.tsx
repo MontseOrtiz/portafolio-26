@@ -98,7 +98,7 @@ export function Nav() {
   const aboutActive = onAbout && !cvActive;
 
   return (
-    <header className="nav-enter fixed inset-x-0 top-4 z-40">
+    <header className="nav-enter fixed inset-x-0 top-4 z-40 print:hidden">
       <div className="mx-auto w-full max-w-page px-gutter">
         <div className="relative flex items-center justify-between gap-gap rounded-md border border-border bg-bg px-6 py-3">
           <div className="flex min-w-0 items-center gap-gap-sm md:flex-1">

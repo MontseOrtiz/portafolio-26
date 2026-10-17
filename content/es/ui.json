@@ -103,7 +103,17 @@
   },
   "cv": {
     "title": "CV",
-    "placeholder": "Esta página llega pronto.",
-    "back": "Volver al inicio"
+    "tabs": "Idioma del CV",
+    "english": "English",
+    "spanish": "Español",
+    "location": "Ubicación",
+    "contact": "Contacto",
+    "digital": "Digital",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "portfolio": "Portafolio",
+    "download": "Descargar PDF",
+    "updated": "Última actualización",
+    "newTab": "se abre en una pestaña nueva"
   }
 }
