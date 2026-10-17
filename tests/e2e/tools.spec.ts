@@ -23,10 +23,50 @@ for (const locale of ["en", "es"] as const) {
       for (const name of NAMES) await expect(list.getByText(name, { exact: true })).toHaveCount(1);
       // Íconos decorativos; el nombre es texto real.
       expect(await section.locator("svg:not([aria-hidden='true'])").count()).toBe(0);
-      await expect(section.locator(".pattern-awning")).toHaveAttribute("aria-hidden", "true");
+      // Franja de ondas arriba y espejada abajo, ambas decorativas.
+      const awnings = section.locator(".pattern-awning");
+      await expect(awnings).toHaveCount(2);
+      for (const awning of await awnings.all()) await expect(awning).toHaveAttribute("aria-hidden", "true");
     });
   });
 }
+
+test.describe("awning, phrase color", () => {
+  for (const scheme of ["light", "dark"] as const) {
+    test.describe(scheme, () => {
+      test.use({ colorScheme: scheme });
+
+      test("awning is pop on top and mirrored at the bottom; phrase is cherry", async ({ page }) => {
+        await page.goto("/en");
+        const { pop, cherry } = await page.evaluate(() => {
+          const probe = (token: string) => {
+            const el = document.createElement("span");
+            el.style.color = `var(--token-${token})`;
+            document.body.append(el);
+            const color = getComputedStyle(el).color;
+            el.remove();
+            return color;
+          };
+          return { pop: probe("pop"), cherry: probe("cherry") };
+        });
+        const awnings = page.locator("#tools .pattern-awning");
+        for (const awning of await awnings.all()) {
+          expect(await awning.evaluate((el) => getComputedStyle(el).backgroundImage)).toContain(pop);
+        }
+        expect(await awnings.nth(0).evaluate((el) => getComputedStyle(el).transform)).toBe("none");
+        expect(await awnings.nth(1).evaluate((el) => getComputedStyle(el).transform)).toBe("matrix(1, 0, 0, -1, 0, 0)");
+
+        // El bloque inferior es el último hijo de la sección, debajo del contenido.
+        const section = (await page.locator("#tools").boundingBox())!;
+        const bottom = (await awnings.nth(1).boundingBox())!;
+        expect(Math.round(bottom.y + bottom.height)).toBeGreaterThanOrEqual(Math.round(section.y + section.height) - 2);
+
+        await expect(page.locator("#tools h2")).toHaveCSS("color", cherry);
+        await expect(page.locator("#tools h2 + p")).toHaveCSS("color", cherry);
+      });
+    });
+  }
+});
 
 test("cards alternate surface, powder and accent-soft backgrounds", async ({ page }) => {
   await page.goto("/en");
@@ -86,6 +126,12 @@ test.describe("desktop", () => {
       .toMatch(/^matrix3d\(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, (-?[\d.e-]+), 0, 0, 0, 1\)$|^matrix\(1, 0, 0, 1, 0, 0\)$/);
   });
 
+  test("names are visible on desktop", async ({ page }) => {
+    await page.goto("/en");
+    const box = (await page.locator("#tools li").first().locator("span").boundingBox())!;
+    expect(box.width).toBeGreaterThan(20);
+  });
+
   test("the phrase sits in the middle of the block", async ({ page }) => {
     await page.goto("/en");
     const section = (await page.locator("#tools").boundingBox())!;
@@ -116,6 +162,16 @@ test.describe("mobile", () => {
 
     expect(await cards(page).first().evaluate((el) => getComputedStyle(el).transform)).toBe("none");
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  });
+
+  test("only icons are visible; names stay available to screen readers", async ({ page }) => {
+    await page.goto("/en");
+    const name = page.locator("#tools li").first().locator("span");
+    const box = (await name.boundingBox())!;
+    expect(box.width).toBeLessThanOrEqual(1);
+    expect(box.height).toBeLessThanOrEqual(1);
+    await expect(page.getByRole("list", { name: "Tools" }).getByText("React", { exact: true })).toHaveCount(1);
+    await expect(page.locator("#tools li").first().locator("svg")).toBeVisible();
   });
 
   test("the phrase is between the cards, not first or last", async ({ page }) => {
