@@ -6,7 +6,7 @@ const copy = {
   es: { label: "Contacto", title: "Trabajemos juntos", copy: "Copiar", copied: "¡Copiado!", download: "Descargar PDF", view: "Ver CV", cta: "Hablemos" },
 } as const;
 
-const block = (page: Page) => page.locator("section#contact");
+const block = (page: Page) => page.locator("section#get-in-touch");
 
 const tokenColor = (page: Page, token: string) =>
   page.evaluate((name) => {
@@ -47,12 +47,12 @@ for (const locale of ["en", "es"] as const) {
       expect(await section.innerText()).not.toMatch(/\+52|\d{4} ?\d{4}/);
     });
 
-    test("the nav CTA lands on the contact block", async ({ page }, testInfo) => {
+    test("the nav CTA lands on the closing footer (#contact), not on this block", async ({ page }, testInfo) => {
       await page.goto(`/${locale}`);
       if (testInfo.project.name === "mobile") await page.getByRole("button", { name: /menu|menú/i }).click();
       await page.getByRole("banner").getByRole("link", { name: c.cta }).click();
       await expect(page).toHaveURL(new RegExp(`/${locale}#contact$`));
-      await expect(block(page)).toBeInViewport();
+      await expect(page.locator("footer#contact")).toBeInViewport();
     });
   });
 }

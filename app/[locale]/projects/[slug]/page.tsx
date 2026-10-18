@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Footer } from "@/components/sections/footer";
 import { CaseStudy } from "@/components/sections/case-study";
 import { routing, type Locale } from "@/i18n/routing";
 import { caseStudies } from "@/content/projects/case-studies";
@@ -31,5 +32,12 @@ export default async function ProjectPage({ params }: Props) {
   if (!caseStudies[slug]) notFound();
   setRequestLocale(locale);
 
-  return <CaseStudy slug={slug} locale={locale as Locale} />;
+  return (
+    <>
+      <CaseStudy slug={slug} locale={locale as Locale} />
+      <div className="mt-section">
+        <Footer variant="case-study" />
+      </div>
+    </>
+  );
 }

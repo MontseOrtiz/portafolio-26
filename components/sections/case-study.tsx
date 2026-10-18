@@ -194,9 +194,6 @@ export async function CaseStudy({ slug, locale }: Props) {
           <span className="sr-only">: {tp(`items.${next.slug}.name`)}</span>
         </Link>
       </nav>
-
-      {/* TODO: footer de cierre en su versión de casos de estudio (sección 10, footer.md). */}
-      <div id="contact" className="scroll-mt-24" />
     </article>
   );
 }

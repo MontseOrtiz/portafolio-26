@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { About } from "@/components/sections/about";
+import { Footer } from "@/components/sections/footer";
 import { Cv } from "@/components/sections/cv";
 import type { Locale } from "@/i18n/routing";
 
@@ -26,8 +27,9 @@ export default async function AboutPage({ params }: Props) {
 
       <Cv locale={locale as Locale} />
 
-      {/* TODO: footer de cierre con "Selected work →" (sección 10, footer.md). */}
-      <div id="contact" className="scroll-mt-24 print:hidden" />
+      <div className="mt-gap">
+        <Footer variant="about" />
+      </div>
     </>
   );
 }
