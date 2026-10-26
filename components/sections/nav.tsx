@@ -30,9 +30,6 @@ export function Nav() {
 
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
-  // Sobre la media de proyectos del home el nav va sin fondo ni borde, en blanco y negritas.
-  const [mediaInView, setOverMedia] = useState(false);
-  const overMedia = onHome && mediaInView;
   const buttonRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -96,24 +93,6 @@ export function Nav() {
     return () => observer.disconnect();
   }, [onHome, onAbout]);
 
-  useEffect(() => {
-    if (!onHome) return;
-    const work = document.getElementById("work");
-    if (!work) return;
-    function update() {
-      const rect = work!.getBoundingClientRect();
-      setOverMedia(rect.top <= 24 && rect.bottom > 80);
-    }
-    const frame = window.requestAnimationFrame(update);
-    window.addEventListener("scroll", update, { passive: true });
-    window.addEventListener("resize", update);
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("scroll", update);
-      window.removeEventListener("resize", update);
-    };
-  }, [onHome]);
-
   const workActive = onHome && activeId === "work";
   const cvActive = onAbout && activeId === "cv";
   const aboutActive = onAbout && !cvActive;
@@ -121,11 +100,7 @@ export function Nav() {
   return (
     <header className="nav-enter fixed inset-x-0 top-4 z-40 print:hidden">
       <div className="mx-auto w-full max-w-page px-gutter">
-        <div
-          className={`relative flex items-center justify-between gap-gap rounded-md border px-6 py-3 transition-colors duration-(--duration-fast) ease-token ${
-            overMedia ? "text-on-media border-transparent bg-transparent font-bold" : "border-border bg-bg"
-          }`}
-        >
+        <div className="relative flex items-center justify-between gap-gap rounded-md border border-border bg-bg px-6 py-3">
           <div className="flex min-w-0 items-center gap-gap-sm md:flex-1">
             <Link href="/" className="text-small font-sans font-medium whitespace-nowrap">
               {t("name")}
@@ -136,7 +111,7 @@ export function Nav() {
             ref={buttonRef}
             variant="outline"
             size="icon"
-            className={`md:hidden ${overMedia && !open ? "border-on-media text-on-media bg-transparent hover:bg-transparent" : ""}`}
+            className="md:hidden"
             aria-expanded={open}
             aria-controls="site-menu"
             aria-label={open ? t("menuClose") : t("menuOpen")}
@@ -148,7 +123,7 @@ export function Nav() {
           <div
             id="site-menu"
             ref={panelRef}
-            className={`${open ? "nav-panel flex" : "hidden"} absolute inset-x-0 top-full mt-2 flex-col gap-gap rounded-md border border-border bg-bg p-gap max-md:text-text max-md:font-normal md:contents`}
+            className={`${open ? "nav-panel flex" : "hidden"} absolute inset-x-0 top-full mt-2 flex-col gap-gap rounded-md border border-border bg-bg p-gap md:contents`}
           >
             <nav aria-label={t("main")} className="flex flex-col gap-gap md:flex-row md:justify-center">
               <Link

@@ -20,7 +20,7 @@ import { projectMedia } from "@/content/projects/media";
 
 const COUNT = projects.length;
 
-// Un proyecto a pantalla completa: su hero con look editorial oscuro, el nombre al centro y, pasados
+// Un proyecto a pantalla completa: su hero con look editorial oscuro, el nombre abajo y centrado y, pasados
 // unos segundos, "Conocer más" debajo (ver .learn-more en globals.css).
 function Slide({
   slug,
@@ -56,7 +56,7 @@ function Slide({
     >
       <Image src={hero.src} alt="" fill sizes="100vw" className="filter-editorial object-cover object-top" />
       <span aria-hidden="true" className="bg-scrim absolute inset-0" />
-      <motion.span style={{ opacity }} className="absolute inset-0 flex flex-col items-center justify-center gap-gap px-gutter text-center">
+      <motion.span style={{ opacity }} className="absolute inset-0 flex flex-col items-center justify-end gap-gap px-gutter pb-section text-center">
         <span className="text-project-name text-on-media">{name}</span>
         <span className="learn-more text-body-lg text-on-media inline-flex items-center gap-gap-sm">
           {t("learnMore")}

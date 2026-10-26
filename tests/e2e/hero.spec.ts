@@ -151,7 +151,7 @@ test.describe("work showcase", () => {
     expect(Math.round(box.width)).toBe(page.viewportSize()!.width);
   });
 
-  test("name is centred in white without underline; 'Learn more' appears a few seconds later", async ({ page }) => {
+  test("name is at the bottom, centred, in white without underline; 'Learn more' appears a few seconds later", async ({ page }) => {
     await page.goto("/en");
     await page.evaluate(() => window.scrollTo(0, document.querySelector("#work")!.getBoundingClientRect().top + window.scrollY));
     const link = page.locator("section#work a:not([inert])");
@@ -161,7 +161,7 @@ test.describe("work showcase", () => {
     const box = (await name.boundingBox())!;
     const viewport = page.viewportSize()!;
     expect(Math.abs(box.x + box.width / 2 - viewport.width / 2)).toBeLessThan(2);
-    expect(Math.abs(box.y + box.height / 2 - viewport.height / 2)).toBeLessThan(viewport.height * 0.12);
+    expect(box.y + box.height).toBeGreaterThan(viewport.height * 0.6);
 
     const more = link.getByText("Learn more");
     await expect(more).toHaveCSS("opacity", "0");
@@ -175,20 +175,6 @@ test.describe("work showcase", () => {
     const filter = await page.locator(".hero-media img").first().evaluate((el) => getComputedStyle(el).filter);
     expect(filter).toContain("brightness");
     expect(filter).toContain("contrast");
-  });
-
-  test("the nav goes transparent with white bold text over the media, and back to normal after it", async ({ page }, testInfo) => {
-    test.skip(testInfo.project.name !== "desktop", "checked on desktop");
-    await page.goto("/en");
-    const bar = page.getByRole("banner").locator("> div > div").first();
-    await expect(bar).toHaveCSS("background-color", "rgb(255, 252, 242)");
-    await page.evaluate(() => window.scrollTo(0, document.querySelector("#work")!.getBoundingClientRect().top + window.scrollY + 10));
-    await expect(bar).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
-    await expect(bar).toHaveCSS("border-top-color", "rgba(0, 0, 0, 0)");
-    await expect(bar).toHaveCSS("font-weight", "700");
-    await expect(bar).toHaveCSS("color", "rgb(255, 252, 242)");
-    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
-    await expect(bar).toHaveCSS("background-color", "rgb(255, 252, 242)");
   });
 
   test.describe("reduced motion", () => {

@@ -345,7 +345,7 @@
   Tokens: --filter-editorial y --delay-learn-more (documentados en tokens.md).
 */
 :root {
-  --filter-editorial: brightness(0.68) contrast(1.096) saturate(0.84) sepia(0.08);
+  --filter-editorial: brightness(0.872) contrast(1.038) saturate(0.936) sepia(0.032);
   --delay-learn-more: 2500ms;
 }
 /* Nombre del proyecto en el hero: la mitad de display-xl. */

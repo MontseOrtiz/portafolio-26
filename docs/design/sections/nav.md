@@ -21,4 +21,4 @@ Interacción:
 Animación: al cargar la página, la tarjeta del nav baja desde arriba con `intro-nav`, al mismo tiempo que el nombre del hero (ver hero.md). Panel móvil con fade + subida de 8px en `duration`. Sin animación con `prefers-reduced-motion`.
 No incluir: logo gráfico, link "Contact" en el centro (lo cubre el CTA), menú con submenús, ocultar la barra al hacer scroll, links a redes (van en contacto y footer).
 
-Sobre la media de proyectos del home (`#work`) el nav va sin fondo ni borde, con texto blanco (`on-media`) en negritas; fuera de ella vuelve a su estilo normal. A la izquierda solo va el nombre (sin rol).
+A la izquierda solo va el nombre (sin rol).
