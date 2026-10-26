@@ -6,7 +6,7 @@ Contenido:
 2. Nombre: "Montse Ortiz"
 3. Rol: "Frontend / Full Stack Developer"
 4. Propuesta en una frase (brief.md)
-5. Media que se expande: debajo de la primera pantalla, el mockup o video de WOD Tracker con su nombre encima y link a su caso de estudio. Por ahora un placeholder marcado (bloque `powder` con el texto "placeholder"); el mockup real llega en la fase 6
+5. Media de proyectos (`#work`): debajo de la primera pantalla, el hero de cada proyecto (imagen desktop si existe, si no la móvil) con su nombre encima y link a su caso de estudio. Entran uno tras otro con el scroll: el primero se expande y los demás lo tapan desde abajo hasta llegar al último. "Work" (nav) y "Selected work" (footer) llevan a esta sección
 Primera pantalla: nav, imagen, nombre, rol y propuesta. Nada más.
 Layout desktop: bloque dentro del `container` con fondo `surface` y `radius-md`, que ocupa la primera pantalla (alto de la ventana menos el nav y su separación). Imagen centrada horizontalmente, de ~240px de ancho, en proporción 4:5. Debajo, el nombre ocupa todo el ancho del bloque. Debajo del nombre, alineados a la izquierda: rol y propuesta (ancho máx. `measure`).
 Media que se expande (desktop): bloque de proporción 16:9 debajo del hero, separado por `gap`. Empieza con el ancho de `container` y, conforme entra en pantalla con el scroll, crece hasta el ancho completo de la ventana. Se anima con clip-path (no con width). Nombre del proyecto centrado abajo, sobre `scrim`, en `heading` color `on-media`. Media `radius-none`.
@@ -17,11 +17,11 @@ Color: fondo `surface`; texto `text`. Imagen sin fondo ni borde (es transparente
 Interacción:
 - El nombre es el `h1` de la página.
 - La imagen lleva `alt` descriptivo y carga con prioridad (next/image `priority`).
-- La media que se expande es un link al caso de estudio de WOD Tracker; carga diferida (no `priority`), con póster si es video. Videos según CLAUDE.md.
+- Cada proyecto es un link a su caso de estudio; solo el visible se puede enfocar (los demás van con `inert`); carga diferida (no `priority`), con póster si es video. Videos según CLAUDE.md.
 Animación (secuencia al cargar, como en jsandrieu.com):
 1. 0 ms: el nav baja con `intro-nav` y, al mismo tiempo, el nombre sube con `intro-name` (sin máscara). La opacidad inicial de 0.001 hace que el navegador cuente el nombre como visible desde el inicio, así no se afecta el LCP.
 2. `intro-delay` después: la imagen aparece poco a poco con `intro-reveal`.
 3. `intro-delay` + `stagger` × 2: el rol y la propuesta aparecen con `intro-reveal`.
 Toda la secuencia de entrada usa el mismo mecanismo y el mismo punto de partida (el primer render), para que no se desfase: si una parte arranca con CSS y otra espera a que cargue el JavaScript, en conexiones lentas la imagen aparece antes que el nombre. Recomendado: CSS con keyframes, y el spring del nombre con la función `linear()` de CSS, para que todo empiece sin esperar al JavaScript.
-La expansión de la media está ligada al scroll (Motion: useScroll + useTransform) y termina cuando el bloque llega al centro de la pantalla. Con `prefers-reduced-motion`: todo aparece sin movimiento y la media se muestra fija al ancho de `container`.
+La expansión de la media está ligada al scroll (Motion: useScroll + useTransform) y termina cuando el bloque llega al centro de la pantalla. Con `prefers-reduced-motion`: todo aparece sin movimiento y los proyectos se muestran apilados al ancho de `container`, sin sticky.
 No incluir: botones de CTA, foto a pantalla completa como fondo, video en la primera pantalla, carrusel, texto rotativo, scroll bloqueado (scroll-jacking).

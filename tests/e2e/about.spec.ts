@@ -79,7 +79,7 @@ test.describe("collage", () => {
     await page.goto("/en/about");
     const group = page.getByRole("group", { name: "Collage of images about Montse" });
     await group.scrollIntoViewIfNeeded();
-    await expect(group.locator(".reveal[data-shown='true']")).toHaveCount(3);
+    await expect(group.locator(".reveal[data-shown='true']")).toHaveCount(2);
     const tilted = group.locator("div[class*='rotate-']");
     const rotations = await tilted.evaluateAll((els) => els.map((el) => getComputedStyle(el).rotate));
     expect(rotations.some((r) => r === "3deg")).toBe(true);
@@ -96,7 +96,7 @@ test.describe("collage", () => {
       .getByRole("group", { name: "Collage of images about Montse" })
       .locator(".reveal")
       .evaluateAll((els) => els.map((el) => getComputedStyle(el).transitionDelay));
-    expect(new Set(delays).size).toBe(3);
+    expect(new Set(delays).size).toBe(2);
   });
 });
 

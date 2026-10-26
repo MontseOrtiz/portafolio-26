@@ -2,11 +2,11 @@ import { setRequestLocale } from "next-intl/server";
 import { Hero } from "@/components/sections/hero";
 import { Intro } from "@/components/sections/intro";
 import { Footer } from "@/components/sections/footer";
-import { Contact } from "@/components/sections/contact";
-import type { Locale } from "@/i18n/routing";
 import { Tools } from "@/components/sections/tools";
-import { Projects } from "@/components/sections/projects";
 import { HeroMediaLoader } from "@/components/sections/hero-media-loader";
+// import { Projects } from "@/components/sections/projects";
+// import { Contact } from "@/components/sections/contact";
+// import type { Locale } from "@/i18n/routing";
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -20,9 +20,10 @@ export default async function HomePage({ params }: Props) {
     <>
       <Hero />
 
-      <div className="mt-gap">
+      {/* #work: todos los proyectos, uno tras otro, al hacer scroll. "Work" y "Selected work" llegan aquí. */}
+      <section id="work" className="mt-gap">
         <HeroMediaLoader />
-      </div>
+      </section>
 
       <div className="mt-gap">
         <Intro />
@@ -32,11 +33,11 @@ export default async function HomePage({ params }: Props) {
         <Tools />
       </div>
 
-      <Projects />
+      {/* <Projects /> */}
       <div id="about" className="scroll-mt-24" />
-      <div className="mt-gap">
+      {/* <div className="mt-gap">
         <Contact locale={locale as Locale} />
-      </div>
+      </div> */}
 
       <div className="mt-gap">
         <Footer variant="home" />
