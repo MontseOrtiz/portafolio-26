@@ -1,15 +1,20 @@
 import { ArrowUpRight } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import Image from "next/image";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Reveal } from "@/components/ui/reveal";
 import { ProjectsStrip } from "@/components/sections/projects-strip";
 import { Link } from "@/i18n/navigation";
 import { projects } from "@/content/projects";
+import { projectMedia } from "@/content/projects/media";
+import type { Locale } from "@/i18n/routing";
 
 export async function Projects() {
   const t = await getTranslations("projects");
+  const locale = (await getLocale()) as Locale;
 
   const cards = projects.map((project) => {
     const name = t(`items.${project.slug}.name`);
+    const card = projectMedia[project.slug]?.card;
     return (
       <li
         key={project.slug}
@@ -19,12 +24,20 @@ export async function Projects() {
         <Reveal className="h-full">
           <article className="group relative flex h-full flex-col gap-gap">
             <div className="relative aspect-[4/3] overflow-hidden bg-surface">
-              {/* TODO: mockup real (imagen o video con póster) en la fase 6. */}
-              <div
-                aria-hidden="true"
-                className="duration-(--duration) ease-token group-hover:scale-hover absolute inset-0 flex items-center justify-center transition-transform"
-              >
-                <span className="text-label text-muted">{t("placeholder")}</span>
+              <div data-card-media className="duration-(--duration) ease-token group-hover:scale-hover absolute inset-0 transition-transform">
+                {card ? (
+                  <Image
+                    src={card.src}
+                    alt={card.alt[locale]}
+                    fill
+                    sizes="(min-width: 768px) 480px, 85vw"
+                    className={card.fit === "cover" ? "object-cover object-top" : "object-contain"}
+                  />
+                ) : (
+                  <div aria-hidden="true" className="flex size-full items-center justify-center">
+                    <span className="text-label text-muted">{t("placeholder")}</span>
+                  </div>
+                )}
               </div>
               {project.concept && (
                 <span className="text-small text-on-accent-soft absolute top-gap left-gap rounded-full border border-border bg-accent-soft px-gap-sm">

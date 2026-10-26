@@ -12,12 +12,14 @@ import {
   Sparkles,
   type LucideIcon,
 } from "lucide-react";
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { CaseStudyMedia } from "@/components/sections/case-study-media";
 import { Reveal } from "@/components/ui/reveal";
 import { Link } from "@/i18n/navigation";
 import { caseStudies } from "@/content/projects/case-studies";
 import { projects } from "@/content/projects";
+import { projectMedia, type Shot } from "@/content/projects/media";
 import type { Locale } from "@/i18n/routing";
 
 // TODO: íconos de marca de cada tecnología; por ahora un ícono genérico por tipo.
@@ -38,7 +40,23 @@ const SECONDARY_IMAGES = 6;
 
 type Props = { slug: string; locale: Locale };
 
-// Marcador de media pendiente (mockups y capturas reales en la fase 6).
+// Captura real dentro de un marco con proporción propia; el marco da el fondo (surface o bg).
+function Screenshot({ shot, locale, sizes, priority, className, main }: { shot: Shot; locale: Locale; sizes: string; priority?: boolean; className: string; main?: boolean }) {
+  return (
+    <div data-main-media={main || undefined} className={`relative overflow-hidden ${className}`}>
+      <Image
+        src={shot.src}
+        alt={shot.alt[locale]}
+        fill
+        sizes={sizes}
+        priority={priority}
+        className={shot.fit === "cover" ? "object-cover object-top" : "object-contain"}
+      />
+    </div>
+  );
+}
+
+// Marcador de media pendiente (proyectos sin capturas todavía).
 function Placeholder({ label, className }: { label: string; className: string }) {
   return (
     <div aria-hidden="true" className={`flex items-center justify-center ${className}`}>
@@ -53,6 +71,7 @@ export async function CaseStudy({ slug, locale }: Props) {
   const index = projects.findIndex((p) => p.slug === slug);
   const project = projects[index];
   const copy = caseStudies[slug][locale];
+  const media = projectMedia[slug];
   const name = tp(`items.${slug}.name`);
   const prev = projects[(index - 1 + projects.length) % projects.length];
   const next = projects[(index + 1) % projects.length];
@@ -77,8 +96,21 @@ export async function CaseStudy({ slug, locale }: Props) {
 
   return (
     <article className="flex flex-col gap-section">
-      {/* Media principal: sin animación de entrada. TODO: video con póster (prioridad) en la fase 6. */}
-      <Placeholder label={t("placeholder")} className="aspect-[4/5] bg-surface md:aspect-video" />
+      {/* Media principal: sin animación de entrada; imagen con prioridad para el LCP. */}
+      {media ? (
+        <Screenshot
+          shot={media.main}
+          locale={locale}
+          sizes="(min-width: 1280px) 1200px, 100vw"
+          priority
+          main
+          className="aspect-[4/5] bg-surface md:aspect-video"
+        />
+      ) : (
+        <div data-main-media>
+          <Placeholder label={t("placeholder")} className="aspect-[4/5] bg-surface md:aspect-video" />
+        </div>
+      )}
 
       <header className="grid gap-gap md:grid-cols-12">
         <div className="flex max-w-measure flex-col gap-gap md:col-span-5">
@@ -115,6 +147,7 @@ export async function CaseStudy({ slug, locale }: Props) {
         {/* Bucle de al menos 6 imágenes; 10% menos alta que el 4:5 anterior (8:9). */}
         <CaseStudyMedia
           count={SECONDARY_IMAGES}
+          images={media?.secondary.map((shot) => ({ src: shot.src, alt: shot.alt[locale], fit: shot.fit }))}
           label={t("secondaryMedia")}
           placeholder={t("placeholder")}
           pause={t("pause")}
@@ -134,10 +167,14 @@ export async function CaseStudy({ slug, locale }: Props) {
               </section>
             </Reveal>
             {/* Media a todo el ancho entre bloques (capturas de escritorio sobre gingham). */}
-            {i === 2 && (
+            {i === 2 && (!media || media.wide) && (
               <Reveal>
                 <div className="pattern-gingham p-gap md:p-section">
-                  <Placeholder label={t("placeholder")} className="aspect-video bg-surface" />
+                  {media?.wide ? (
+                    <Screenshot shot={media.wide} locale={locale} sizes="(min-width: 1280px) 1100px, 100vw" className="aspect-video bg-surface" />
+                  ) : (
+                    <Placeholder label={t("placeholder")} className="aspect-video bg-surface" />
+                  )}
                 </div>
               </Reveal>
             )}
@@ -173,11 +210,18 @@ export async function CaseStudy({ slug, locale }: Props) {
           className="rounded-md bg-accent p-gap py-section dark:bg-surface md:px-section"
         >
           <ul className="flex gap-gap overflow-x-auto md:justify-center">
-            {Array.from({ length: MOBILE_SCREENS }, (_, n) => (
-              <li key={n} className="w-48 shrink-0">
-                <Placeholder label={t("placeholder")} className="aspect-[9/19] rounded-sm bg-bg" />
-              </li>
-            ))}
+            {Array.from({ length: MOBILE_SCREENS }, (_, n) => {
+              const shot = media?.mobile[n];
+              return (
+                <li key={n} className="w-48 shrink-0">
+                  {shot ? (
+                    <Screenshot shot={shot} locale={locale} sizes="192px" className="aspect-[9/19] rounded-sm bg-bg" />
+                  ) : (
+                    <Placeholder label={t("placeholder")} className="aspect-[9/19] rounded-sm bg-bg" />
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </section>
       </Reveal>
