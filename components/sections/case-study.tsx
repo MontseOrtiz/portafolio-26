@@ -19,7 +19,7 @@ import { Reveal } from "@/components/ui/reveal";
 import { Link } from "@/i18n/navigation";
 import { caseStudies } from "@/content/projects/case-studies";
 import { projects } from "@/content/projects";
-import { isPortrait, projectMedia, type Shot } from "@/content/projects/media";
+import { projectMedia, type Shot } from "@/content/projects/media";
 import type { Locale } from "@/i18n/routing";
 
 // TODO: íconos de marca de cada tecnología; por ahora un ícono genérico por tipo.
@@ -139,7 +139,7 @@ export async function CaseStudy({ slug, locale }: Props) {
         {/* Bucle de al menos 6 imágenes; 10% menos alta que el 4:5 anterior (8:9). */}
         <CaseStudyMedia
           count={SECONDARY_IMAGES}
-          images={media?.carousel.map((shot) => ({ src: shot.src, alt: shot.alt[locale], portrait: isPortrait(shot) }))}
+          images={media?.carousel.map((shot) => ({ src: shot.src, alt: shot.alt[locale], width: shot.width, height: shot.height }))}
           label={t("secondaryMedia")}
           placeholder={t("placeholder")}
           pause={t("pause")}

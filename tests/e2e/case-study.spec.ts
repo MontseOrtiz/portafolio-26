@@ -85,10 +85,10 @@ test.describe("layout", () => {
 test.describe("secondary media", () => {
   const group = (page: import("@playwright/test").Page) => page.getByRole("group", { name: "Project screens" });
 
-  test("is 4:3 and holds at least 6 images", async ({ page }) => {
+  test("is 16:10 and holds at least 6 images", async ({ page }) => {
     await page.goto("/en/projects/wod-tracker");
     const box = (await group(page).boundingBox())!;
-    expect(box.width / box.height).toBeCloseTo(4 / 3, 2);
+    expect(box.width / box.height).toBeCloseTo(16 / 10, 2);
     expect(await group(page).locator("[data-slide]").count()).toBeGreaterThanOrEqual(6);
   });
 

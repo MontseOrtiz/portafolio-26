@@ -4,8 +4,7 @@ import { Pause, Play } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-// `portrait`: captura vertical; se muestra completa sobre su propio desenfoque para que no se vea el fondo del marco.
-export type CycleImage = { src: string; alt: string; portrait: boolean };
+export type CycleImage = { src: string; alt: string; width: number; height: number };
 
 type Props = {
   count: number;
@@ -62,7 +61,7 @@ export function CaseStudyMedia({ count, images, label, placeholder, pause, play 
       role="group"
       aria-label={label}
       data-current={current}
-      className="relative aspect-[4/3] overflow-hidden bg-surface md:col-span-7"
+      className="relative aspect-[16/10] overflow-hidden bg-surface md:col-span-7"
     >
       {Array.from({ length: total }, (_, i) => {
         const isCurrent = i === current;
@@ -78,14 +77,26 @@ export function CaseStudyMedia({ count, images, label, placeholder, pause, play 
             }`}
           >
             {image ? (
-              image.portrait ? (
-                <>
-                  <Image src={image.src} alt="" aria-hidden="true" fill sizes="25vw" className="scale-110 object-cover blur-xl" />
-                  <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 60vw, 100vw" className="object-contain" />
-                </>
-              ) : (
-                <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 60vw, 100vw" className="object-cover object-center" />
-              )
+              <>
+                {/* Marco fijo (misma altura para todas): la captura va a todo el ancho, sin recorte ni zoom; si es más alta
+                    que el marco se recorre con scroll. Si es más baja, el resto se rellena con su propio desenfoque. */}
+                <Image src={image.src} alt="" aria-hidden="true" fill sizes="25vw" className="scale-110 object-cover blur-xl" />
+                <div
+                  role="region"
+                  aria-label={image.alt}
+                  tabIndex={isCurrent ? 0 : -1}
+                  className="absolute inset-0 overflow-y-auto focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-pop"
+                >
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    width={image.width}
+                    height={image.height}
+                    sizes="(min-width: 768px) 60vw, 100vw"
+                    className="h-auto w-full"
+                  />
+                </div>
+              </>
             ) : (
               // Placeholder: se alternan surface y powder para que se note el cambio.
               <div
