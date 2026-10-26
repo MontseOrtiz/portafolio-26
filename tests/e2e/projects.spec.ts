@@ -10,13 +10,13 @@ for (const locale of LOCALES) {
   const c = copy[locale];
 
   test.describe(`projects ${locale}`, () => {
-    test("section is #work with heading and a list of three cards", async ({ page }) => {
+    test("section is #work with heading and a list of four cards", async ({ page }) => {
       await page.goto(`/${locale}`);
       const section = page.locator("section#work");
       await expect(section.getByRole("heading", { level: 2, name: c.title })).toBeVisible();
       const list = section.getByRole("list", { name: c.title, exact: true });
-      await expect(list.locator("[data-project-card]")).toHaveCount(3);
-      await expect(section.getByText("1 / 3")).toBeVisible();
+      await expect(list.locator("[data-project-card]")).toHaveCount(4);
+      await expect(section.getByText("1 / 4")).toBeVisible();
     });
 
     test("cards link to the case study and open the demo in a new tab", async ({ page }) => {
@@ -32,7 +32,7 @@ for (const locale of LOCALES) {
       await expect(demo).toHaveAttribute("href", "https://wod-tracker-iota.vercel.app/");
     });
 
-    test("only Destino China has the concept badge; there are exactly 3 cards, no filters", async ({ page }) => {
+    test("only Destino China has the concept badge; there are exactly 4 cards, no filters", async ({ page }) => {
       await page.goto(`/${locale}`);
       await expect(page.getByText(c.concept)).toHaveCount(1);
       await expect(page.locator("[data-project-card]").nth(2).getByText(c.concept)).toBeVisible();
@@ -52,13 +52,13 @@ test.describe("desktop strip", () => {
     test.skip(testInfo.project.name !== "desktop", "arrows and staggered layout are desktop only");
   });
 
-  test("card widths 480/360/420 and offsets 0/48/24", async ({ page }) => {
+  test("card widths 480/360/420/400 and offsets 0/48/24/0", async ({ page }) => {
     await page.goto("/en");
     const cards = page.locator("[data-project-card]");
     const boxes = await cards.evaluateAll((els) => els.map((el) => el.getBoundingClientRect()));
-    expect(boxes.map((b) => Math.round(b.width))).toEqual([480, 360, 420]);
+    expect(boxes.map((b) => Math.round(b.width))).toEqual([480, 360, 420, 400]);
     const top = Math.round(boxes[0].top);
-    expect(boxes.map((b) => Math.round(b.top - top) || 0)).toEqual([0, 48, 24]);
+    expect(boxes.map((b) => Math.round(b.top - top) || 0)).toEqual([0, 48, 24, 0]);
   });
 
   test("first card fully visible and second peeking; arrows move the counter", async ({ page }) => {
@@ -69,9 +69,11 @@ test.describe("desktop strip", () => {
     await expect(cards.nth(1)).toBeInViewport();
     await expect(page.getByRole("button", { name: "Previous project" })).toBeDisabled();
     await page.getByRole("button", { name: "Next project" }).click();
-    await expect(page.getByText("2 / 3")).toBeVisible();
+    await expect(page.getByText("2 / 4")).toBeVisible();
     await page.getByRole("button", { name: "Next project" }).click();
-    await expect(page.getByText("3 / 3")).toBeVisible();
+    await expect(page.getByText("3 / 4")).toBeVisible();
+    await page.getByRole("button", { name: "Next project" }).click();
+    await expect(page.getByText("4 / 4")).toBeVisible();
     await expect(page.getByRole("button", { name: "Next project" })).toBeDisabled();
   });
 
@@ -80,7 +82,7 @@ test.describe("desktop strip", () => {
     const card = page.locator("[data-project-card]").first();
     await card.scrollIntoViewIfNeeded();
     await card.hover();
-    const mock = card.locator('div[aria-hidden="true"]').first();
+    const mock = card.locator("[data-card-media]");
     await expect.poll(() => mock.evaluate((el) => getComputedStyle(el).scale)).toBe("1.02");
     // El nombre cambia al color pop (se compara contra un elemento de prueba con --token-pop).
     const name = card.getByRole("heading", { level: 3 });
@@ -109,7 +111,7 @@ test.describe("mobile strip", () => {
     expect(Math.round(boxes[0].width / listBox!.width * 100)).toBe(85);
     expect(new Set(boxes.map((b) => Math.round(b.top))).size).toBe(1);
     await expect(page.getByRole("button", { name: "Next project" })).toBeHidden();
-    await expect(page.getByText("1 / 3")).toBeVisible();
+    await expect(page.getByText("1 / 4")).toBeVisible();
   });
 });
 
@@ -133,10 +135,10 @@ test.describe("screenshots", () => {
           await page.goto(`/${locale}`);
           const section = page.locator("section#work");
           await section.scrollIntoViewIfNeeded();
-          // La tercera tarjeta está fuera de la tira: se desplaza para que se revele y se regresa al inicio.
+          // Las tarjetas 3 y 4 están fuera de la tira: se desplaza para que se revelen y se regresa al inicio.
           const list = section.getByRole("list", { name: locale === "en" ? "Projects" : "Proyectos", exact: true });
-          for (const i of [1, 2]) await page.locator("[data-project-card]").nth(i).scrollIntoViewIfNeeded();
-          await expect(page.locator("[data-project-card] .reveal[data-shown='true']")).toHaveCount(3);
+          for (const i of [1, 2, 3]) await page.locator("[data-project-card]").nth(i).scrollIntoViewIfNeeded();
+          await expect(page.locator("[data-project-card] .reveal[data-shown='true']")).toHaveCount(4);
           await list.evaluate((el) => el.scrollTo({ left: 0, behavior: "instant" }));
           await page.evaluate(() => Promise.all(document.getAnimations().map((a) => a.finished)));
           await expect(section).toHaveScreenshot(`projects-${locale}-${scheme}.png`, { animations: "disabled" });

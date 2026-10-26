@@ -4,7 +4,7 @@ import { Pause, Play } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export type CycleImage = { src: string; alt: string };
+export type CycleImage = { src: string; alt: string; fit: "cover" | "contain" };
 
 type Props = {
   count: number;
@@ -25,7 +25,6 @@ const REDUCED_QUERY = "(prefers-reduced-motion: reduce)";
 // Media secundaria del caso de estudio: bucle de imágenes (mínimo 6). La primera se muestra
 // completa; cada siguiente entra encima de la anterior. Se pausa con el botón. Con
 // prefers-reduced-motion se queda en la primera imagen y no hay botón.
-// TODO: pasar `images` reales (public/images/projects/<slug>/) en la fase 6.
 export function CaseStudyMedia({ count, images, label, placeholder, pause, play }: Props) {
   const total = images?.length ?? count;
   const [current, setCurrent] = useState(0);
@@ -78,7 +77,7 @@ export function CaseStudyMedia({ count, images, label, placeholder, pause, play 
             }`}
           >
             {image ? (
-              <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 60vw, 100vw" className="object-cover" />
+              <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 60vw, 100vw" className={image.fit === "cover" ? "object-cover object-top" : "object-contain"} />
             ) : (
               // Placeholder: se alternan surface y powder para que se note el cambio.
               <div

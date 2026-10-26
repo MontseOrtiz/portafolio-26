@@ -1,15 +1,18 @@
 "use client";
 
 import { motion, useReducedMotion, useScroll, type MotionStyle } from "motion/react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useRef } from "react";
 import { Link } from "@/i18n/navigation";
+import { projectMedia } from "@/content/projects/media";
 
 // Media debajo del hero. En escritorio crece con el scroll hasta el ancho de la ventana
 // (clip-path, ver .hero-media en globals.css); en móvil es 4:5 y no se expande.
-// Placeholder hasta que llegue el mockup real (fase 6).
+// Capturas decorativas (alt vacío): el nombre del proyecto es el texto del enlace. Muestra capturas de WOD Tracker: tres en escritorio, una en móvil.
 export function HeroMedia() {
   const t = useTranslations("hero");
+  const screens = projectMedia["wod-tracker"].mobile.slice(0, 3);
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
 
@@ -31,7 +34,19 @@ export function HeroMedia() {
           prefetch={false}
           className="group bg-powder relative block size-full overflow-hidden"
         >
-          <span className="text-label text-on-powder absolute top-gap left-gap">{t("mediaPlaceholder")}</span>
+          <span className="absolute inset-0 flex items-start justify-center gap-gap pt-gap">
+            {screens.map((shot, n) => (
+              <span key={shot.src} className={`relative h-[78%] aspect-[9/19.5] ${n === 0 ? "" : "hidden md:block"}`}>
+                <Image
+                  src={shot.src}
+                  alt=""
+                  fill
+                  sizes="(min-width: 768px) 25vw, 60vw"
+                  className="object-contain object-top"
+                />
+              </span>
+            ))}
+          </span>
           <span aria-hidden="true" className="bg-scrim absolute inset-0" />
           <span className="text-heading text-on-media absolute inset-x-0 bottom-0 p-gap text-center underline-offset-4 group-hover:underline">
             {t("mediaTitle")}

@@ -4,7 +4,7 @@ const copy = {
   en: { concept: "Concept project", demo: "Live demo", problem: "Problem", role: "My role", decisions: "Technical decisions", result: "Result", prev: "Previous", next: "Next" },
   es: { concept: "Proyecto conceptual", demo: "Demo en vivo", problem: "Problema", role: "Mi rol", decisions: "Decisiones técnicas", result: "Resultado", prev: "Anterior", next: "Siguiente" },
 } as const;
-const names = { "book-diary": "Book Diary", "wod-tracker": "WOD Tracker", "destino-china": "Destino China" } as const;
+const names = { "book-diary": "Book Diary", "wod-tracker": "WOD Tracker", "destino-china": "Destino China", "mi-botiquin": "Mi botiquín" } as const;
 type Slug = keyof typeof names;
 const slugs = Object.keys(names) as Slug[];
 
@@ -37,7 +37,7 @@ for (const locale of ["en", "es"] as const) {
     test("Previous / Next cycle through the projects", async ({ page }) => {
       await page.goto(`/${locale}/projects/book-diary`);
       await page.getByRole("link", { name: new RegExp(`^${c.prev}`) }).click();
-      await page.waitForURL(`**/${locale}/projects/destino-china`);
+      await page.waitForURL(`**/${locale}/projects/mi-botiquin`);
       await page.getByRole("link", { name: new RegExp(`^${c.next}`) }).click();
       await page.waitForURL(`**/${locale}/projects/book-diary`);
       await page.getByRole("link", { name: new RegExp(`^${c.next}`) }).click();
@@ -62,7 +62,7 @@ test.describe("layout", () => {
     const mobile = testInfo.project.name === "mobile";
     await page.goto("/en/projects/wod-tracker");
     const article = page.locator("article");
-    const mainMedia = article.locator("> div[aria-hidden='true']").first();
+    const mainMedia = article.locator("[data-main-media]");
     const box = (await mainMedia.boundingBox())!;
     expect(box.width / box.height).toBeCloseTo(mobile ? 4 / 5 : 16 / 9, 1);
 
@@ -142,7 +142,7 @@ test.describe("secondary media", () => {
 test.describe("motion", () => {
   test("main media has no entrance animation; blocks reveal on scroll", async ({ page }) => {
     await page.goto("/en/projects/wod-tracker");
-    await expect(page.locator("article > div[aria-hidden='true']").first()).not.toHaveClass(/reveal/);
+    await expect(page.locator("article [data-main-media]")).not.toHaveClass(/reveal/);
     const block = page.locator("#cs-result").locator("xpath=ancestor::div[contains(@class,'reveal')]");
     await expect(block).toHaveAttribute("data-shown", "false");
     await page.locator("#cs-result").scrollIntoViewIfNeeded();

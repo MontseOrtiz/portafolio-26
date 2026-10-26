@@ -9,8 +9,7 @@
     "role": "Frontend / Full Stack Developer",
     "proposal": "Construyo interfaces rápidas y claras con React y Next.js, y aprendo rápido lo que el proyecto necesite.",
     "imageAlt": "Ilustración de Montse programando en su laptop, sentada sobre una ventana de navegador con dos perritos",
-    "mediaTitle": "WOD Tracker",
-    "mediaPlaceholder": "placeholder"
+    "mediaTitle": "WOD Tracker"
   },
   "intro": {
     "text": "Soy desarrolladora Frontend / Full Stack y cambié de carrera al código. He construido productos en startups y hecho consultoría en Xeleva, donde también mentoro a juniors. Lo que me distingue es lo rápido que aprendo: hice un sitio WordPress a medida en una semana."
@@ -44,6 +43,10 @@
       "destino-china": {
         "name": "Destino China",
         "demonstrates": "Sitio completo en WordPress/Elementor con SEO on-page y copy orientado a conversión."
+      },
+      "mi-botiquin": {
+        "name": "Mi botiquín",
+        "demonstrates": "PWA offline-first: Google Sheets como fuente de verdad, snapshots validados en IndexedDB y vencimientos como fechas de calendario."
       }
     }
   },

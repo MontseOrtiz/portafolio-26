@@ -9,8 +9,7 @@
     "role": "Frontend / Full Stack Developer",
     "proposal": "I build fast, clear interfaces with React and Next.js — and I learn whatever the project needs, fast.",
     "imageAlt": "Illustration of Montse coding on her laptop, sitting on a browser window with two dogs",
-    "mediaTitle": "WOD Tracker",
-    "mediaPlaceholder": "placeholder"
+    "mediaTitle": "WOD Tracker"
   },
   "intro": {
     "text": "I'm a Frontend / Full Stack developer who switched careers into code. I've built products at startups and consulted at Xeleva, where I also mentor juniors. What sets me apart is how fast I learn: I built a custom WordPress site in a week."
@@ -44,6 +43,10 @@
       "destino-china": {
         "name": "Destino China",
         "demonstrates": "Full WordPress/Elementor site with on-page SEO and conversion-focused copy."
+      },
+      "mi-botiquin": {
+        "name": "Mi botiquín",
+        "demonstrates": "Offline-first PWA: Google Sheets as the source of truth, validated IndexedDB snapshots and calendar-day expiry dates."
       }
     }
   },
