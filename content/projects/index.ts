@@ -31,6 +31,15 @@ export const projects = [
     widthClass: "md:w-[420px]",
     offsetClass: "md:mt-6",
   },
+  {
+    slug: "mi-botiquin",
+    stack: ["React", "Vite", "Tailwind CSS", "Zustand", "Dexie", "PWA"],
+    demoUrl: "https://mi-botiquin-rouge.vercel.app/",
+    concept: false,
+    repoUrl: null as string | null, // TODO: confirmar que el repo sea público
+    widthClass: "md:w-[400px]",
+    offsetClass: "md:mt-0",
+  },
 ] as const;
 
 export type Project = (typeof projects)[number];
