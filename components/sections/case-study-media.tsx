@@ -77,26 +77,24 @@ export function CaseStudyMedia({ count, images, label, placeholder, pause, play 
             }`}
           >
             {image ? (
-              <>
-                {/* Marco fijo (misma altura para todas): la captura va a todo el ancho, sin recorte ni zoom; si es más alta
-                    que el marco se recorre con scroll. Si es más baja, el resto se rellena con su propio desenfoque. */}
-                <Image src={image.src} alt="" aria-hidden="true" fill sizes="25vw" className="scale-110 object-cover blur-xl" />
-                <div
-                  role="region"
-                  aria-label={image.alt}
-                  tabIndex={isCurrent ? 0 : -1}
-                  className="absolute inset-0 overflow-y-auto focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-pop"
-                >
-                  <Image
-                    src={image.src}
-                    alt={image.alt}
-                    width={image.width}
-                    height={image.height}
-                    sizes="(min-width: 768px) 60vw, 100vw"
-                    className="h-auto w-full"
-                  />
-                </div>
-              </>
+              image.height > image.width ? (
+                // Captura vertical (móvil): a todo el ancho del marco y, como es más alta, con scroll interno.
+                <>
+                  <Image src={image.src} alt="" aria-hidden="true" fill sizes="25vw" className="scale-110 object-cover blur-xl" />
+                  <div
+                    role="region"
+                    aria-label={image.alt}
+                    tabIndex={isCurrent ? 0 : -1}
+                    className="absolute inset-0 overflow-y-auto focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-pop"
+                  >
+                    <Image src={image.src} alt={image.alt} width={image.width} height={image.height} sizes="(min-width: 768px) 60vw, 100vw" className="h-auto w-full" />
+                  </div>
+                </>
+              ) : (
+                // Capturas de escritorio: todas con el mismo alto de marco (16:10, el de la mayoría). Las más altas
+                // pierden la parte de abajo; las más bajas se ajustan sin dejar ver el fondo.
+                <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 60vw, 100vw" className="object-cover object-top" />
+              )
             ) : (
               // Placeholder: se alternan surface y powder para que se note el cambio.
               <div

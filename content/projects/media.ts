@@ -52,7 +52,16 @@ const SIZES: Record<string, [number, number]> = {
   "mi-botiquin/medications-mobile": [702, 1950],
   "mi-botiquin/supplies-desktop": [1248, 741],
   "mi-botiquin/supplies-mobile": [702, 1390],
+  "wod-tracker/404-desktop": [1280, 800],
   "wod-tracker/404-mobile": [780, 1688],
+  "wod-tracker/access-desktop": [1280, 800],
+  "wod-tracker/detail-desktop": [1280, 800],
+  "wod-tracker/history-desktop": [1280, 800],
+  "wod-tracker/home-desktop": [1280, 800],
+  "wod-tracker/photo-desktop": [1280, 800],
+  "wod-tracker/rep-ladder-desktop": [1280, 1000],
+  "wod-tracker/saved-desktop": [1280, 800],
+  "wod-tracker/wod-desktop": [1280, 800],
   "wod-tracker/access-mobile": [780, 1688],
   "wod-tracker/detail-mobile": [780, 1688],
   "wod-tracker/history-mobile": [780, 1688],
@@ -84,9 +93,9 @@ const bdHero = bd(
 
 // ---- WOD Tracker
 const wtHome = wt(
-  "home-desktop-full",
-  "WOD Tracker home: a greeting asking how the workout went and a button to start a round.",
-  "Inicio de WOD Tracker: un saludo que pregunta cómo va el día y un botón para empezar un round.",
+  "home-desktop",
+  "WOD Tracker home on desktop: a greeting asking how the workout went and a button to start a round.",
+  "Inicio de WOD Tracker en escritorio: un saludo que pregunta cómo va el día y un botón para empezar un round.",
 );
 
 // ---- Destino China
@@ -164,16 +173,19 @@ export const projectMedia: Record<string, ProjectMedia> = {
   },
   "wod-tracker": {
     hero: wtHome,
-    // La app es solo móvil: el carrusel usa capturas móviles.
     carousel: [
-      wt("history-mobile", "WOD Tracker history: a list of past rounds with their dates, filtered by month and year.", "Historial de WOD Tracker: lista de rounds anteriores con fecha, filtrada por mes y año."),
-      wt("detail-mobile", "WOD Tracker round detail: warm-up, strength and the workout with its results.", "Detalle de un round en WOD Tracker: calentamiento, fuerza y el WOD con sus resultados."),
-      wt("photo-mobile", "WOD Tracker photo step: take or pick a photo of the gym whiteboard.", "Paso de foto en WOD Tracker: tomar o elegir una foto del pizarrón del gimnasio."),
-      wt("rep-ladder-mobile", "WOD Tracker form to enter an exercise with its rep ladder, such as 21-15-9 repetitions.", "Formulario de WOD Tracker para capturar un ejercicio con su escalera de repeticiones, como 21-15-9."),
-      wt("saved-mobile", "WOD Tracker confirmation: the round was saved, with buttons to log another or see the history.", "Confirmación en WOD Tracker: el round se guardó, con botones para registrar otro o ver el historial."),
-      wt("wod-mobile", "WOD Tracker form to enter the result and the exercises of the workout, with a save button.", "Formulario de WOD Tracker para capturar el resultado y los ejercicios del entrenamiento, con un botón para guardar."),
+      wt("history-desktop", "WOD Tracker history on desktop: a list of past rounds with their dates, filtered by month and year.", "Historial de WOD Tracker en escritorio: lista de rounds anteriores con fecha, filtrada por mes y año."),
+      wt("detail-desktop", "WOD Tracker round detail on desktop: warm-up, strength and the workout with its results.", "Detalle de un round en WOD Tracker en escritorio: calentamiento, fuerza y el WOD con sus resultados."),
+      wt("photo-desktop", "WOD Tracker photo step on desktop: take or pick a photo of the gym whiteboard.", "Paso de foto en WOD Tracker en escritorio: tomar o elegir una foto del pizarrón del gimnasio."),
+      wt("rep-ladder-desktop", "WOD Tracker form on desktop to enter an exercise with its rep ladder, such as 21-15-9 repetitions.", "Formulario de WOD Tracker en escritorio para capturar un ejercicio con su escalera de repeticiones, como 21-15-9."),
+      wt("wod-desktop", "WOD Tracker form on desktop to enter the result and the exercises of the workout, with a save button.", "Formulario de WOD Tracker en escritorio para capturar el resultado y los ejercicios del entrenamiento, con un botón para guardar."),
+      wt("saved-desktop", "WOD Tracker confirmation on desktop: the round was saved, with buttons to log another or see the history.", "Confirmación en WOD Tracker en escritorio: el round se guardó, con botones para registrar otro o ver el historial."),
     ],
-    wide: wtHome,
+    wide: wt(
+      "home-desktop-full",
+      "WOD Tracker full home on desktop: a greeting asking how the workout went and a button to start a round.",
+      "Inicio completo de WOD Tracker en escritorio: un saludo que pregunta cómo va el día y un botón para empezar un round.",
+    ),
     mobile: [
       wt("home-mobile", "WOD Tracker home on a phone: a greeting and a button to start a round.", "Inicio de WOD Tracker en el celular: un saludo y un botón para empezar un round.",),
       wt("history-mobile", "WOD Tracker history on a phone: past rounds filtered by month and year.", "Historial de WOD Tracker en el celular: rounds anteriores filtrados por mes y año.",),
@@ -193,8 +205,7 @@ export const projectMedia: Record<string, ProjectMedia> = {
       dc("services-desktop", "Destino China services page on desktop: tailor-made trips to China.", "Página de servicios de Destino China en escritorio: viajes a medida a China."),
       dc("itineraries-desktop", "Destino China itineraries page on desktop, with sample trips and photos of a panda and Chinese landscapes.", "Página de itinerarios de Destino China en escritorio, con viajes de ejemplo y fotos de un panda y paisajes de China."),
       dc("contact-desktop", "Destino China contact page on desktop, with the form to request a trip.", "Página de contacto de Destino China en escritorio, con el formulario para pedir un viaje."),
-      dc("home-mobile", "Destino China home on a phone, with the hero about personalized trips to China.", "Inicio de Destino China en el celular, con el hero de viajes personalizados a China."),
-      dc("itineraries-mobile", "Destino China itineraries page on a phone, with photos of a panda and the Chinese landscape.", "Página de itinerarios de Destino China en el celular, con fotos de un panda y paisajes de China."),
+      dc("home-desktop", "Destino China home on desktop: a hero reading personalized trips to China, with a menu and a WhatsApp button.", "Inicio de Destino China en escritorio: un hero que dice viajes personalizados a China, con menú y botón de WhatsApp."),
     ],
     wide: dc(
       "home-desktop-full",
