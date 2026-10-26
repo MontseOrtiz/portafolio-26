@@ -79,7 +79,7 @@
   Las variables se sobrescriben en :root para que las utilidades las lean en vivo.
 */
 @theme {
-  --text-display-xl: clamp(64px, calc(64px + 112 * (100vw - 375px) / 905), 176px);
+  --text-display-xl: clamp(64px, calc(64px + 80 * (100vw - 375px) / 905), 144px);
   --text-display-xl--line-height: 0.9;
   --text-display-xl--letter-spacing: -0.04em;
 
@@ -184,6 +184,20 @@
 }
 
 /* Tipos con su familia, tamaño, peso e interlineado de tokens.md. */
+/*
+  Frase de una sola línea (footer: "Selected work →"): nunca más grande que display-xl, y se reduce
+  para caber en el ancho de su contenedor (cqw = 1% del ancho del contenedor).
+*/
+@utility text-fit-line {
+  container-type: inline-size;
+}
+@utility text-fit-line-inner {
+  font-size: min(var(--text-display-xl), 12.5cqw);
+  line-height: var(--text-display-xl--line-height);
+  letter-spacing: var(--text-display-xl--letter-spacing);
+  white-space: nowrap;
+}
+
 @utility text-display-xl {
   font-family: var(--font-sans);
   font-size: var(--text-display-xl);

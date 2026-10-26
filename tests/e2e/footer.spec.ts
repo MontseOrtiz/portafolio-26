@@ -22,10 +22,10 @@ for (const locale of ["en", "es"] as const) {
   const c = copy[locale];
 
   test.describe(`footer ${locale}`, () => {
-    test("home: phrase is a mailto link, awning on top", async ({ page }) => {
+    test("home: phrase is a mailto link, no awning", async ({ page }) => {
       await page.goto(`/${locale}`);
       await expect(footer(page).getByRole("heading", { level: 2 }).getByRole("link", { name: c.home })).toHaveAttribute("href", `mailto:${EMAIL}`);
-      await expect(footer(page).locator(".pattern-awning")).toHaveAttribute("aria-hidden", "true");
+      await expect(footer(page).locator(".pattern-awning")).toHaveCount(0);
     });
 
     test("about: phrase links to /#work, no awning", async ({ page }) => {

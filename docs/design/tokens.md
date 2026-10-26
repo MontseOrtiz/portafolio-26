@@ -59,7 +59,7 @@ Los párrafos largos van en Geist (sans) para que se lean bien; la mono queda pa
 
 | Token | Fuente | Tamaño desktop / móvil | Peso | Interlineado | Tracking | Uso |
 | --- | --- | --- | --- | --- | --- | --- |
-| `display-xl` | Geist | 176px / 64px | 500 | 0.9 | -0.04em | Nombre gigante del hero |
+| `display-xl` | Geist | 144px / 64px | 500 | 0.9 | -0.04em | Nombre gigante del hero |
 | `heading` | Geist | 38px / 28px | 500 | 1.3 | -0.02em | Títulos de sección |
 | `title` | Geist | 22px / 19px | 500 | 1.3 | -0.02em | Nombres de proyecto, subtítulos |
 | `body-lg` | Geist | 19px / 17px | 400 | 1.5 | 0 | Propuesta del hero, intro de bloques |

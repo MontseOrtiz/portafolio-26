@@ -10,7 +10,7 @@ Contenido (la frase cambia según la página):
 5. Debajo, en pequeño: "© 2026 Montse Ortiz · Made with ♥ in Querétaro" (año automático)
 Layout desktop: bloque dentro del `container`, fondo `surface`, `radius-md`. Frase alineada abajo a la izquierda, a todo el ancho, con mucho aire arriba (padding superior `section-lg`). Fila inferior separada por divisor 1px `border`, con los tres links repartidos (izquierda, centro, derecha).
 Layout móvil: frase en dos líneas; fila de links apilada a la izquierda.
-Tipografía: frase en `display-xl`; links en `label`; copyright en `label` color `muted`.
+Tipografía: frase en `display-xl` (en los casos de estudio y About va en una sola línea: se reduce para caber en su contenedor); links en `label`; copyright en `label` color `muted`.
 Espaciado: padding `section`; `gap` entre la frase y la fila; padding vertical de 16px en la fila.
 Color: fondo `surface`, texto `text`; patrón `pattern-awning` como franja superior del bloque en el home; corazón en `cherry` (`cherry` también se usa en la frase central de Tools).
 Interacción:
