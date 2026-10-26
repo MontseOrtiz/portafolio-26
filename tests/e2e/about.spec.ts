@@ -95,7 +95,7 @@ test.describe("collage", () => {
     const delays = await page
       .getByRole("group", { name: "Collage of images about Montse" })
       .locator(".reveal")
-      .evaluateAll((els) => els.map((el) => getComputedStyle(el).transitionDelay));
+      .evaluateAll((els) => els.map((el) => (el as HTMLElement).style.transitionDelay));
     expect(new Set(delays).size).toBe(2);
   });
 });
