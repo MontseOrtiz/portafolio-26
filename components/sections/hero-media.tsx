@@ -57,7 +57,7 @@ function Slide({
       <Image src={hero.src} alt="" fill sizes="100vw" className="filter-editorial object-cover object-top" />
       <span aria-hidden="true" className="bg-scrim absolute inset-0" />
       <motion.span style={{ opacity }} className="absolute inset-0 flex flex-col items-center justify-center gap-gap px-gutter text-center">
-        <span className="text-display-xl text-on-media">{name}</span>
+        <span className="text-project-name text-on-media">{name}</span>
         <span className="learn-more text-body-lg text-on-media inline-flex items-center gap-gap-sm">
           {t("learnMore")}
           <ArrowRight className="size-5" aria-hidden="true" />

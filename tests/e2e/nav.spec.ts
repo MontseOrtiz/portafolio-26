@@ -148,7 +148,7 @@ test.describe("nav content and layout", () => {
     }
   });
 
-  test("nav card has bg and a 1px border; content starts gap below it", async ({ page }, testInfo) => {
+  test("nav card has bg and a 1px border; the hero starts at the same top, with no gap", async ({ page }) => {
     await page.goto("/en");
     const card = page.locator("header div.rounded-md").first();
     // Espera a que termine la animación de entrada antes de medir posiciones.
@@ -164,8 +164,8 @@ test.describe("nav content and layout", () => {
     const box = await card.boundingBox();
     const heroBox = await page.locator("#hero").boundingBox();
     expect(box && heroBox).toBeTruthy();
-    const gap = testInfo.project.name === "mobile" ? 16 : 24;
-    expect(Math.round(heroBox!.y - (box!.y + box!.height))).toBe(gap);
+    // El hero empieza donde empieza el nav (el nav flota sobre su parte superior).
+    expect(Math.round(heroBox!.y)).toBe(Math.round(box!.y));
   });
 
   test("nav drops in on load", async ({ page }) => {

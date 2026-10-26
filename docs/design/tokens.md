@@ -133,5 +133,5 @@ Respetar `prefers-reduced-motion`: sin animaciones si el usuario las desactiva (
 
 | Token | Valor | Uso |
 | --- | --- | --- |
-| `filter-editorial` | `brightness(0.6) contrast(1.12) saturate(0.8) sepia(0.1)` | Look editorial oscuro de las imágenes del hero de proyectos |
+| `filter-editorial` | `brightness(0.68) contrast(1.096) saturate(0.84) sepia(0.08)` | Look editorial oscuro de las imágenes del hero de proyectos |
 | `delay-learn-more` | 2500ms | Espera antes de que aparezca "Conocer más" bajo el nombre del proyecto |
