@@ -12,11 +12,11 @@ const HeroMedia = dynamic(() => import("@/components/sections/hero-media").then(
     // con movimiento, o los proyectos apilados con prefers-reduced-motion.
     <>
       <div className="relative w-full motion-reduce:hidden" style={{ height: `${projects.length * 100}svh` }}>
-        <div className="bg-powder sticky top-24 aspect-[4/5] md:ml-[calc(50%-50vw)] md:aspect-video md:w-screen" />
+        <div className="bg-text sticky top-0 ml-[calc(50%-50vw)] h-svh w-screen" />
       </div>
       <div className="hidden flex-col gap-gap motion-reduce:flex">
         {projects.map((project) => (
-          <div key={project.slug} className="bg-powder aspect-[4/5] w-full md:aspect-video" />
+          <div key={project.slug} className="bg-text ml-[calc(50%-50vw)] h-svh w-screen" />
         ))}
       </div>
     </>

@@ -130,27 +130,78 @@ test.describe("work showcase", () => {
     expect(overflows).toBe(false);
   });
 
-  test("on mobile it is 4:5 and does not expand", async ({ page }, testInfo) => {
+  test("each project fills the window height and shows from the top (all sizes)", async ({ page }) => {
+    await page.goto("/en");
+    const media = page.locator(".hero-media");
+    await page.evaluate(() => window.scrollTo(0, document.querySelector("#work")!.getBoundingClientRect().top + window.scrollY));
+    const box = (await media.boundingBox())!;
+    const viewport = page.viewportSize()!;
+    expect(Math.round(box.height)).toBe(viewport.height);
+    expect(Math.round(box.y)).toBe(0);
+    // La imagen se ancla arriba: no se recorta su parte superior.
+    await expect(media.locator("img").first()).toHaveCSS("object-position", "50% 0%");
+  });
+
+  test("on mobile it is edge to edge and does not expand", async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "mobile", "mobile only");
     await page.goto("/en");
     const media = page.locator(".hero-media");
-    await media.evaluate((el) => el.scrollIntoView({ block: "center" }));
+    await media.evaluate((el) => el.scrollIntoView({ block: "start" }));
     const box = (await media.boundingBox())!;
-    expect(box.width).toBeLessThan(page.viewportSize()!.width);
-    expect(Math.round((box.height / box.width) * 100)).toBe(125);
+    expect(Math.round(box.width)).toBe(page.viewportSize()!.width);
+  });
+
+  test("name is centred in white without underline; 'Learn more' appears a few seconds later", async ({ page }) => {
+    await page.goto("/en");
+    await page.evaluate(() => window.scrollTo(0, document.querySelector("#work")!.getBoundingClientRect().top + window.scrollY));
+    const link = page.locator("section#work a:not([inert])");
+    const name = link.getByText("Book Diary", { exact: true });
+    await expect(name).toHaveCSS("color", "rgb(255, 252, 242)");
+    await expect(name).toHaveCSS("text-decoration-line", "none");
+    const box = (await name.boundingBox())!;
+    const viewport = page.viewportSize()!;
+    expect(Math.abs(box.x + box.width / 2 - viewport.width / 2)).toBeLessThan(2);
+    expect(Math.abs(box.y + box.height / 2 - viewport.height / 2)).toBeLessThan(viewport.height * 0.12);
+
+    const more = link.getByText("Learn more");
+    await expect(more).toHaveCSS("opacity", "0");
+    const moreBox = await more.boundingBox();
+    expect(moreBox!.y).toBeGreaterThan(box.y + box.height - 2);
+    await expect(more).toHaveCSS("opacity", "1", { timeout: 6000 });
+  });
+
+  test("hero images carry the dark editorial filter", async ({ page }) => {
+    await page.goto("/en");
+    const filter = await page.locator(".hero-media img").first().evaluate((el) => getComputedStyle(el).filter);
+    expect(filter).toContain("brightness");
+    expect(filter).toContain("contrast");
+  });
+
+  test("the nav goes transparent with white bold text over the media, and back to normal after it", async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "desktop", "checked on desktop");
+    await page.goto("/en");
+    const bar = page.getByRole("banner").locator("> div > div").first();
+    await expect(bar).toHaveCSS("background-color", "rgb(255, 252, 242)");
+    await page.evaluate(() => window.scrollTo(0, document.querySelector("#work")!.getBoundingClientRect().top + window.scrollY + 10));
+    await expect(bar).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
+    await expect(bar).toHaveCSS("border-top-color", "rgba(0, 0, 0, 0)");
+    await expect(bar).toHaveCSS("font-weight", "700");
+    await expect(bar).toHaveCSS("color", "rgb(255, 252, 242)");
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await expect(bar).toHaveCSS("background-color", "rgb(255, 252, 242)");
   });
 
   test.describe("reduced motion", () => {
     test.use({ reducedMotion: "reduce" });
 
-    test("projects are stacked at container width, not sticky and not animated", async ({ page }) => {
+    test("projects are stacked full height, not sticky and not animated", async ({ page }) => {
       await page.goto("/en");
       const links = page.locator("section#work a");
       await expect(links).toHaveCount(ORDER.length);
       const boxes = await links.evaluateAll((els) => els.map((el) => el.getBoundingClientRect()));
-      // Uno debajo de otro, todos del mismo ancho y dentro de la ventana.
+      // Uno debajo de otro, todos del mismo ancho y con el alto de la ventana.
       expect(new Set(boxes.map((b) => Math.round(b.width))).size).toBe(1);
-      expect(boxes[0].width).toBeLessThanOrEqual(page.viewportSize()!.width);
+      expect(Math.round(boxes[0].height)).toBe(page.viewportSize()!.height);
       for (let i = 1; i < boxes.length; i++) expect(boxes[i].top).toBeGreaterThan(boxes[i - 1].top);
       await expect(page.locator("section#work a[inert]")).toHaveCount(0);
     });

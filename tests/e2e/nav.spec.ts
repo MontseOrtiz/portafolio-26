@@ -113,16 +113,11 @@ test.describe("theme persistence", () => {
 });
 
 test.describe("nav content and layout", () => {
-  test("left zone: name and role on desktop; name only on mobile", async ({ page }, testInfo) => {
+  test("left zone: only the name, no role text", async ({ page }) => {
     await page.goto("/en");
     const banner = page.getByRole("banner");
     await expect(banner.getByRole("link", { name: "Montse Ortiz" })).toBeVisible();
-    const role = banner.getByText("Frontend / Full Stack Developer");
-    if (testInfo.project.name === "desktop") {
-      await expect(role).toBeVisible();
-    } else {
-      await expect(role).toBeHidden();
-    }
+    await expect(banner.getByText("Frontend / Full Stack Developer")).toHaveCount(0);
   });
 
   test("name uses the sans font, not the mono", async ({ page }) => {

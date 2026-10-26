@@ -128,3 +128,10 @@ Respetar `prefers-reduced-motion`: sin animaciones si el usuario las desactiva (
 
 - Las referencias por sección (references.md) aportan layout e interacción; sus colores, fuentes y medidas no se usan.
 - Si una sección necesita un valor que no está aquí, primero se agrega a este archivo y después se usa.
+
+## Hero de proyectos
+
+| Token | Valor | Uso |
+| --- | --- | --- |
+| `filter-editorial` | `brightness(0.6) contrast(1.12) saturate(0.8) sepia(0.1)` | Look editorial oscuro de las imágenes del hero de proyectos |
+| `delay-learn-more` | 2500ms | Espera antes de que aparezca "Conocer más" bajo el nombre del proyecto |

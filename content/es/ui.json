@@ -26,6 +26,7 @@
     "previous": "Proyecto anterior",
     "next": "Proyecto siguiente",
     "stack": "Stack",
+    "learnMore": "Conocer más",
     "caseStudy": "Caso de estudio",
     "liveDemo": "Demo en vivo",
     "newTab": "se abre en una pestaña nueva",
@@ -89,7 +90,6 @@
   },
   "nav": {
     "name": "Montse Ortiz",
-    "role": "Frontend / Full Stack Developer",
     "main": "Navegación principal",
     "language": "Idioma",
     "about": "Sobre mí",
