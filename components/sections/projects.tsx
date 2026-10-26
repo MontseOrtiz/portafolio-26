@@ -14,7 +14,7 @@ export async function Projects() {
 
   const cards = projects.map((project) => {
     const name = t(`items.${project.slug}.name`);
-    const card = projectMedia[project.slug]?.card;
+    const card = projectMedia[project.slug]?.hero;
     return (
       <li
         key={project.slug}
@@ -31,7 +31,7 @@ export async function Projects() {
                     alt={card.alt[locale]}
                     fill
                     sizes="(min-width: 768px) 480px, 85vw"
-                    className={card.fit === "cover" ? "object-cover object-top" : "object-contain"}
+                    className="object-cover object-top"
                   />
                 ) : (
                   <div aria-hidden="true" className="flex size-full items-center justify-center">

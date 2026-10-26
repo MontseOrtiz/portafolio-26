@@ -4,7 +4,8 @@ import { Pause, Play } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export type CycleImage = { src: string; alt: string; fit: "cover" | "contain" };
+// `portrait`: captura vertical; se muestra completa sobre su propio desenfoque para que no se vea el fondo del marco.
+export type CycleImage = { src: string; alt: string; portrait: boolean };
 
 type Props = {
   count: number;
@@ -61,7 +62,7 @@ export function CaseStudyMedia({ count, images, label, placeholder, pause, play 
       role="group"
       aria-label={label}
       data-current={current}
-      className="relative aspect-[8/9] overflow-hidden bg-surface md:col-span-7"
+      className="relative aspect-[4/3] overflow-hidden bg-surface md:col-span-7"
     >
       {Array.from({ length: total }, (_, i) => {
         const isCurrent = i === current;
@@ -77,7 +78,14 @@ export function CaseStudyMedia({ count, images, label, placeholder, pause, play 
             }`}
           >
             {image ? (
-              <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 60vw, 100vw" className={image.fit === "cover" ? "object-cover object-top" : "object-contain"} />
+              image.portrait ? (
+                <>
+                  <Image src={image.src} alt="" aria-hidden="true" fill sizes="25vw" className="scale-110 object-cover blur-xl" />
+                  <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 60vw, 100vw" className="object-contain" />
+                </>
+              ) : (
+                <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 60vw, 100vw" className="object-cover object-center" />
+              )
             ) : (
               // Placeholder: se alternan surface y powder para que se note el cambio.
               <div

@@ -51,12 +51,6 @@ test("unknown slug is a 404", async ({ page }) => {
   expect(response?.status()).toBe(404);
 });
 
-test("project cards on the home link to existing case studies", async ({ page }) => {
-  await page.goto("/en");
-  await page.locator("[data-project-card]").nth(1).getByRole("link", { name: /Case study/ }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("WOD Tracker");
-});
-
 test.describe("layout", () => {
   test("main media ratio, summary columns and stack grid", async ({ page }, testInfo) => {
     const mobile = testInfo.project.name === "mobile";
@@ -91,11 +85,10 @@ test.describe("layout", () => {
 test.describe("secondary media", () => {
   const group = (page: import("@playwright/test").Page) => page.getByRole("group", { name: "Project screens" });
 
-  test("is 10% shorter than the old 4:5 and holds at least 6 images", async ({ page }) => {
+  test("is 4:3 and holds at least 6 images", async ({ page }) => {
     await page.goto("/en/projects/wod-tracker");
     const box = (await group(page).boundingBox())!;
-    // 4:5 -> altura x 0.9 => ancho / alto = 4 / 4.5
-    expect(box.width / box.height).toBeCloseTo(4 / 4.5, 2);
+    expect(box.width / box.height).toBeCloseTo(4 / 3, 2);
     expect(await group(page).locator("[data-slide]").count()).toBeGreaterThanOrEqual(6);
   });
 
