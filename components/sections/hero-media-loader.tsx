@@ -8,10 +8,18 @@ import { projects } from "@/content/projects";
 const HeroMedia = dynamic(() => import("@/components/sections/hero-media").then((m) => m.HeroMedia), {
   ssr: false,
   loading: () => (
-    // Reserva el mismo alto que el bloque real (una pantalla por proyecto) para no mover la página.
-    <div className="relative w-full" style={{ height: `${projects.length * 100}svh` }}>
-      <div className="bg-powder sticky top-24 aspect-[4/5] md:ml-[calc(50%-50vw)] md:aspect-video md:w-screen" />
-    </div>
+    // Reserva el mismo alto que el bloque real para no mover la página: una pantalla por proyecto
+    // con movimiento, o los proyectos apilados con prefers-reduced-motion.
+    <>
+      <div className="relative w-full motion-reduce:hidden" style={{ height: `${projects.length * 100}svh` }}>
+        <div className="bg-powder sticky top-24 aspect-[4/5] md:ml-[calc(50%-50vw)] md:aspect-video md:w-screen" />
+      </div>
+      <div className="hidden flex-col gap-gap motion-reduce:flex">
+        {projects.map((project) => (
+          <div key={project.slug} className="bg-powder aspect-[4/5] w-full md:aspect-video" />
+        ))}
+      </div>
+    </>
   ),
 });
 
