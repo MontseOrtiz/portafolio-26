@@ -22,8 +22,15 @@ for (const locale of ["en", "es"] as const) {
         const demo = page.getByRole("link", { name: new RegExp(c.demo) });
         await expect(demo).toHaveAttribute("target", "_blank");
         await expect(demo).toHaveAttribute("rel", /noopener/);
-        // Aún no hay repos: el link no se muestra.
-        await expect(page.getByRole("link", { name: /^Repo/ })).toHaveCount(0);
+        // Solo Mi botiquín tiene repo público; en los demás el link no se muestra.
+        const repo = page.getByRole("link", { name: /^Repo/ });
+        if (slug === "mi-botiquin") {
+          await expect(repo).toHaveAttribute("href", "https://github.com/MontseOrtiz/mi-botiquin");
+          await expect(repo).toHaveAttribute("target", "_blank");
+          await expect(repo).toHaveAttribute("rel", /noopener/);
+        } else {
+          await expect(repo).toHaveCount(0);
+        }
       });
     }
 
