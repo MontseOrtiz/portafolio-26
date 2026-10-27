@@ -36,7 +36,7 @@ export const projects = [
     stack: ["React", "Vite", "Tailwind CSS", "Zustand", "Dexie", "PWA"],
     demoUrl: "https://mi-botiquin-rouge.vercel.app/",
     concept: false,
-    repoUrl: null as string | null, // TODO: confirmar que el repo sea público
+    repoUrl: "https://github.com/MontseOrtiz/mi-botiquin" as string | null,
     widthClass: "md:w-[400px]",
     offsetClass: "md:mt-0",
   },

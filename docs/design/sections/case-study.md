@@ -2,16 +2,16 @@
 Referencia: https://jsandrieu.com/04-nextprize (ver moodboard) — media grande arriba, texto + media en dos columnas, bloques de media a todo el ancho, franja oscura con pantallas móviles, "Previous / Next". De https://wearebou.com/cases/rovio: la cuadrícula de bordes finos.
 Objetivo: Que un líder técnico entienda el problema, mis decisiones y el resultado en 2 minutos.
 Contenido (de content/projects/[slug].mdx, en ambos idiomas):
-1. Media principal: video con transiciones entre capturas de la app (placeholder hasta la fase 6)
+1. Media principal: imagen del hero del proyecto en desktop; si no hay, la del móvil (video con transiciones más adelante)
 2. Resumen: nombre del proyecto (`h1`), badge "Concept project" si aplica, 3–4 líneas de descripción, rol, links "Live demo" y "Repo"
-3. Media secundaria a la derecha del resumen: bucle de al menos 6 imágenes (capturas verticales o mockups). La primera se muestra completa; cada 4 s entra la siguiente encima de la anterior, alternando la dirección: izquierda → derecha, abajo → arriba, derecha → izquierda, arriba → abajo, y repite; tras la última vuelve a la primera. Botón de pausa/reanudar
+3. Media secundaria a la derecha del resumen: bucle de 5 o más capturas de escritorio (móviles solo si faltan). Todas en un marco de la misma altura, 16:10 (la proporción de la mayoría de las capturas de escritorio): las más altas pierden la parte de abajo (`object-top`) y las más bajas se ajustan sin dejar ver el fondo. Las capturas móviles, si hacen falta, van a todo el ancho con scroll interno. La primera se muestra completa; cada 4 s entra la siguiente encima de la anterior, alternando la dirección: izquierda → derecha, abajo → arriba, derecha → izquierda, arriba → abajo, y repite; tras la última vuelve a la primera. Botón de pausa/reanudar
 4. Bloques: Problem, My role, Technical decisions, Result
-5. Media a todo el ancho entre bloques (capturas de escritorio sobre `pattern-gingham`)
+5. Media a todo el ancho entre bloques: imagen completa del home del proyecto sobre `pattern-gingham`, con altura máxima y scroll interno (región enfocable con etiqueta)
 6. Stack: cuadrícula con bordes finos, una celda por tecnología (ícono + nombre)
-7. Franja oscura con 3–4 pantallas móviles en fila
+7. Franja oscura con todas las pantallas móviles del proyecto en fila, completas y sin recorte (cada una con su propia altura)
 8. Navegación "← Previous" / "Next →" entre proyectos
 9. Footer de cierre en su versión de casos de estudio (solo la fila de links, ver footer.md)
-Layout desktop: todo dentro del `container`. Media principal 16:9, a todo el ancho del contenedor. Resumen en dos columnas 5/7: texto a la izquierda (ancho máx. `measure`), media secundaria a la derecha en proporción 8:9 (10% menos alta que el 4:5 anterior). Cada bloque en dos columnas 4/8: título a la izquierda, párrafo a la derecha. Cuadrícula del stack de 6 columnas con bordes 1px `border`. Franja oscura con `radius-md` y las pantallas móviles centradas con `gap`.
+Layout desktop: todo dentro del `container`. Media principal 16:9, a todo el ancho del contenedor. Resumen en dos columnas 5/7: texto a la izquierda (ancho máx. `measure`), media secundaria a la derecha en proporción 16:10. Cada bloque en dos columnas 4/8: título a la izquierda, párrafo a la derecha. Cuadrícula del stack de 6 columnas con bordes 1px `border`. Franja oscura con `radius-md` y las pantallas móviles centradas con `gap`.
 Layout móvil: una columna: media principal (4:5), resumen, media secundaria, bloques con título arriba del párrafo, cuadrícula del stack de 3 columnas, pantallas móviles con scroll horizontal, Previous / Next.
 Tipografía: nombre en `heading`; títulos de bloque en `title`; resumen en `body-lg`; párrafos en `body`; rol, links, stack y Previous / Next en `small`; badge en `label`.
 Espaciado: padding `section`; `section` entre bloques; `gap` entre columnas.

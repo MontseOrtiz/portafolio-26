@@ -65,15 +65,52 @@ test.describe("hero content", () => {
   });
 });
 
-test.describe("hero media", () => {
-  test("links to the WOD Tracker case study", async ({ page }) => {
+const PROJECTS = [
+  { slug: "book-diary", name: "Book Diary" },
+  { slug: "wod-tracker", name: "WOD Tracker" },
+  { slug: "mi-botiquin", name: "Mi botiquín" },
+  { slug: "destino-china", name: "Destino China" },
+] as const;
+
+// Orden de las diapositivas = orden de content/projects/index.ts.
+const ORDER = ["book-diary", "wod-tracker", "destino-china", "mi-botiquin"];
+const NAMES: Record<string, string> = Object.fromEntries(PROJECTS.map((p) => [p.slug, p.name]));
+
+test.describe("work showcase", () => {
+  test("#work holds every project as a link to its case study", async ({ page }) => {
     await page.goto("/en");
-    const link = page.locator(".hero-media a");
-    await expect(link).toHaveAttribute("href", "/en/projects/wod-tracker");
-    await expect(link).toContainText("WOD Tracker");
+    const links = page.locator("section#work a");
+    await expect(links).toHaveCount(ORDER.length);
+    for (const [i, slug] of ORDER.entries()) {
+      await expect(links.nth(i)).toHaveAttribute("href", `/en/projects/${slug}`);
+      await expect(links.nth(i)).toContainText(NAMES[slug]);
+    }
   });
 
-  test("on desktop it grows from the container width to the full window while scrolling", async ({ page }, testInfo) => {
+  test("the nav Work link lands on the showcase", async ({ page }, testInfo) => {
+    test.skip(testInfo.project.name !== "desktop", "nav links are inline on desktop");
+    await page.goto("/en");
+    await page.getByRole("banner").getByRole("link", { name: "Work" }).click();
+    await expect.poll(() => page.evaluate(() => document.querySelector("#work")!.getBoundingClientRect().top)).toBeLessThan(2);
+  });
+
+  test("scrolling shows one project after another until the last", async ({ page }) => {
+    await page.goto("/en");
+    const { top, vh } = await page.evaluate(() => ({
+      top: document.querySelector("#work")!.getBoundingClientRect().top + window.scrollY,
+      vh: window.innerHeight,
+    }));
+    for (const [i, slug] of ORDER.entries()) {
+      await page.evaluate((y) => window.scrollTo(0, y), top + i * vh);
+      // Solo el proyecto visible se puede enfocar (los demás están tapados).
+      const active = page.locator("section#work a:not([inert])");
+      await expect(active).toHaveCount(1);
+      await expect(active).toHaveAttribute("href", `/en/projects/${slug}`);
+      await expect(active).toBeInViewport();
+    }
+  });
+
+  test("on desktop the first project grows from the container width to the full window", async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "desktop", "expansion is desktop-only");
     await page.goto("/en");
     const media = page.locator(".hero-media");
@@ -85,7 +122,7 @@ test.describe("hero media", () => {
     const edge = (page.viewportSize()!.width - (await page.locator("main").boundingBox())!.width) / 2 + 1;
     expect(await inset()).toBeGreaterThan(edge - 2);
 
-    await media.evaluate((el) => el.scrollIntoView({ block: "center" }));
+    await page.evaluate(() => window.scrollTo(0, document.querySelector("#work")!.getBoundingClientRect().top + window.scrollY));
     await expect.poll(inset).toBeLessThan(1);
 
     // La expansión no debe crear scroll horizontal.
@@ -93,41 +130,73 @@ test.describe("hero media", () => {
     expect(overflows).toBe(false);
   });
 
-  test("on mobile it is 4:5 and does not expand", async ({ page }, testInfo) => {
+  test("each project fills the window height and shows from the top (all sizes)", async ({ page }) => {
+    await page.goto("/en");
+    const media = page.locator(".hero-media");
+    await page.evaluate(() => window.scrollTo(0, document.querySelector("#work")!.getBoundingClientRect().top + window.scrollY));
+    const box = (await media.boundingBox())!;
+    const viewport = page.viewportSize()!;
+    expect(Math.round(box.height)).toBe(viewport.height);
+    expect(Math.round(box.y)).toBe(0);
+    // La imagen se ancla arriba: no se recorta su parte superior.
+    await expect(media.locator("img").first()).toHaveCSS("object-position", "50% 0%");
+  });
+
+  test("on mobile it is edge to edge and does not expand", async ({ page }, testInfo) => {
     test.skip(testInfo.project.name !== "mobile", "mobile only");
     await page.goto("/en");
     const media = page.locator(".hero-media");
-    await media.evaluate((el) => el.scrollIntoView({ block: "center" }));
+    await media.evaluate((el) => el.scrollIntoView({ block: "start" }));
     const box = (await media.boundingBox())!;
-    expect(box.width).toBeLessThan(page.viewportSize()!.width);
-    expect(Math.round((box.height / box.width) * 100)).toBe(125);
+    expect(Math.round(box.width)).toBe(page.viewportSize()!.width);
+  });
+
+  test("name is at the bottom, centred, in white without underline; 'Learn more' appears a few seconds later", async ({ page }) => {
+    await page.goto("/en");
+    await page.evaluate(() => window.scrollTo(0, document.querySelector("#work")!.getBoundingClientRect().top + window.scrollY));
+    const link = page.locator("section#work a:not([inert])");
+    const name = link.getByText("Book Diary", { exact: true });
+    await expect(name).toHaveCSS("color", "rgb(255, 252, 242)");
+    await expect(name).toHaveCSS("text-decoration-line", "none");
+    const box = (await name.boundingBox())!;
+    const viewport = page.viewportSize()!;
+    expect(Math.abs(box.x + box.width / 2 - viewport.width / 2)).toBeLessThan(2);
+    expect(box.y + box.height).toBeGreaterThan(viewport.height * 0.6);
+
+    const more = link.getByText("Learn more");
+    await expect(more).toHaveCSS("opacity", "0");
+    const moreBox = await more.boundingBox();
+    expect(moreBox!.y).toBeGreaterThan(box.y + box.height - 2);
+    await expect(more).toHaveCSS("opacity", "1", { timeout: 6000 });
+  });
+
+  test("hero images carry the dark editorial filter", async ({ page }) => {
+    await page.goto("/en");
+    const filter = await page.locator(".hero-media img").first().evaluate((el) => getComputedStyle(el).filter);
+    expect(filter).toContain("brightness");
+    expect(filter).toContain("contrast");
   });
 
   test.describe("reduced motion", () => {
     test.use({ reducedMotion: "reduce" });
 
-    test("stays at container width and does not move", async ({ page }, testInfo) => {
+    test("projects are stacked full height, not sticky and not animated", async ({ page }) => {
       await page.goto("/en");
-      const media = page.locator(".hero-media");
-      await media.evaluate((el) => el.scrollIntoView({ block: "center" }));
-      const box = (await media.boundingBox())!;
-      if (testInfo.project.name === "desktop") {
-        // Sigue recortada a container: la inserción lateral no baja de (ventana - container) / 2.
-        const inset = await media.evaluate((el) => {
-          const match = /inset\(0px(?: ([\d.]+)px)?/.exec(getComputedStyle(el).clipPath);
-          return match ? Number(match[1] ?? 0) : NaN;
-        });
-        const main = (await page.locator("main").boundingBox())!;
-        expect(inset).toBeGreaterThan((page.viewportSize()!.width - main.width) / 2 - 2);
-        expect(box.width).toBeGreaterThan(0);
-      }
+      const links = page.locator("section#work a");
+      await expect(links).toHaveCount(ORDER.length);
+      const boxes = await links.evaluateAll((els) => els.map((el) => el.getBoundingClientRect()));
+      // Uno debajo de otro, todos del mismo ancho y con el alto de la ventana.
+      expect(new Set(boxes.map((b) => Math.round(b.width))).size).toBe(1);
+      expect(Math.round(boxes[0].height)).toBe(page.viewportSize()!.height);
+      for (let i = 1; i < boxes.length; i++) expect(boxes[i].top).toBeGreaterThan(boxes[i - 1].top);
+      await expect(page.locator("section#work a[inert]")).toHaveCount(0);
     });
 
     for (const locale of ["en", "es"] as const) {
-      test(`screenshot of the media, reduced motion (${locale})`, async ({ page }) => {
+      test(`screenshot of the first project, reduced motion (${locale})`, async ({ page }) => {
         await page.goto(`/${locale}`);
         await ready(page);
-        const media = page.locator(".hero-media");
+        const media = page.locator("section#work a").first();
         await media.evaluate((el) => el.scrollIntoView({ block: "center" }));
         await ready(page);
         // El nav fijo taparía la parte superior de la media en el centro de la ventana.

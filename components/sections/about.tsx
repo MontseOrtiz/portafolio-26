@@ -6,8 +6,6 @@ import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 // Imagen del collage: sube al frente y se endereza al pasar el cursor (solo con puntero).
-const photo =
-  "size-full shadow-photo transition-[rotate] duration-(--duration) ease-token hover:z-30 hover:rotate-0";
 
 // TODO: bio final y 1–2 imágenes más (captura de una app, pizarrón o libros) en la fase 6.
 export async function About() {
@@ -62,15 +60,6 @@ export async function About() {
               sizes="(min-width: 768px) 400px, 240px"
               className="h-auto w-full"
             />
-          </div>
-        </Reveal>
-        <Reveal className="absolute bottom-0 left-0 z-20 aspect-[4/3] w-3/5" delay={100}>
-          {/* TODO: captura de una app, pizarrón de CrossFit o libros (fase 6). */}
-          <div
-            aria-hidden="true"
-            className={cn(photo, "flex rotate-(--rotate-tilt-md) items-center justify-center bg-powder")}
-          >
-            <span className="text-label text-on-powder">{t("placeholder")}</span>
           </div>
         </Reveal>
       </div>

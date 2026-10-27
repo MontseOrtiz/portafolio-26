@@ -105,10 +105,6 @@ export function Nav() {
             <Link href="/" className="text-small font-sans font-medium whitespace-nowrap">
               {t("name")}
             </Link>
-            <span aria-hidden="true" className="text-small text-muted hidden md:inline">
-              |
-            </span>
-            <span className="text-small text-muted hidden whitespace-nowrap md:inline">{t("role")}</span>
           </div>
 
           <Button

@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
-// Primera pantalla: ocupa el alto de la ventana menos el nav (82px) y su separación (gap).
+// Primera pantalla: empieza donde empieza el nav (top-4, 1rem) y ocupa el resto del alto de la ventana.
+// El nav flota sobre su parte superior, sin dejar espacio entre ambos.
 export async function Hero() {
   const t = await getTranslations("hero");
 
@@ -9,7 +10,7 @@ export async function Hero() {
     <section
       id="hero"
       aria-labelledby="hero-name"
-      className="flex min-h-[calc(100svh-82px-var(--spacing-gap))] flex-col justify-center gap-gap rounded-md bg-surface px-gutter py-section-lg"
+      className="-mt-[calc(82px+var(--spacing-gap)-1rem)] flex min-h-[calc(100svh-1rem)] flex-col justify-center gap-gap rounded-md bg-surface px-gutter pt-[calc(82px+var(--spacing-section-lg))] pb-section-lg"
     >
       <Image
         src="/images/hero/hero-avatar-browser.webp"

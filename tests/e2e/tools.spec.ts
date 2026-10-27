@@ -209,7 +209,9 @@ test.describe("screenshots", () => {
           await page.evaluate(() => document.fonts.ready);
           const section = page.locator("#tools");
           await section.scrollIntoViewIfNeeded();
-          await expect(section).toHaveScreenshot(`tools-${locale}-${scheme}.png`, { animations: "disabled", mask: [page.locator("header")] });
+          // El nav fijo cae sobre la sección según el scroll: se oculta (en vez de enmascararlo) para que la captura no dependa de dónde quede.
+          await page.addStyleTag({ content: "header { visibility: hidden !important; }" });
+          await expect(section).toHaveScreenshot(`tools-${locale}-${scheme}.png`, { animations: "disabled" });
         });
       });
     }

@@ -4,7 +4,7 @@ import { Pause, Play } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export type CycleImage = { src: string; alt: string; fit: "cover" | "contain" };
+export type CycleImage = { src: string; alt: string; width: number; height: number };
 
 type Props = {
   count: number;
@@ -61,7 +61,7 @@ export function CaseStudyMedia({ count, images, label, placeholder, pause, play 
       role="group"
       aria-label={label}
       data-current={current}
-      className="relative aspect-[8/9] overflow-hidden bg-surface md:col-span-7"
+      className="relative aspect-[16/10] overflow-hidden bg-surface md:col-span-7"
     >
       {Array.from({ length: total }, (_, i) => {
         const isCurrent = i === current;
@@ -77,7 +77,24 @@ export function CaseStudyMedia({ count, images, label, placeholder, pause, play 
             }`}
           >
             {image ? (
-              <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 60vw, 100vw" className={image.fit === "cover" ? "object-cover object-top" : "object-contain"} />
+              image.height > image.width ? (
+                // Captura vertical (móvil): a todo el ancho del marco y, como es más alta, con scroll interno.
+                <>
+                  <Image src={image.src} alt="" aria-hidden="true" fill sizes="25vw" className="scale-110 object-cover blur-xl" />
+                  <div
+                    role="region"
+                    aria-label={image.alt}
+                    tabIndex={isCurrent ? 0 : -1}
+                    className="absolute inset-0 overflow-y-auto focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-pop"
+                  >
+                    <Image src={image.src} alt={image.alt} width={image.width} height={image.height} sizes="(min-width: 768px) 60vw, 100vw" className="h-auto w-full" />
+                  </div>
+                </>
+              ) : (
+                // Capturas de escritorio: todas con el mismo alto de marco (16:10, el de la mayoría). Las más altas
+                // pierden la parte de abajo; las más bajas se ajustan sin dejar ver el fondo.
+                <Image src={image.src} alt={image.alt} fill sizes="(min-width: 768px) 60vw, 100vw" className="object-cover object-top" />
+              )
             ) : (
               // Placeholder: se alternan surface y powder para que se note el cambio.
               <div

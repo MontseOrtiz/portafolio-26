@@ -79,7 +79,7 @@
   Las variables se sobrescriben en :root para que las utilidades las lean en vivo.
 */
 @theme {
-  --text-display-xl: clamp(64px, calc(64px + 112 * (100vw - 375px) / 905), 176px);
+  --text-display-xl: clamp(64px, calc(64px + 80 * (100vw - 375px) / 905), 144px);
   --text-display-xl--line-height: 0.9;
   --text-display-xl--letter-spacing: -0.04em;
 
@@ -184,6 +184,20 @@
 }
 
 /* Tipos con su familia, tamaño, peso e interlineado de tokens.md. */
+/*
+  Frase de una sola línea (footer: "Selected work →"): nunca más grande que display-xl, y se reduce
+  para caber en el ancho de su contenedor (cqw = 1% del ancho del contenedor).
+*/
+@utility text-fit-line {
+  container-type: inline-size;
+}
+@utility text-fit-line-inner {
+  font-size: min(var(--text-display-xl), 12.5cqw);
+  line-height: var(--text-display-xl--line-height);
+  letter-spacing: var(--text-display-xl--letter-spacing);
+  white-space: nowrap;
+}
+
 @utility text-display-xl {
   font-family: var(--font-sans);
   font-size: var(--text-display-xl);
@@ -323,6 +337,44 @@
       (1 - var(--reveal, 0)) * (100vw - min(100vw, var(--container-page)) + 2 * var(--spacing-gutter)) / 2
     );
     clip-path: inset(0 var(--hero-media-inset));
+  }
+}
+
+/*
+  Look editorial oscuro de las imágenes del hero: más oscuras, más contraste y algo menos de color.
+  Tokens: --filter-editorial y --delay-learn-more (documentados en tokens.md).
+*/
+:root {
+  --filter-editorial: brightness(0.872) contrast(1.038) saturate(0.936) sepia(0.032);
+  --delay-learn-more: 2500ms;
+}
+/* Nombre del proyecto en el hero: la mitad de display-xl. */
+@utility text-project-name {
+  font-size: calc(var(--text-display-xl) * 0.5);
+  line-height: var(--text-display-xl--line-height);
+  letter-spacing: var(--text-display-xl--letter-spacing);
+}
+@utility filter-editorial {
+  filter: var(--filter-editorial);
+}
+
+/* "Conocer más" aparece unos segundos después de que el proyecto queda visible. */
+.learn-more {
+  opacity: 0;
+  translate: 0 0.5rem;
+}
+[data-active="true"] .learn-more {
+  opacity: 1;
+  translate: 0 0;
+  transition:
+    opacity var(--duration-slow) var(--ease-token) var(--delay-learn-more),
+    translate var(--duration-slow) var(--ease-token) var(--delay-learn-more);
+}
+@media (prefers-reduced-motion: reduce) {
+  .learn-more {
+    opacity: 1;
+    translate: 0 0;
+    transition: none;
   }
 }
 

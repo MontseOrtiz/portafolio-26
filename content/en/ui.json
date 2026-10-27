@@ -26,6 +26,7 @@
     "previous": "Previous project",
     "next": "Next project",
     "stack": "Stack",
+    "learnMore": "Learn more",
     "caseStudy": "Case study",
     "liveDemo": "Live demo",
     "newTab": "opens in a new tab",
@@ -61,6 +62,7 @@
     "decisions": "Technical decisions",
     "result": "Result",
     "stack": "Stack",
+    "fullPage": "Full home page, scrollable",
     "mobileScreens": "Mobile screens",
     "previous": "Previous",
     "next": "Next",
@@ -88,7 +90,6 @@
   },
   "nav": {
     "name": "Montse Ortiz",
-    "role": "Frontend / Full Stack Developer",
     "main": "Main navigation",
     "language": "Language",
     "about": "About",

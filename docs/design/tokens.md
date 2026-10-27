@@ -59,7 +59,7 @@ Los párrafos largos van en Geist (sans) para que se lean bien; la mono queda pa
 
 | Token | Fuente | Tamaño desktop / móvil | Peso | Interlineado | Tracking | Uso |
 | --- | --- | --- | --- | --- | --- | --- |
-| `display-xl` | Geist | 176px / 64px | 500 | 0.9 | -0.04em | Nombre gigante del hero |
+| `display-xl` | Geist | 144px / 64px | 500 | 0.9 | -0.04em | Nombre gigante del hero |
 | `heading` | Geist | 38px / 28px | 500 | 1.3 | -0.02em | Títulos de sección |
 | `title` | Geist | 22px / 19px | 500 | 1.3 | -0.02em | Nombres de proyecto, subtítulos |
 | `body-lg` | Geist | 19px / 17px | 400 | 1.5 | 0 | Propuesta del hero, intro de bloques |
@@ -128,3 +128,10 @@ Respetar `prefers-reduced-motion`: sin animaciones si el usuario las desactiva (
 
 - Las referencias por sección (references.md) aportan layout e interacción; sus colores, fuentes y medidas no se usan.
 - Si una sección necesita un valor que no está aquí, primero se agrega a este archivo y después se usa.
+
+## Hero de proyectos
+
+| Token | Valor | Uso |
+| --- | --- | --- |
+| `filter-editorial` | `brightness(0.872) contrast(1.038) saturate(0.936) sepia(0.032)` | Look editorial oscuro de las imágenes del hero de proyectos |
+| `delay-learn-more` | 2500ms | Espera antes de que aparezca "Conocer más" bajo el nombre del proyecto |

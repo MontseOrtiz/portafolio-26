@@ -9,7 +9,7 @@ type Variant = "home" | "about" | "case-study";
 const linkClass =
   "text-label inline-flex items-center gap-gap-sm transition-colors duration-(--duration-fast) ease-token hover:text-pop";
 const phraseClass =
-  "text-display-xl text-text transition-colors duration-(--duration-fast) ease-token hover:text-pop";
+  "text-text transition-colors duration-(--duration-fast) ease-token hover:text-pop";
 
 // Footer de cierre. La frase cambia según la página; en los casos de estudio solo va la fila de links.
 // Lleva el ancla #contact (el CTA "Let's talk" del nav).
@@ -21,11 +21,11 @@ export async function Footer({ variant }: { variant: Variant }) {
 
   return (
     <footer id="contact" className="scroll-mt-24 overflow-hidden rounded-md bg-surface print:hidden">
-      {variant === "home" && <div aria-hidden="true" className="pattern-awning" />}
+      {variant === "home" && <div aria-hidden="true" />}
 
       <div className="px-gutter py-section">
         {variant !== "case-study" && (
-          <Reveal className="pt-section-lg pb-gap">
+          <Reveal className={`pt-section-lg pb-gap ${variant === "home" ? "" : "text-fit-line"}`}>
             {variant === "home" ? (
               <h2 className="text-display-xl">
                 <a href={`mailto:${cvContact.email}`} className={phraseClass}>
@@ -33,7 +33,7 @@ export async function Footer({ variant }: { variant: Variant }) {
                 </a>
               </h2>
             ) : (
-              <h2 className="text-display-xl">
+              <h2 className="text-fit-line-inner">
                 <Link href="/#work" className={phraseClass}>
                   {t("aboutPhrase")} <span aria-hidden="true">→</span>
                 </Link>
@@ -61,7 +61,7 @@ export async function Footer({ variant }: { variant: Variant }) {
           </a>
         </nav>
 
-        <p className="text-label pt-4 text-muted">
+        <p className="text-label pt-4 text-muted text-center">
           {t("rights", { year })} ·{" "}
           {t.rich("credit", {
             heart: () => (

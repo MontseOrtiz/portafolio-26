@@ -35,23 +35,15 @@ const stackIcons: Record<string, LucideIcon> = {
   "Yoast SEO": Search,
 };
 
-const MOBILE_SCREENS = 4;
 const SECONDARY_IMAGES = 6;
 
 type Props = { slug: string; locale: Locale };
 
-// Captura real dentro de un marco con proporción propia; el marco da el fondo (surface o bg).
+// Captura que llena su marco (el marco da la proporción).
 function Screenshot({ shot, locale, sizes, priority, className, main }: { shot: Shot; locale: Locale; sizes: string; priority?: boolean; className: string; main?: boolean }) {
   return (
     <div data-main-media={main || undefined} className={`relative overflow-hidden ${className}`}>
-      <Image
-        src={shot.src}
-        alt={shot.alt[locale]}
-        fill
-        sizes={sizes}
-        priority={priority}
-        className={shot.fit === "cover" ? "object-cover object-top" : "object-contain"}
-      />
+      <Image src={shot.src} alt={shot.alt[locale]} fill sizes={sizes} priority={priority} className="object-cover object-top" />
     </div>
   );
 }
@@ -99,7 +91,7 @@ export async function CaseStudy({ slug, locale }: Props) {
       {/* Media principal: sin animación de entrada; imagen con prioridad para el LCP. */}
       {media ? (
         <Screenshot
-          shot={media.main}
+          shot={media.hero}
           locale={locale}
           sizes="(min-width: 1280px) 1200px, 100vw"
           priority
@@ -147,7 +139,7 @@ export async function CaseStudy({ slug, locale }: Props) {
         {/* Bucle de al menos 6 imágenes; 10% menos alta que el 4:5 anterior (8:9). */}
         <CaseStudyMedia
           count={SECONDARY_IMAGES}
-          images={media?.secondary.map((shot) => ({ src: shot.src, alt: shot.alt[locale], fit: shot.fit }))}
+          images={media?.carousel.map((shot) => ({ src: shot.src, alt: shot.alt[locale], width: shot.width, height: shot.height }))}
           label={t("secondaryMedia")}
           placeholder={t("placeholder")}
           pause={t("pause")}
@@ -167,11 +159,26 @@ export async function CaseStudy({ slug, locale }: Props) {
               </section>
             </Reveal>
             {/* Media a todo el ancho entre bloques (capturas de escritorio sobre gingham). */}
-            {i === 2 && (!media || media.wide) && (
+            {i === 2 && (
               <Reveal>
                 <div className="pattern-gingham p-gap md:p-section">
-                  {media?.wide ? (
-                    <Screenshot shot={media.wide} locale={locale} sizes="(min-width: 1280px) 1100px, 100vw" className="aspect-video bg-surface" />
+                  {media ? (
+                    // Imagen completa del home: se recorre dentro del marco (altura máxima) sin recortarla.
+                    <div
+                      role="region"
+                      tabIndex={0}
+                      aria-label={t("fullPage")}
+                      className="max-h-[80svh] overflow-y-auto bg-surface focus-visible:outline-2 focus-visible:outline-pop"
+                    >
+                      <Image
+                        src={media.wide.src}
+                        alt={media.wide.alt[locale]}
+                        width={media.wide.width}
+                        height={media.wide.height}
+                        sizes="(min-width: 1280px) 1100px, 100vw"
+                        className="h-auto w-full"
+                      />
+                    </div>
                   ) : (
                     <Placeholder label={t("placeholder")} className="aspect-video bg-surface" />
                   )}
@@ -209,19 +216,24 @@ export async function CaseStudy({ slug, locale }: Props) {
           aria-label={t("mobileScreens")}
           className="rounded-md bg-accent p-gap py-section dark:bg-surface md:px-section"
         >
-          <ul className="flex gap-gap overflow-x-auto md:justify-center">
-            {Array.from({ length: MOBILE_SCREENS }, (_, n) => {
-              const shot = media?.mobile[n];
-              return (
-                <li key={n} className="w-48 shrink-0">
-                  {shot ? (
-                    <Screenshot shot={shot} locale={locale} sizes="192px" className="aspect-[9/19] rounded-sm bg-bg" />
-                  ) : (
-                    <Placeholder label={t("placeholder")} className="aspect-[9/19] rounded-sm bg-bg" />
-                  )}
-                </li>
-              );
-            })}
+          <ul className="flex items-start gap-gap overflow-x-auto [&>li:first-child]:ml-auto [&>li:last-child]:mr-auto">
+            {(media?.mobile ?? [null, null, null, null]).map((shot, n) => (
+              <li key={shot?.src ?? n} className="w-48 shrink-0">
+                {shot ? (
+                  // Completa y con su propia altura: sin recorte ni zoom.
+                  <Image
+                    src={shot.src}
+                    alt={shot.alt[locale]}
+                    width={shot.width}
+                    height={shot.height}
+                    sizes="192px"
+                    className="h-auto w-full rounded-sm"
+                  />
+                ) : (
+                  <Placeholder label={t("placeholder")} className="aspect-[9/19] rounded-sm bg-bg" />
+                )}
+              </li>
+            ))}
           </ul>
         </section>
       </Reveal>
